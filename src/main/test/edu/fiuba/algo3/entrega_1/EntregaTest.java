@@ -4,12 +4,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.*;
+import edu.fiuba.algo3.modelo.tablero.*;
+import edu.fiuba.algo3.modelo.tablero.terreno.*;
+import edu.fiuba.algo3.modelo.*;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-public class Entrega1Test {
+public class EntregaTest {
 	
     private Tablero tablero, tableroMock;
     private Dados dados, dadosMock;
@@ -33,38 +37,38 @@ public class Entrega1Test {
     	 Tablero tableroA = new Tablero(1234L);
     	 Tablero tableroB = new Tablero(5678L);
 
-    	 List<Terreno> terA = tableroA.getTerrenos();
-    	 List<Terreno> terB = tableroB.getTerrenos();
+    	List<Terreno> terA = tableroA.getTerrenos();
+    	List<Terreno> terB = tableroB.getTerrenos();
 
     	 
-    	 assertEquals(19, terA.size(), "Debe haber exactamente 19 hexágonos");
-    	 assertEquals(19, terB.size(), "Debe haber exactamente 19 hexágonos");
+    	assertEquals(19, terA.size(), "Debe haber exactamente 19 hexágonos");
+    	assertEquals(19, terB.size(), "Debe haber exactamente 19 hexágonos");
 
-    	 Map<Terreno, Long> conteo = terA.stream().map(Terreno::getTipo)
-    			 .collect(java.util.stream.Collectors.groupingBy(t -> t, java.util.stream.Collectors.counting()));
+    	Map<TerrenoTipo, Long> conteo = terA.stream().map(Terreno::getTipo)
+                .collect(java.util.stream.Collectors.groupingBy(t -> t, java.util.stream.Collectors.counting()));
 
-    	 assertEquals(4, conteo.getOrDefault(Terreno.CAMPO, 0L), "Debe haber 4 campos");
-    	 assertEquals(4, conteo.getOrDefault(Terreno.PASTIZAL, 0L), "Debe haber 4 pastizales");
-    	 assertEquals(4, conteo.getOrDefault(Terreno.BOSQUE, 0L), "Debe haber 4 bosques");
-    	 assertEquals(3, conteo.getOrDefault(Terreno.CERRO, 0L), "Debe haber 3 cerros");
-    	 assertEquals(3, conteo.getOrDefault(Terreno.MONTANIA, 0L), "Debe haber 3 montañas");
-    	 assertEquals(1, conteo.getOrDefault(Terreno.DESIERTO, 0L), "Debe haber 1 desierto");
+    	assertEquals(4, conteo.getOrDefault(TerrenoTipo.CAMPO, 0L), "Debe haber 4 campos");
+    	assertEquals(4, conteo.getOrDefault(TerrenoTipo.PASTIZAL, 0L), "Debe haber 4 pastizales");
+    	assertEquals(4, conteo.getOrDefault(TerrenoTipo.BOSQUE, 0L), "Debe haber 4 bosques");
+    	assertEquals(3, conteo.getOrDefault(TerrenoTipo.CERRO, 0L), "Debe haber 3 cerros");
+    	assertEquals(3, conteo.getOrDefault(TerrenoTipo.MONTANIA, 0L), "Debe haber 3 montañas");
+    	assertEquals(1, conteo.getOrDefault(TerrenoTipo.DESIERTO, 0L), "Debe haber 1 desierto");
 
 
-    	 List<Integer> fichas = terA.stream().filter(h -> !h.esDesierto())map(Terreno::getFichaNumero).sorted().toList();
+    	List<Integer> fichas = terA.stream().filter(h -> !(h.getTipo() == TerrenoTipo.DESIERTO)).map(Terreno::getFichaNumero).sorted().toList();
 
-    	 List<Integer> esperado = List.of(2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12);
-    	 assertEquals(esperado, fichas, "Las fichas de número deben coincidir con la configuración estándar de Catán");
+    	List<Integer> esperado = List.of(2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12);
+    	assertEquals(esperado, fichas, "Las fichas de número deben coincidir con la configuración estándar de Catán");
 
-    	 boolean iguales = true;
-    	 for (int i = 0; i < terA.size(); i++) {
-    	     if (terA.get(i).getTerreno() != terB.get(i).getTerreno() ||
-    	         terA.get(i).getFichaNumero() != terB.get(i).getFichaNumero()) {
-    	         iguales = false;
-    	         break;
-    	     }
-    	 }
-    	 assertFalse(iguales, "Dos tableros generados con seeds distintas deben ser diferentes");
+    	boolean iguales = true;
+    	for (int i = 0; i < terA.size(); i++) {
+    	    if (terA.get(i).getTipo() != terB.get(i).getTipo() ||
+    	        terA.get(i).getFichaNumero() != terB.get(i).getFichaNumero()) {
+    	        iguales = false;
+    	        break;
+    	    }
+    	}
+    	assertFalse(iguales, "Dos tableros generados con seeds distintas deben ser diferentes");
     }
     
     void test02ReglaDeDistanciaEntrePobladosIniciales() {
@@ -86,7 +90,7 @@ public class Entrega1Test {
         when(h2.getRecurso()).thenReturn(Recurso.CEREAL);
         when(h3.getRecurso()).thenReturn(Recurso.LANA);
 
-        List<Hexagono> adyacentes = List.of(h1, h2, h3);
+        List<Terreno> adyacentes = List.of(h1, h2, h3);
         when(tableroMock.getHexagonosAdyacentes(new Coordenada(2,2,2))).thenReturn(adyacentes);
 
         // Se omite la colocacion del primer poblado
