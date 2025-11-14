@@ -173,6 +173,7 @@ public class EntregaTest {
         // --- Arrange ---
         Ladron ladron = new Ladron();
 
+        
         Jugador jugadorRobador = new Jugador("Jugador 1");   // jugador activo
         Jugador jugadorRobado = new Jugador("Jugador 2");
         jugadorRobado.agregarRecursos(List.of(Recurso.LANA, Recurso.MADERA));
