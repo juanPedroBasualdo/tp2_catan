@@ -62,6 +62,7 @@ public class EntregaTest {
     	assertEquals(esperado, fichas, "Las fichas de número deben coincidir con la configuración estándar de Catán");
 
     	boolean iguales = true;
+        // Iteramos por cada Terreno en los Tableros para verificar si existe uno que sea diferente
     	for (int i = 0; i < terA.size(); i++) {
     	    if (terA.get(i).getTipo() != terB.get(i).getTipo() ||
     	        terA.get(i).getFichaNumero() != terB.get(i).getFichaNumero()) {
