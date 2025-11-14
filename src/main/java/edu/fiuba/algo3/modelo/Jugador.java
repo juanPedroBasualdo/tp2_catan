@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.modelo;
 
-import edu.fiuba.algo3.modelo.tablero.Recurso;
+import edu.fiuba.algo3.modelo.tablero.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,19 +23,19 @@ public class Jugador {
     }
 
     public void agregarRecursos(List<Recurso> nuevos) {
-        recursos.addAll(nuevos);
+        this.recursos.addAll(nuevos);
     }
 
     public void agregarRecurso(Recurso recurso) {
-        recursos.add(recurso);
+        this.recursos.add(recurso);
     }
 
     public boolean tieneRecurso(Recurso recursoBuscado) {
-        return recursos.contains(recursoBuscado);
+        return this.recursos.contains(recursoBuscado);
     }
 
     public int cantidadDeRecursos() {
-        return recursos.size();
+        return this.recursos.size();
     }
 
     public void descartarPorLadron() {

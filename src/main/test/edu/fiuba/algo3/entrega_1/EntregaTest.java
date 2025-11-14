@@ -3,6 +3,7 @@ package edu.fiuba.algo3.entrega_1;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.lang.reflect.Field;
 import java.util.*;
 import edu.fiuba.algo3.modelo.tablero.*;
 import edu.fiuba.algo3.modelo.tablero.terreno.*;
@@ -92,8 +93,10 @@ public class EntregaTest {
         when(h3.getRecurso()).thenReturn(Recurso.LANA);
 
         List<Terreno> adyacentes = List.of(h1, h2, h3);
-        when(tableroMock.getHexagonosAdyacentes(new Coordenada(2,2,2))).thenReturn(adyacentes);
-
+        when(tableroMock.getHexagonosAdyacentes(any(Coordenada.class))).thenReturn(adyacentes);
+        doCallRealMethod()
+                .when(tableroMock)
+                .otorgarRecursosIniciales(any(Jugador.class), any(Coordenada.class));
         // Se omite la colocacion del primer poblado
         
         tableroMock.colocarPoblado(jugador1, new Coordenada(2,2,2)); // Segundo poblado
@@ -166,21 +169,35 @@ public class EntregaTest {
     }
 
     @Test
-    void test08MoverLadronYRobarCartaAleatoria() {
-        Terreno origen = mock(Desierto.class);
-        Terreno destino = mock(Bosque.class);
+    void test08MoverLadronYRobarCartaAleatoria() throws Exception {
+        // --- Arrange ---
+        Ladron ladron = new Ladron();
 
-        jugador2.agregarRecursos(List.of(Recurso.LANA, Recurso.MADERA));
+        Jugador jugadorRobador = new Jugador("Jugador 1");   // jugador activo
+        Jugador jugadorRobado = new Jugador("Jugador 2");
+        jugadorRobado.agregarRecursos(List.of(Recurso.LANA, Recurso.MADERA));
 
-        when(destino.tieneJugadorAdyacente(jugador2)).thenReturn(true);
-        when(ladron.moverA(destino)).thenReturn(true);
+        Field randomField = Ladron.class.getDeclaredField("random");
+        randomField.setAccessible(true);
+        randomField.set(ladron, new Random(0)); // semilla fija
 
+        Terreno destino = mock(Terreno.class);
+
+        // --- Act ---
         ladron.moverA(destino);
-        Recurso robado = ladron.robarCartaAleatoria(jugador2, jugador1);
+        Recurso robado = ladron.robarCartaAleatoria(jugadorRobado, jugadorRobador);
 
-        assertNotNull(robado, "Debe robarse una carta al mover el ladrón a un hexágono adyacente a otro jugador");
-        assertTrue(jugador1.tieneRecurso(robado), "El jugador activo debe recibir la carta robada");
-        assertFalse(jugador2.tieneRecurso(robado), "El jugador afectado debe perder la carta robada");
+        // --- Assert ---
+        assertNotNull(robado, "Debe devolver un recurso robado");
+        assertEquals(1, jugadorRobado.cantidadDeRecursos(),
+                "El jugador robado debe perder exactamente 1 recurso");
+        assertEquals(1, jugadorRobador.cantidadDeRecursos(),
+                "El jugador robador debe ganar exactamente 1 recurso");
+        assertFalse(jugadorRobado.tieneRecurso(robado),
+                "El jugador robado ya no debe tener el recurso robado");
+        assertTrue(jugadorRobador.tieneRecurso(robado),
+                "El jugador robador debe tener el recurso robado");
     }
-    
+
+
 }
