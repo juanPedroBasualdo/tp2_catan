@@ -39,8 +39,8 @@ public class Jugador {
     }
 
     public void descartarPorLadron() {
-        int cantADescartar = recursos.size() / 2;
-        for (int i = 0; i < cantADescartar; i++) {
+        int cantADescartar = (recursos.size() / 2);
+        for (int i = 0; i <= cantADescartar; i++) {
             if (!recursos.isEmpty()) {
                 int idx = random.nextInt(recursos.size());
                 recursos.remove(idx);
@@ -49,15 +49,20 @@ public class Jugador {
     }
 
     public Recurso robarCartaAleatoria(Jugador objetivo) {
-        if (objetivo.recursos.isEmpty()) return null;
+        if (objetivo.recursos.isEmpty()){ return null; }
         int idx = random.nextInt(objetivo.recursos.size());
-        Recurso robado = objetivo.recursos.remove(idx);
+        Recurso robado = objetivo.eliminarRecurso(idx);
         this.recursos.add(robado);
         return robado;
     }
 
-    public void eliminarRecurso(Recurso recurso) {
-        recursos.remove(recurso);
+    public Recurso eliminarRecurso(int index) {
+        return recursos.remove(index);
+    }
+
+    public Recurso eliminarRecurso(Recurso recurso) {
+        int index = recursos.indexOf(recurso);
+        return recursos.remove(index);
     }
 
     public List<Recurso> obtenerRecursos() {return recursos;};

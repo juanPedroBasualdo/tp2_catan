@@ -1,5 +1,10 @@
 package edu.fiuba.algo3.modelo.tablero.terreno;
 
+import edu.fiuba.algo3.modelo.Jugador;
+import edu.fiuba.algo3.modelo.tablero.Pieza;
+import edu.fiuba.algo3.modelo.tablero.PiezaTipo;
+import edu.fiuba.algo3.modelo.tablero.Recurso;
+
 public abstract class Terreno {
 
     private final int fichaNumero;
@@ -36,6 +41,8 @@ public abstract class Terreno {
 
     public abstract TerrenoTipo getTipo();
 
+    public abstract Recurso getRecurso();
+
     protected void setVertice(int i, Vertice v) { vertices[i] = v; }
     public void setArista(int i, Arista a) { aristas[i] = a; }
 
@@ -65,6 +72,29 @@ public abstract class Terreno {
     @Override
     public String toString() {
         return getClass().getSimpleName() + " (" + fichaNumero + ")";
+    }
+
+    public void colocarPoblado(Jugador jugador, int Vertice) {
+        if(!vertices[Vertice].estaOcupado()) {
+            vertices[Vertice].colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador), jugador);
+        }
+    }
+
+
+    public boolean tienePobladoDe(Jugador jugador1) {
+        return false;
+    }
+
+    public boolean tieneLadron() {
+        return false;
+    }
+
+    public boolean tieneJugadorAdyacente(Jugador jugador) {
+        return false;
+    }
+
+    public boolean tieneCiudadDe(Jugador jugador) {
+        return false;
     }
 }
 

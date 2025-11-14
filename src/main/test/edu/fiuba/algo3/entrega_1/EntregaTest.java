@@ -70,7 +70,8 @@ public class EntregaTest {
     	}
     	assertFalse(iguales, "Dos tableros generados con seeds distintas deben ser diferentes");
     }
-    
+
+    @Test
     void test02ReglaDeDistanciaEntrePobladosIniciales() {
     	tablero.colocarPoblado(jugador1, new Coordenada(0,0,0));
 
@@ -108,6 +109,7 @@ public class EntregaTest {
             "El jugador debe recibir 1 recurso por cada Terreno adyacente al segundo poblado");
     }
 
+    @Test
     void test04LanzamientoDeDadosGeneraNumeroValido() {
         int resultado = dados.tirar();
 
@@ -123,15 +125,14 @@ public class EntregaTest {
         when(bosque.tienePobladoDe(jugador1)).thenReturn(true);
         when(bosque.getRecurso()).thenReturn(Recurso.MADERA);
 
-        when(dados.tirar()).thenReturn(8);
+        when(dadosMock.tirar()).thenReturn(8);
 
-        Map<Jugador, List<Recurso>> produccion = Produccion.producirRecursos(dados.tirar(), List.of(bosque));
+        Map<Recurso, Long> produccion = Tablero.producirRecursos(dadosMock.tirar(), List.of(bosque));
 
-        assertEquals(1, produccion.get(jugador1).size(),
+        assertEquals(1, List.of(produccion.get(Recurso.MADERA)).size(),
             "Un poblado produce 1 recurso adyacente al número lanzado");
-        assertEquals(Recurso.MADERA, produccion.get(jugador1).get(0));
     }
-    
+
     @Test
     void test06TerrenoBajoLadronNoProduceRecursos() {
         Terreno terreno = mock(Bosque.class);
@@ -141,9 +142,9 @@ public class EntregaTest {
 
         when(dadosMock.tirar()).thenReturn(8);
 
-        Map<Jugador, List<Recurso>> produccion = Tablero.producirRecursos(dados.tirar(), List.of(terreno));
+        Map<Recurso, Long> produccion = Tablero.producirRecursos(dados.tirar(), List.of(terreno));
 
-        assertTrue(produccion.getOrDefault(jugador1, List.of()).isEmpty(),
+        assertTrue(produccion.isEmpty(),
             "El hexágono con el ladrón no debe producir recursos");
     }
     

@@ -8,11 +8,15 @@ public class Dados {
         random = new Random();
     }
 
+    public int tirar(){
+        return (this.tirarDado() + this.tirarDado());
+    }
+
     /**
-     * Devuelve un número entero entre 0 y 5 (inclusive).
+     * Devuelve un número entero entre 1 y 6 (inclusive).
      */
-    public int tirar() {
-        return random.nextInt(6); // genera un número entre 0 y 5
+    public int tirarDado() {
+        return (random.nextInt(6) + 1); // genera un número entre 1 y 6
     }
 }
 

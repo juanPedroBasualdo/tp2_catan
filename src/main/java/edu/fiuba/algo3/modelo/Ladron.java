@@ -28,15 +28,13 @@ public class Ladron {
     }
 
     public Recurso robarCartaAleatoria(Jugador jugadorRobado, Jugador jugadorRobador) {
-        if (jugadorRobado == null || jugadorRobador == null) return null;
-        if (jugadorRobado.cantidadDeRecursos() == 0) return null;
+        if (jugadorRobado == null || jugadorRobador == null) {return null;}
+        if (jugadorRobado.cantidadDeRecursos() == 0) {return null;}
 
-        var recursosRobado = jugadorRobado.obtenerRecursos();
-        int idx = random.nextInt(recursosRobado.size());
-        Recurso recursoRobado = recursosRobado.get(idx);
+        int idx = random.nextInt(jugadorRobado.obtenerRecursos().size());
 
         // Efectúa el robo
-        jugadorRobado.eliminarRecurso(recursoRobado);
+        Recurso recursoRobado = jugadorRobado.eliminarRecurso(idx);
         jugadorRobador.agregarRecurso(recursoRobado);
 
         return recursoRobado;

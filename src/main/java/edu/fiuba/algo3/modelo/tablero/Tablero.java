@@ -1,16 +1,13 @@
 package edu.fiuba.algo3.modelo.tablero;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
+import edu.fiuba.algo3.modelo.Jugador;
 import edu.fiuba.algo3.modelo.tablero.terreno.Terreno;
 import edu.fiuba.algo3.modelo.tablero.terreno.TerrenoTipo;
 
 public class Tablero {
     private final Terreno[][] terrenos = new Terreno[5][];
-
 
     public Tablero() {
         this.armarFormaDeTablero();
@@ -22,6 +19,16 @@ public class Tablero {
         this.armarFormaDeTablero();
         Random random = new Random(seed);
         generarTerrenos(random);
+    }
+
+    public static Map<Recurso, Long> producirRecursos(int tirar, List<Terreno> terreno) {
+        List<Terreno> produccion = new ArrayList<>();
+        for(Terreno t : terreno) {
+            if(!t.tieneLadron()) {
+                produccion.add(t);
+            }
+        }
+        return produccion.stream().map(Terreno::getRecurso).collect(java.util.stream.Collectors.groupingBy(t -> t, java.util.stream.Collectors.counting()));
     }
 
     private void generarTerrenos(Random random) {
@@ -65,11 +72,32 @@ public class Tablero {
     public List<Terreno> getTerrenos() {
         List<Terreno> listaTerrenos = new ArrayList<>();
         for(int i = 0 ; i < terrenos.length ; i++) {
-            for(int j = 0 ; j < terrenos[i].length ; i++){
-                listaTerrenos.add(terrenos[i][j]); 
+            for(int j = 0 ; j < terrenos[i].length ; j++){
+                listaTerrenos.add(terrenos[i][j]);
             }
         }
         return listaTerrenos;
     }
 
+    public void colocarPoblado(Jugador jugador, Coordenada coordenada) {
+        if(this.puedeColocarPoblado(jugador, coordenada)) {
+            terrenos[coordenada.getX()][coordenada.getY()].colocarPoblado(jugador, coordenada.getZ());
+        }
+    }
+
+    public boolean puedeColocarPoblado(Jugador jugador1, Coordenada coordenada) {
+        return false;
+    }
+
+    public List<Terreno> getHexagonosAdyacentes(Coordenada coordenada) {
+        return new ArrayList<Terreno>();
+    }
+
+    public void otorgarRecursosIniciales(Jugador jugador, Coordenada coordenada) {
+        List<Terreno> adyacentes = this.getHexagonosAdyacentes(coordenada);
+
+        for (Terreno terreno : adyacentes) {
+            jugador.agregarRecurso(terreno.getRecurso());
+        }
+    }
 }
