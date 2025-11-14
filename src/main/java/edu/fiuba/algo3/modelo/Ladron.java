@@ -1,4 +1,7 @@
 package edu.fiuba.algo3.modelo;
+import edu.fiuba.algo3.modelo.tablero.Recurso;
+import edu.fiuba.algo3.modelo.tablero.terreno.Terreno;
+
 import java.util.Random;
 
 public class Ladron {

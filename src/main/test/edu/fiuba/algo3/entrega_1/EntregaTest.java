@@ -55,7 +55,7 @@ public class EntregaTest {
     	assertEquals(1, conteo.getOrDefault(TerrenoTipo.DESIERTO, 0L), "Debe haber 1 desierto");
 
 
-    	List<Integer> fichas = terA.stream().filter(h -> !(h.getTipo() == TerrenoTipo.DESIERTO)).map(Terreno::getFichaNumero).sorted().toList();
+    	List<Integer> fichas = terA.stream().filter(h -> !(h.getTipo() == TerrenoTipo.DESIERTO)).map(Terreno::getFichaNumero).sorted().collect(java.util.stream.Collectors.toList());;
 
     	List<Integer> esperado = List.of(2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12);
     	assertEquals(esperado, fichas, "Las fichas de número deben coincidir con la configuración estándar de Catán");
@@ -109,7 +109,7 @@ public class EntregaTest {
     }
 
     void test04LanzamientoDeDadosGeneraNumeroValido() {
-        int resultado = dados.lanzar();
+        int resultado = dados.tirar();
 
         assertTrue(resultado >= 2 && resultado <= 12,
             "El número de los dados debe estar entre 2 y 12");
@@ -123,9 +123,9 @@ public class EntregaTest {
         when(bosque.tienePobladoDe(jugador1)).thenReturn(true);
         when(bosque.getRecurso()).thenReturn(Recurso.MADERA);
 
-        when(dados.lanzar()).thenReturn(8);
+        when(dados.tirar()).thenReturn(8);
 
-        Map<Jugador, List<Recurso>> produccion = Produccion.producirRecursos(dados.lanzar(), List.of(bosque));
+        Map<Jugador, List<Recurso>> produccion = Produccion.producirRecursos(dados.tirar(), List.of(bosque));
 
         assertEquals(1, produccion.get(jugador1).size(),
             "Un poblado produce 1 recurso adyacente al número lanzado");
@@ -139,22 +139,22 @@ public class EntregaTest {
         when(terreno.tienePobladoDe(jugador1)).thenReturn(true);
         when(terreno.tieneLadron()).thenReturn(true);
 
-        when(dadosMock.lanzar()).thenReturn(8);
+        when(dadosMock.tirar()).thenReturn(8);
 
-        Map<Jugador, List<Recurso>> produccion = Tablero.producirRecursos(dados.lanzar(), List.of(terreno));
+        Map<Jugador, List<Recurso>> produccion = Tablero.producirRecursos(dados.tirar(), List.of(terreno));
 
         assertTrue(produccion.getOrDefault(jugador1, List.of()).isEmpty(),
             "El hexágono con el ladrón no debe producir recursos");
     }
     
     @Test
-    void test07JugadorDescartaLaMitadAlLanzar7() {
+    void test07JugadorDescartaLaMitadAltirar7() {
         jugador1.agregarRecursos(Arrays.asList(
             Recurso.MADERA, Recurso.MADERA, Recurso.CEREAL,
             Recurso.LANA, Recurso.MINERAL, Recurso.MADERA, Recurso.LANA
         ));
 
-        when(dadosMock.lanzar()).thenReturn(7);
+        when(dadosMock.tirar()).thenReturn(7);
 
         int antes = jugador1.cantidadDeRecursos();
         jugador1.descartarPorLadron();

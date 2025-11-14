@@ -1,5 +1,7 @@
 package edu.fiuba.algo3.modelo.tablero.terreno;
 
+import edu.fiuba.algo3.modelo.Jugador;
+
 public class Arista {
     private Vertice verticeA;
     private Vertice verticeB;

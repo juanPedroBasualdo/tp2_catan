@@ -1,5 +1,7 @@
 package edu.fiuba.algo3.modelo;
 
+import edu.fiuba.algo3.modelo.tablero.Recurso;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -53,5 +55,11 @@ public class Jugador {
         this.recursos.add(robado);
         return robado;
     }
+
+    public void eliminarRecurso(Recurso recurso) {
+        recursos.remove(recurso);
+    }
+
+    public List<Recurso> obtenerRecursos() {return recursos;};
 
 }
