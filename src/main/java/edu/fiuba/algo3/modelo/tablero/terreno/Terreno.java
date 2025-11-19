@@ -20,6 +20,15 @@ public abstract class Terreno {
         return fichaNumero;
     }
 
+    public void agregarVertice(Vertice vertice) {
+        for (int i = 0; i < vertices.length; i++) {
+            if (vertices[i] == null) {  // para no pisar vertices ya agregados
+                vertices[i] = vertice;
+                return;
+            }
+        }
+    }
+
     public static Terreno crear(TerrenoTipo tipo, int fichaNumero) throws IllegalArgumentException {
         switch (tipo) {
             case BOSQUE:
