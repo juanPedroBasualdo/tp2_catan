@@ -12,10 +12,12 @@ public class Jugador {
     private final String nombre;
     private final List<Recurso> recursos;
     private final Random random = new Random();
+    private final Integer puntosVictoria;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
         this.recursos = new ArrayList<>();
+        this.puntosVictoria = 0;
     }
 
     public String obtenerNombre() {
@@ -65,6 +67,8 @@ public class Jugador {
         return recursos.remove(index);
     }
 
-    public List<Recurso> obtenerRecursos() {return recursos;};
+    public List<Recurso> obtenerRecursos() { return recursos; };
+
+    public int obtenerPuntaje() { return puntosVictoria; };
 
 }

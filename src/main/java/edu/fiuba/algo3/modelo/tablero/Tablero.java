@@ -85,6 +85,16 @@ public class Tablero {
         }
     }
 
+    public void mejorarPoblado(Jugador jugador, Coordenada coordenada) {
+        if(this.existePuebloDeJugador(jugador, coordenada)) {
+            terrenos[coordenada.getX()][coordenada.getY()].colocarCiudad(jugador, coordenada.getZ());
+        }
+    }
+
+    public boolean existePuebloDeJugador(Jugador jugador1, Coordenada coordenada) {
+        return false;
+    }
+
     public boolean puedeColocarPoblado(Jugador jugador1, Coordenada coordenada) {
         return false;
     }

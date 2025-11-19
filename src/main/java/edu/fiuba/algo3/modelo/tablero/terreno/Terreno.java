@@ -80,6 +80,12 @@ public abstract class Terreno {
         }
     }
 
+    public void colocarCiudad(Jugador jugador, int Vertice) {
+        if(vertices[Vertice].estaOcupado()){
+            vertices[Vertice].mejorarPoblado(jugador);
+        }
+    }
+
 
     public boolean tienePobladoDe(Jugador jugador1) {
         return false;
