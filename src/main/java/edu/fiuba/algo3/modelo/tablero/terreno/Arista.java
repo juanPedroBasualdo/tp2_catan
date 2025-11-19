@@ -1,26 +1,37 @@
 package edu.fiuba.algo3.modelo.tablero.terreno;
 
-import edu.fiuba.algo3.modelo.Jugador;
-
 public class Arista {
-    private Vertice verticeA;
-    private Vertice verticeB;
-    private Jugador propietario;
+    private final Vertice a;
+    private final Vertice b;
+    private Carretera carretera = new SinCarretera();
 
-    public Arista(Vertice a, Vertice b) {
-        this.verticeA = a;
-        this.verticeB = b;
+    public Arista(Vertice v1, Vertice v2) {
+        this.a = v1;
+        this.b = v2;
     }
 
-    public boolean estaOcupada() {
-        return propietario != null;
+    public Carretera getCarretera() {
+        return carretera;
     }
 
-    public void colocarCamino(Jugador jugador) {
-        if (estaOcupada()) {
-            throw new IllegalStateException("La arista ya tiene un camino");
+    public Vertice getElOtroVertice(Vertice v) {
+        if (v == a) return b;
+        if (v == b) return a;
+        throw new IllegalArgumentException("El vértice no pertenece a esta arista, esto nunca debería ocurrir.");
+    }
+
+    public boolean estaLibre() {
+        return !carretera.hayCarretera();
+    }
+
+    public boolean tieneCarretera() {
+        return carretera.estaLibre();
+    }
+
+    public void construirCarretera(Carretera carretera) {
+        if (!estaLibre()) {
+            throw new IllegalStateException("Ya hay una carretera en esta arista, no podes construir otra sobre la existente.");
         }
-        this.propietario = jugador;
+        this.carretera = new Carretera(jugador);
     }
-
 }
