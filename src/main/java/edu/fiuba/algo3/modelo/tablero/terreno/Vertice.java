@@ -1,29 +1,41 @@
 package edu.fiuba.algo3.modelo.tablero.terreno;
 
-import edu.fiuba.algo3.modelo.Jugador;
-import edu.fiuba.algo3.modelo.tablero.Pieza;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Vertice {
-    private Pieza pieza;  // Puede ser un Poblado o una Ciudad
-    private Jugador propietario;
+    private final List<Arista> aristas = new ArrayList<>();
+    private Construccion construccion = new SinConstruccion();
 
-    public boolean estaOcupado() {
-        return pieza != null;
-    }
-
-    public void colocarPieza(Pieza pieza, Jugador jugador) {
-        if (estaOcupado()) {
-            throw new IllegalStateException("El vértice ya está ocupado");
+    public void agregarArista(Arista arista) {
+        if(!aristas.contains(arista)) {
+            aristas.add(arista);
         }
-        this.pieza = pieza;
-        this.propietario = jugador;
     }
 
-    public Jugador getPropietario() {
-        return propietario;
+    public List<Arista> getAristas() {
+        return List.copyOf(aristas);
     }
 
-    public Pieza getPieza() {
-        return pieza;
+    public Construccion getConstruccion() {
+        return construccion;
+    }
+
+    public boolean tieneConstruccion() {
+        return !construccion.estaVacio();
+    }
+
+    public void construirPoblado(Construccion nuevoPoblado) {   // la construccion sabe a que jugador le pertenece
+        if(this.tieneConstruccion()) {
+            throw new IllegalStateException("Ya hay un poblado o una ciudad en este vértice.");
+        }
+        construccion = nuevoPoblado;
+    }
+
+    public void construirCiudad(Construccion nuevaCiudad) {
+        if(!construccion.esPoblado()) {
+            throw new IllegalStateException("No hay un poblado en este vértice para mejorar a ciudad.");
+        }
+        construccion = nuevaCiudad;
     }
 }
