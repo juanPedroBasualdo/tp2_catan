@@ -1,7 +1,8 @@
 package edu.fiuba.algo3.modelo.tablero.terreno;
 
-import java.util.ArrayList;
-import java.util.List;
+import edu.fiuba.algo3.modelo.Jugador;
+import edu.fiuba.algo3.modelo.tablero.Pieza;
+import edu.fiuba.algo3.modelo.tablero.PiezaTipo;
 
 public class Vertice {
     private final List<Arista> aristas = new ArrayList<>();
@@ -13,8 +14,19 @@ public class Vertice {
         }
     }
 
-    public List<Arista> getAristas() {
-        return List.copyOf(aristas);
+    public void mejorarPoblado(Jugador jugador) {
+        if(!esPobladoACiudad(jugador)){
+            throw new IllegalStateException("El poblado debe existir y ser del jugador");
+        }
+        this.pieza = Pieza.crearPieza(PiezaTipo.CIUDAD, jugador);
+    }
+
+    public boolean esPobladoACiudad(Jugador jugador) {
+        return this.pieza.obtenerTipo() == PiezaTipo.POBLADO && this.propietario == jugador;
+    }
+
+    public Jugador getPropietario() {
+        return propietario;
     }
 
     public Construccion getConstruccion() {
