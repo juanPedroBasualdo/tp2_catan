@@ -12,15 +12,12 @@ import edu.fiuba.algo3.modelo.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 
 public class EntregaTest {
 	
     private Tablero tablero, tableroMock;
     private Dados dados, dadosMock;
-    private Ladron ladron;
     private Jugador jugador1;
-    private Jugador jugador2;
 	
     @BeforeEach
     void setUp() {
@@ -28,9 +25,7 @@ public class EntregaTest {
         tableroMock = mock(Tablero.class);
         dados = new Dados();
         dadosMock = mock(Dados.class);
-        ladron = mock(Ladron.class);
         jugador1 = new Jugador("Jugador 1");
-        jugador2 = new Jugador("Jugador 2");
     }
     
     @Test
