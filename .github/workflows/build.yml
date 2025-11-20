@@ -11,6 +11,8 @@ jobs:
       - name: Run test suite
         # run: docker compose -f docker/docker-compose.yaml exec -T app bash scripts/build.sh
         run: docker compose -f docker/docker-compose.yaml run --rm app bash scripts/build.sh
+      - name: Print test reports
+        run: cat target/surefire-reports/*.txt
       - name: Run mutation test
         # run: docker compose -f docker/docker-compose.yaml exec -T app bash scripts/run_mutation_test.sh
         run: docker compose -f docker/docker-compose.yaml run --rm app bash scripts/run_mutation_test.sh
