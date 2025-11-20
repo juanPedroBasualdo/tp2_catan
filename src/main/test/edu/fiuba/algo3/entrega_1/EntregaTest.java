@@ -9,28 +9,26 @@ import edu.fiuba.algo3.modelo.tablero.*;
 import edu.fiuba.algo3.modelo.tablero.terreno.*;
 import edu.fiuba.algo3.modelo.*;
 
-
+import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
+import edu.fiuba.algo3.modelo.tablero.terreno.tipo.Bosque;
+import edu.fiuba.algo3.modelo.tablero.terreno.tipo.Campo;
+import edu.fiuba.algo3.modelo.tablero.terreno.tipo.Pastizal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 
 public class EntregaTest {
 	
     private Tablero tablero, tableroMock;
     private Dados dados, dadosMock;
-    private Ladron ladron;
     private Jugador jugador1;
-    private Jugador jugador2;
 	
     @BeforeEach
     void setUp() {
-    	tablero = new Tablero();
+    	tablero = new Tablero(1235L);
         tableroMock = mock(Tablero.class);
         dados = new Dados();
         dadosMock = mock(Dados.class);
-        ladron = mock(Ladron.class);
         jugador1 = new Jugador("Jugador 1");
-        jugador2 = new Jugador("Jugador 2");
     }
     
     @Test
@@ -62,6 +60,7 @@ public class EntregaTest {
     	assertEquals(esperado, fichas, "Las fichas de número deben coincidir con la configuración estándar de Catán");
 
     	boolean iguales = true;
+        // Iteramos por cada Terreno en los Tableros para verificar si existe uno que sea diferente
     	for (int i = 0; i < terA.size(); i++) {
     	    if (terA.get(i).getTipo() != terB.get(i).getTipo() ||
     	        terA.get(i).getFichaNumero() != terB.get(i).getFichaNumero()) {
@@ -74,9 +73,12 @@ public class EntregaTest {
 
     @Test
     void test02ReglaDeDistanciaEntrePobladosIniciales() {
-    	tablero.colocarPoblado(jugador1, new Coordenada(0,0,0));
+        Coordenada coord1 = new Coordenada(0, 0, 0);
+        Coordenada coord2 = new Coordenada(0, 0, 1);
 
-        boolean permitido = tablero.puedeColocarPoblado(jugador1, new Coordenada(0,0,1));
+    	tablero.colocarPoblado(jugador1, coord1);
+
+        boolean permitido = tablero.puedeColocarPoblado(jugador1, coord2);
         assertFalse(permitido, 
         		"No debería poder colocarse un poblado a menos de 2 caminos de otro");
     }
@@ -93,7 +95,7 @@ public class EntregaTest {
         when(h3.getRecurso()).thenReturn(Recurso.LANA);
 
         List<Terreno> adyacentes = List.of(h1, h2, h3);
-        when(tableroMock.getHexagonosAdyacentes(any(Coordenada.class))).thenReturn(adyacentes);
+        when(tableroMock.getTerrenosAdyacentes(any(Coordenada.class))).thenReturn(adyacentes);
         doCallRealMethod()
                 .when(tableroMock)
                 .otorgarRecursosIniciales(any(Jugador.class), any(Coordenada.class));

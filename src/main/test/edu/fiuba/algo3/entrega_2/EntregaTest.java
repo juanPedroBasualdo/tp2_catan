@@ -1,17 +1,12 @@
 package edu.fiuba.algo3.entrega_2;
 
+import java.util.Arrays;
+
+import edu.fiuba.algo3.modelo.Banca;
 import edu.fiuba.algo3.modelo.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Coordenada;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class EntregaTest {
 	
@@ -69,5 +64,92 @@ public class EntregaTest {
         //
 
     }
+
+    @Test
+    void test07intercambioInteriorDeberiaRealizarseSiElReceptorAcepta() {
+        Jugador emisor = new Jugador("1");
+        Jugador receptor = mock(Jugador.class);
+
+        // el receptor acepta
+        when(receptor.aceptarIntercambio(any())).thenReturn(true);
+
+        // Mock de manos (si las tienes como clase aparte)
+        Mano manoEmisor = mock(Mano.class);
+        Mano manoReceptor = mock(Mano.class);
+        emisor.setMano(manoEmisor);
+        when(receptor.getMano()).thenReturn(manoReceptor);
+
+        Intercambio intercambio = new Intercambio(
+                new Recursos(Recurso.MADERA),
+                new Recursos(Recurso.ARCILLA)
+        );
+
+        boolean resultado = emisor.intercambiarCon(receptor, intercambio);
+
+        assertTrue(resultado);
+        verify(manoEmisor).remover(intercambio.getOfrecido());
+        verify(manoReceptor).agregar(intercambio.getOfrecido());
+        verify(manoReceptor).remover(intercambio.getSolicitado());
+        verify(manoEmisor).agregar(intercambio.getSolicitado());
+    }
+
+    @Test
+    void test08intercambioInteriorNoDeberiaRealizarseSiElReceptorRechaza() {
+        Jugador emisor = new Jugador("A");
+        Jugador receptor = mock(Jugador.class);
+
+        when(receptor.aceptarIntercambio(any())).thenReturn(false);
+
+        Intercambio intercambio = mock(Intercambio.class);
+
+        boolean resultado = emisor.intercambiarCon(receptor, intercambio);
+
+        assertFalse(resultado);
+
+
+        verify(receptor, never()).getMano();
+    }
+
+    @Test
+    void test09comprarCartaDeDesarrolloDeberiaConsumirRecursosYAgregarAlMazoOculto() {
+        Jugador jugador = new Jugador("A");
+
+        Mano mano = mock(Mano.class);
+        jugador.setMano(mano);
+
+        MazoDesarrollo mazo = mock(MazoDesarrollo.class);
+        jugador.setMazoDesarrollo(mazo);
+
+        CartaDesarrollo carta = mock(CartaDesarrollo.class);
+        Banca banca = mock(Banca.class);
+
+        // La banca entrega una carta al azar
+        when(banca.entregarCartaDesarrollo()).thenReturn(carta);
+
+        jugador.comprarCartaDesarrollo(banca);
+
+        // Verificar consumo de recursos
+        verify(mano).remover(new Recursos(0,1,1,1,0)); 
+        // costos típicos: oveja, trigo, piedra (ajustá según tu modelo)
+
+        // verificar que fue al mazo oculto
+        verify(mazo).agregarACartasOcultas(carta);
+    }
+
+    @Test
+    void test00cartaCompradaNoPuedeUsarseEnElMismoTurno() {
+        Jugador jugador = new Jugador("A");
+
+        CartaDesarrollo carta = new CartaDesarrollo();
+        carta.marcarCompradaEnTurno(10);
+
+        // Turno actual también 10 → no válida para jugar
+        assertThrows(
+                CartaNoJugableEsteTurnoException.class,
+                () -> jugador.jugarCarta(carta, 10)
+        );
+    }
+
+
 
 }

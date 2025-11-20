@@ -1,32 +1,31 @@
-package edu.fiuba.algo3.modelo.tablero.terreno;
+package edu.fiuba.algo3.modelo.tablero.terreno.parte;
 
 import edu.fiuba.algo3.modelo.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Pieza;
 import edu.fiuba.algo3.modelo.tablero.PiezaTipo;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
+import edu.fiuba.algo3.modelo.tablero.terreno.TerrenoTipo;
+import edu.fiuba.algo3.modelo.tablero.terreno.tipo.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 
 public abstract class Terreno {
 
     private final int fichaNumero;
-    private final Vertice[] vertices = new Vertice[6];
-    private final Arista[] aristas = new Arista[6];
-
+    private final List<Vertice> vertices;
+    private final List<Arista> aristas;
 
     protected Terreno(int fichaNumero) {
         this.fichaNumero = fichaNumero;
+        this.vertices = new ArrayList<>();
+        this.aristas = new ArrayList<>();
     }
 
     public int getFichaNumero() {
         return fichaNumero;
-    }
-
-    public void agregarVertice(Vertice vertice) {
-        for (int i = 0; i < vertices.length; i++) {
-            if (vertices[i] == null) {  // para no pisar vertices ya agregados
-                vertices[i] = vertice;
-                return;
-            }
-        }
     }
 
     public static Terreno crear(TerrenoTipo tipo, int fichaNumero) throws IllegalArgumentException {
@@ -52,9 +51,13 @@ public abstract class Terreno {
 
     public abstract Recurso getRecurso();
 
-    protected void setVertice(int i, Vertice v) { vertices[i] = v; }
-    public void setArista(int i, Arista a) { aristas[i] = a; }
+    public void agregarVertice(Collection<Vertice> vertices) {
+        this.vertices.addAll(vertices);
+    }
 
+    public void agregarArista(Collection<Arista> aristas) {
+        this.aristas.addAll(aristas);
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -71,11 +74,7 @@ public abstract class Terreno {
             return false;
         }
 
-        if(this.getTipo() != otro.getTipo()) {
-            return false;
-        }
-
-        return true;
+        return this.getTipo() == otro.getTipo();
     }
 
     @Override
@@ -83,33 +82,32 @@ public abstract class Terreno {
         return getClass().getSimpleName() + " (" + fichaNumero + ")";
     }
 
-    public void colocarPoblado(Jugador jugador, int Vertice) {
-        if(!vertices[Vertice].estaOcupado()) {
-            vertices[Vertice].colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador), jugador);
-        }
-    }
-
-    public void colocarCiudad(Jugador jugador, int Vertice) {
-        if(vertices[Vertice].estaOcupado()){
-            vertices[Vertice].mejorarPoblado(jugador);
-        }
-    }
-
-
-    public boolean tienePobladoDe(Jugador jugador1) {
-        return false;
-    }
-
     public boolean tieneLadron() {
         return false;
     }
 
-    public boolean tieneJugadorAdyacente(Jugador jugador) {
+    public boolean puedeColocarPoblado(int indiceVertice) {
+        return vertices.get(indiceVertice).esValido();
+    }
+
+    public void colocarPoblado(Jugador jugador, int indiceVertice) {
+        this.vertices.get(indiceVertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador), jugador);
+    }
+
+    public Object tieneCiudadDe(Jugador jugador1) {
         return false;
     }
 
-    public boolean tieneCiudadDe(Jugador jugador) {
+    public Object tienePobladoDe(Jugador jugador1) {
         return false;
+    }
+
+    public Vertice verticeEn(int vertex) {
+        return this.vertices.get(vertex);
+    }
+
+    public boolean contieneVertice(Vertice vertice) {
+        return this.vertices.contains(vertice);
     }
 }
 

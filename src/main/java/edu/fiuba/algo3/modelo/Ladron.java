@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.modelo;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
-import edu.fiuba.algo3.modelo.tablero.terreno.Terreno;
+import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
 
 import java.util.Random;
 
