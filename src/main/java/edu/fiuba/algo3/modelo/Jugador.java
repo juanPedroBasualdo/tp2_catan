@@ -14,7 +14,7 @@ public class Jugador {
     private final Random random = new Random();
 
     // TODO hacer el puntaje con una clase de Puntaje
-    private final Integer puntaje;
+    private Integer puntaje;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
@@ -105,5 +105,9 @@ public class Jugador {
 
     public void intercambiarConPuertoGenerico(Recurso recursoEntrante, Recurso recursoSaliente) {
         Banca.intercambioPuertoGenerico(this,recursoEntrante,recursoSaliente);
+    }
+
+    public void agregarPuntaje(int puntaje) {
+        this.puntaje += puntaje;
     }
 }

@@ -83,14 +83,33 @@ public class Tablero {
     public void colocarPoblado(Jugador jugador, Coordenada coordenada) {
         if(this.puedeColocarPoblado(jugador, coordenada)) {
             terrenos[coordenada.getX()][coordenada.getY()].colocarPoblado(jugador, coordenada.getZ());
+
+            /*
+            TODO Hacer la logica para aplicar recursos y puntaje con polimorfismo
+            Banca.extraerRecursos(jugador1, Banca.precioDe(PiezaTipo.POBLADO));
+            Banca.otorgarPuntaje(jugador1, Banca.puntajeDe(PiezaTipo.POBLADO));
+            */
+
+            // Temporal!!
+            List<Recurso> listaPrecioRecursosPoblado = Arrays.asList(Recurso.MADERA,Recurso.ARCILLA,Recurso.LANA,Recurso.CEREAL);
+            Banca.extraerRecursos(jugador, listaPrecioRecursosPoblado);
+            Banca.otorgarPuntaje(jugador,1);
         }
     }
 
-    public void mejorarPoblado(Jugador jugador1, Coordenada coordenadaPoblado) {
-        if(jugador1.tieneRecursos(Banca.precioDe(PiezaTipo.CIUDAD)) && puedeMejorarPoblado(jugador1, coordenadaPoblado)) {
-            terrenos[coordenadaPoblado.getX()][coordenadaPoblado.getY()].construirCiudad(jugador1, coordenadaPoblado.getZ());
-            Banca.extraerRecursos(jugador1, Banca.precioDe(PiezaTipo.CIUDAD));
-            Banca.otorgarPuntaje(jugador1, Banca.puntajeDe(PiezaTipo.CIUDAD));
+    public void mejorarPoblado(Jugador jugador, Coordenada coordenadaPoblado) {
+        if(jugador.tieneRecursos(Banca.precioDe(PiezaTipo.CIUDAD)) && puedeMejorarPoblado(jugador, coordenadaPoblado)) {
+            terrenos[coordenadaPoblado.getX()][coordenadaPoblado.getY()].construirCiudad(jugador, coordenadaPoblado.getZ());
+
+            /*
+            TODO Hacer la logica para aplicar recursos y puntaje con polimorfismo
+            Banca.extraerRecursos(jugador, Banca.precioDe(PiezaTipo.CIUDAD));
+            Banca.otorgarPuntaje(jugador, Banca.puntajeDe(PiezaTipo.CIUDAD));
+            */
+
+            List<Recurso> listaPrecioRecursosCiudad = Arrays.asList(Recurso.MINERAL,Recurso.MINERAL,Recurso.MINERAL,Recurso.CEREAL,Recurso.CEREAL);
+            Banca.extraerRecursos(jugador, listaPrecioRecursosCiudad);
+            Banca.otorgarPuntaje(jugador,2);
         }
     }
 

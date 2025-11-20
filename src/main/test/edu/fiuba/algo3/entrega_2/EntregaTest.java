@@ -24,31 +24,30 @@ public class EntregaTest {
     }
 
     @Test
-    void test03JugadorMejoraPobladoYRecivePV() {
+    void test03JugadorMejoraPobladoYRecibePV() {
 
-        // Assign: El Jugador ya fue creado en el setUp()
-
-            // Supone que no cambiaremos el costo de mejorar una ciudad (3 Minerales y 1 Cereal/Trigo)
+        // Assing
         List<Recurso> recursosIniciales = Arrays.asList(Recurso.CEREAL, Recurso.CEREAL, Recurso.MINERAL, Recurso.MINERAL, Recurso.MINERAL);
         jugador1.agregarRecursos(recursosIniciales);
 
         int puntosVictoriaIniciales = jugador1.obtenerPuntaje();
+        Tablero tableroSpy = spy(new Tablero());
 
-        // Act:
-        when(tableroMock.puedeColocarPoblado(eq(jugador1), any(Coordenada.class))).thenReturn(true);
+        // Act
+        doReturn(true).when(tableroSpy).puedeColocarPoblado(eq(jugador1), any(Coordenada.class));
+        doReturn(true).when(tableroSpy).puedeMejorarPoblado(eq(jugador1), any(Coordenada.class));
 
         Coordenada coordenadaPoblado = new Coordenada(2,2,2);
-        // Tiene que tener PV:1
-        tableroMock.colocarPoblado(jugador1, coordenadaPoblado);
-        //Tiene que tener PV:2
-        tableroMock.mejorarPoblado(jugador1, coordenadaPoblado);
+        tableroSpy.colocarPoblado(jugador1, coordenadaPoblado);  // +1 PV
+        tableroSpy.mejorarPoblado(jugador1, coordenadaPoblado);  // +2 PV
 
-        // TODO: falta logica de agregar PV y descontar recursos al construir (Banca se tendría que ocupar de agregar y eliminar)
+
         // Assert
-        boolean jugadorRecibióPuntajeCorrecto = (jugador1.obtenerPuntaje() - puntosVictoriaIniciales) == 1;
-        boolean jugadorDescontadoDeRecursos = (jugador1.cantidadDeRecursos() == 0); // Se supone que no quedan recursos luego de construir
-        assertTrue(jugadorDescontadoDeRecursos && jugadorRecibióPuntajeCorrecto);
+        boolean puntosCorrectos = jugador1.obtenerPuntaje() - puntosVictoriaIniciales == 3;
+        boolean recursosDescontados = jugador1.cantidadDeRecursos() == 0;
+        assertTrue(puntosCorrectos && recursosDescontados);
     }
+
 
     @Test
     void test04ComercioMaritimoTasaEstadar() { // 4 cartas del mismo recurso por 1 carta de cualquier otro recurso.

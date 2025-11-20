@@ -19,7 +19,9 @@ public class Banca {
     public static int puntajeDe(PiezaTipo piezaTipo) { return 0; }
 
     // TODO
-    public static void otorgarPuntaje(Jugador jugador, int puntaje) {}
+    public static void otorgarPuntaje(Jugador jugador, int puntaje) {
+        jugador.agregarPuntaje(puntaje);
+    }
 
     // TODO
     public static List<Recurso> precioDe(PiezaTipo tipo) { return new ArrayList<>(); }
