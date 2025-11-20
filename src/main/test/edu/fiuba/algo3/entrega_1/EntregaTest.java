@@ -9,7 +9,10 @@ import edu.fiuba.algo3.modelo.tablero.*;
 import edu.fiuba.algo3.modelo.tablero.terreno.*;
 import edu.fiuba.algo3.modelo.*;
 
-
+import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
+import edu.fiuba.algo3.modelo.tablero.terreno.tipo.Bosque;
+import edu.fiuba.algo3.modelo.tablero.terreno.tipo.Campo;
+import edu.fiuba.algo3.modelo.tablero.terreno.tipo.Pastizal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +24,7 @@ public class EntregaTest {
 	
     @BeforeEach
     void setUp() {
-    	tablero = new Tablero();
+    	tablero = new Tablero(1235L);
         tableroMock = mock(Tablero.class);
         dados = new Dados();
         dadosMock = mock(Dados.class);
@@ -70,9 +73,12 @@ public class EntregaTest {
 
     @Test
     void test02ReglaDeDistanciaEntrePobladosIniciales() {
-    	tablero.colocarPoblado(jugador1, new Coordenada(0,0,0));
+        Coordenada coord1 = new Coordenada(0, 0, 0);
+        Coordenada coord2 = new Coordenada(0, 0, 1);
 
-        boolean permitido = tablero.puedeColocarPoblado(jugador1, new Coordenada(0,0,1));
+    	tablero.colocarPoblado(jugador1, coord1);
+
+        boolean permitido = tablero.puedeColocarPoblado(jugador1, coord2);
         assertFalse(permitido, 
         		"No debería poder colocarse un poblado a menos de 2 caminos de otro");
     }
@@ -89,7 +95,7 @@ public class EntregaTest {
         when(h3.getRecurso()).thenReturn(Recurso.LANA);
 
         List<Terreno> adyacentes = List.of(h1, h2, h3);
-        when(tableroMock.getHexagonosAdyacentes(any(Coordenada.class))).thenReturn(adyacentes);
+        when(tableroMock.getTerrenosAdyacentes(any(Coordenada.class))).thenReturn(adyacentes);
         doCallRealMethod()
                 .when(tableroMock)
                 .otorgarRecursosIniciales(any(Jugador.class), any(Coordenada.class));

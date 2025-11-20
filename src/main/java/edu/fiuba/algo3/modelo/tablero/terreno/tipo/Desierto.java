@@ -1,10 +1,12 @@
-package edu.fiuba.algo3.modelo.tablero.terreno;
+package edu.fiuba.algo3.modelo.tablero.terreno.tipo;
 
 import edu.fiuba.algo3.modelo.tablero.Recurso;
+import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
+import edu.fiuba.algo3.modelo.tablero.terreno.TerrenoTipo;
 
-public class Desierto extends Terreno{
+public class Desierto extends Terreno {
 
-    Desierto(){
+    public Desierto(){
         super(0);
     }
     
