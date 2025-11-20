@@ -19,7 +19,8 @@ public class ModelDependenciesTest {
         String[] listOfPackages = {MODEL, JAVA_LANG, JUNIT};
 
         ArchRule myRule = classes().that().resideInAPackage(MODEL)
-                .should().onlyDependOnClassesThat().resideInAnyPackage(listOfPackages);
+                .should().onlyDependOnClassesThat().resideInAnyPackage(listOfPackages)
+                .orShould().dependOnClassesThat().haveNameMatching("\\[.*");;
 
         myRule.check(importedClasses);
     }

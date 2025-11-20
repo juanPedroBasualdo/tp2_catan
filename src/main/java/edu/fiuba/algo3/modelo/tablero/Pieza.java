@@ -4,9 +4,21 @@ import edu.fiuba.algo3.modelo.Jugador;
 
 public class Pieza {
 
-    Pieza(Jugador dueño) {}
+    private Jugador propietario;
+    private PiezaTipo tipo;
+    private int puntaje;
 
-    public static Pieza crearPieza(PiezaTipo tipo, Jugador dueño) {
-        return new Pieza(dueño);
+    Pieza(Jugador propietario) {}
+
+    public Pieza(PiezaTipo tipo) {
+        this.tipo = tipo;
+    }
+
+    public static Pieza crearPieza(PiezaTipo tipo, Jugador propietario) {
+        return new Pieza(tipo);
+    }
+
+    public boolean valido() {
+        return this.tipo != PiezaTipo.INVALIDO;
     }
 }

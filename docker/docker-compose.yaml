@@ -7,8 +7,8 @@ services:
     volumes:
       - ../:/app
       - mvn-data:/root/.m2
-    stdin_open: true
-    tty: true
+    #stdin_open: true
+    #tty: true
 
 volumes:
   mvn-data:
