@@ -91,7 +91,7 @@ public abstract class Terreno {
     }
 
     public void colocarPoblado(Jugador jugador, int indiceVertice) {
-        this.vertices.get(indiceVertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador), jugador);
+        this.vertices.get(indiceVertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador));
     }
 
     public Object tieneCiudadDe(Jugador jugador1) {
