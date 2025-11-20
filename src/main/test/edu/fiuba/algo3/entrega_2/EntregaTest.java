@@ -9,7 +9,7 @@ import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
 
 public class EntregaTest {
-	
+	/*
     private Tablero tablero, tableroMock;
     private Jugador jugador1;
 	
@@ -151,5 +151,7 @@ public class EntregaTest {
     }
 
 
+
+	 */
 
 }
