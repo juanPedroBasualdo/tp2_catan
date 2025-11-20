@@ -80,6 +80,12 @@ public abstract class Terreno {
         }
     }
 
+    public void construirCiudad(Jugador jugador1, int vertice) {
+        vertices[vertice].mejorarPoblado(jugador1);
+    }
+    public boolean validarMejoraDePoblado(Jugador jugador1, int vertice) {
+        return (vertices[vertice].validarDatosMejoraCiudad(jugador1));
+    }
 
     public boolean tienePobladoDe(Jugador jugador1) {
         return false;
@@ -96,5 +102,6 @@ public abstract class Terreno {
     public boolean tieneCiudadDe(Jugador jugador) {
         return false;
     }
+
 }
 

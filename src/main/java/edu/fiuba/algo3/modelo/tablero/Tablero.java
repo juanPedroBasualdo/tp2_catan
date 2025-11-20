@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.tablero;
 
 import java.util.*;
 
+import edu.fiuba.algo3.modelo.Banca;
 import edu.fiuba.algo3.modelo.Jugador;
 import edu.fiuba.algo3.modelo.tablero.terreno.Terreno;
 import edu.fiuba.algo3.modelo.tablero.terreno.TerrenoTipo;
@@ -85,9 +86,26 @@ public class Tablero {
         }
     }
 
+    public void mejorarPoblado(Jugador jugador1, Coordenada coordenadaPoblado) {
+        if(jugador1.tieneRecursos(Banca.precioDe(PiezaTipo.CIUDAD)) && puedeMejorarPoblado(jugador1, coordenadaPoblado)) {
+            terrenos[coordenadaPoblado.getX()][coordenadaPoblado.getY()].construirCiudad(jugador1, coordenadaPoblado.getZ());
+            Banca.extraerRecursos(jugador1, Banca.precioDe(PiezaTipo.CIUDAD));
+            Banca.otorgarPuntaje(jugador1, Banca.puntajeDe(PiezaTipo.CIUDAD));
+        }
+    }
+
+    public boolean puedeMejorarPoblado(Jugador jugador1, Coordenada coordenada) {
+        return terrenos[coordenada.getX()][coordenada.getY()].validarMejoraDePoblado(jugador1, coordenada.getZ());
+    }
+
     public boolean puedeColocarPoblado(Jugador jugador1, Coordenada coordenada) {
         return false;
     }
+
+
+    // TODO para tests mientras decidimos en la forma definitiva de Tablero
+    public boolean esCoordenadaPuerto(Coordenada coordenada) { return false; } ;
+
 
     public List<Terreno> getHexagonosAdyacentes(Coordenada coordenada) {
         return new ArrayList<Terreno>();
@@ -100,4 +118,5 @@ public class Tablero {
             jugador.agregarRecurso(terreno.getRecurso());
         }
     }
+
 }

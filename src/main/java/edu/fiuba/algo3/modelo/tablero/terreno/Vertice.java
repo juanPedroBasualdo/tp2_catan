@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.tablero.terreno;
 
 import edu.fiuba.algo3.modelo.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Pieza;
+import edu.fiuba.algo3.modelo.tablero.PiezaTipo;
 
 public class Vertice {
     private Pieza pieza;  // Puede ser un Poblado o una Ciudad
@@ -19,11 +20,20 @@ public class Vertice {
         this.propietario = jugador;
     }
 
+    public void mejorarPoblado(Jugador jugador) {
+        this.pieza = Pieza.crearPieza(PiezaTipo.CIUDAD, jugador);
+        this.propietario = jugador;
+    }
+
     public Jugador getPropietario() {
         return propietario;
     }
 
     public Pieza getPieza() {
         return pieza;
+    }
+
+    public boolean validarDatosMejoraCiudad(Jugador jugador1) {
+        return pieza.obtenerTipo() == PiezaTipo.POBLADO && pieza.getPropietario() == jugador1;
     }
 }

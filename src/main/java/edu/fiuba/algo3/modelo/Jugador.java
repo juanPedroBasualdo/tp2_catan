@@ -13,9 +13,13 @@ public class Jugador {
     private final List<Recurso> recursos;
     private final Random random = new Random();
 
+    // TODO hacer el puntaje con una clase de Puntaje
+    private final Integer puntaje;
+
     public Jugador(String nombre) {
         this.nombre = nombre;
         this.recursos = new ArrayList<>();
+        this.puntaje = 0;
     }
 
     public String obtenerNombre() {
@@ -67,4 +71,39 @@ public class Jugador {
 
     public List<Recurso> obtenerRecursos() {return recursos;};
 
+    public boolean tieneRecursos(List<Recurso> listaDeRecursos) {
+        List<Recurso> copiaRecursos = new ArrayList<>(this.recursos);
+        for (Recurso r : listaDeRecursos) {
+            if (!copiaRecursos.remove(r)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void eliminarRecursos(List<Recurso> listaDeRecursos) {
+        for (Recurso r : listaDeRecursos) {
+            if (!recursos.remove(r)) {
+                throw new IllegalStateException("Recurso a eliminar de Jugador no existe.");
+            }
+        }
+    }
+
+    public int obtenerPuntaje() {
+        return puntaje;
+    }
+
+    // TODO Generalizar un método para recibír cierta cantidad de recursos de jugador por 1 recurso obtenido
+    // TODO crear Clases de Puerto para usar polimorfismo
+    public void intercambiarConTasaEstandar(Recurso recursoEntrante, Recurso recursoSaliente) {
+        Banca.intercambioDeTasaEstandar(this, recursoEntrante, recursoSaliente);
+    }
+
+    public void intercambiarConPuertoEspecifico(Recurso recursoEntrante, Recurso recursoSaliente) {
+        Banca.intercambioPuertoEspeficico(this, recursoEntrante,recursoSaliente);
+    }
+
+    public void intercambiarConPuertoGenerico(Recurso recursoEntrante, Recurso recursoSaliente) {
+        Banca.intercambioPuertoGenerico(this,recursoEntrante,recursoSaliente);
+    }
 }
