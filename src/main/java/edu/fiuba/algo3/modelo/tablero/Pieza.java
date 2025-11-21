@@ -10,14 +10,18 @@ public class Pieza {
 
     Pieza(Jugador propietario) {}
 
-    public Pieza(PiezaTipo tipo) {
+    public Pieza(PiezaTipo tipo, Jugador jugador) {
         this.tipo = tipo;
+        this.propietario = jugador;
     }
 
     public static Pieza crearPieza(PiezaTipo tipo, Jugador propietario) {
-        return new Pieza(tipo);
+        return new Pieza(tipo, propietario);
     }
 
+    public boolean validarMejoraPoblado(Jugador jugador1) {
+        return tipo == (PiezaTipo.POBLADO) && propietario == (jugador1);
+    }
     public boolean valido() {
         return this.tipo != PiezaTipo.INVALIDO;
     }

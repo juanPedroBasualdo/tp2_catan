@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.modelo.tablero.terreno;
+package edu.fiuba.algo3.modelo.tablero.terreno.parte;
 
 import edu.fiuba.algo3.modelo.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Pieza;
@@ -82,17 +82,17 @@ public abstract class Terreno {
         return getClass().getSimpleName() + " (" + fichaNumero + ")";
     }
 
-    public void colocarPoblado(Jugador jugador, int Vertice) {
-        if(!vertices[Vertice].estaOcupado()) {
-            vertices[Vertice].colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador), jugador);
+    public void colocarPobladoTerreno(Jugador jugador, int Vertice) {
+        if(!vertices.get(Vertice).estaOcupado()) {
+            vertices.get(Vertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador), jugador);
         }
     }
 
     public void construirCiudad(Jugador jugador1, int vertice) {
-        vertices[vertice].mejorarPoblado(jugador1);
+        vertices.get(vertice).mejorarPoblado(jugador1);
     }
     public boolean validarMejoraDePoblado(Jugador jugador1, int vertice) {
-        return (vertices[vertice].validarDatosMejoraCiudad(jugador1));
+        return (vertices.get(vertice).validarDatosMejoraCiudad(jugador1));
     }
 
     public boolean tienePobladoDe(Jugador jugador1) {
@@ -112,10 +112,6 @@ public abstract class Terreno {
     }
 
     public Object tieneCiudadDe(Jugador jugador1) {
-        return false;
-    }
-
-    public Object tienePobladoDe(Jugador jugador1) {
         return false;
     }
 

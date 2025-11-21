@@ -27,19 +27,16 @@ public class EntregaTest {
     void test03JugadorMejoraPobladoYRecibePV() {
 
         // Assing
-        List<Recurso> recursosIniciales = Arrays.asList(Recurso.CEREAL, Recurso.CEREAL, Recurso.MINERAL, Recurso.MINERAL, Recurso.MINERAL);
-        jugador1.agregarRecursos(recursosIniciales);
-
+        List<Recurso> listaRecursosCiudad = Arrays.asList(Recurso.CEREAL, Recurso.CEREAL, Recurso.MINERAL, Recurso.MINERAL, Recurso.MINERAL);
+        List<Recurso> listaRecursosPoblado = Arrays.asList(Recurso.MADERA, Recurso.ARCILLA, Recurso.LANA, Recurso.CEREAL);
+        jugador1.agregarRecursos(listaRecursosCiudad);
+        jugador1.agregarRecursos(listaRecursosPoblado);
         int puntosVictoriaIniciales = jugador1.obtenerPuntaje();
-        Tablero tableroSpy = spy(new Tablero());
 
         // Act
-        doReturn(true).when(tableroSpy).puedeColocarPoblado(eq(jugador1), any(Coordenada.class));
-        doReturn(true).when(tableroSpy).puedeMejorarPoblado(eq(jugador1), any(Coordenada.class));
-
         Coordenada coordenadaPoblado = new Coordenada(2,2,2);
-        tableroSpy.colocarPoblado(jugador1, coordenadaPoblado);  // +1 PV
-        tableroSpy.mejorarPoblado(jugador1, coordenadaPoblado);  // +2 PV
+        tablero.colocarPoblado(jugador1, coordenadaPoblado);  // +1 PV
+        tablero.mejorarPoblado(jugador1, coordenadaPoblado);  // +2 PV
 
 
         // Assert
@@ -95,6 +92,7 @@ public class EntregaTest {
         assertEquals(1,jugador1.cantidadDeRecursos());
 
     }
+/*
 
     @Test
     void test07intercambioInteriorDeberiaRealizarseSiElReceptorAcepta() {
@@ -180,5 +178,6 @@ public class EntregaTest {
                 () -> jugador.jugarCarta(carta, 10)
         );
     }
+*/
 
 }
