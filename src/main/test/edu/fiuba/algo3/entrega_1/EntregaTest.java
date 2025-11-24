@@ -5,11 +5,15 @@ import static org.mockito.Mockito.*;
 
 import java.lang.reflect.Field;
 import java.util.*;
+
+import edu.fiuba.algo3.modelo.jugador.Jugador;
+import edu.fiuba.algo3.modelo.randomizados.Dados;
 import edu.fiuba.algo3.modelo.tablero.*;
+import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 import edu.fiuba.algo3.modelo.tablero.terreno.*;
-import edu.fiuba.algo3.modelo.*;
 
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Ladron;
 import edu.fiuba.algo3.modelo.tablero.terreno.tipo.Bosque;
 import edu.fiuba.algo3.modelo.tablero.terreno.tipo.Campo;
 import edu.fiuba.algo3.modelo.tablero.terreno.tipo.Pastizal;

@@ -2,8 +2,9 @@ package edu.fiuba.algo3.modelo.tablero;
 
 import java.util.*;
 
-import edu.fiuba.algo3.modelo.Banca;
-import edu.fiuba.algo3.modelo.Jugador;
+import edu.fiuba.algo3.modelo.banca.Banca;
+import edu.fiuba.algo3.modelo.jugador.Jugador;
+import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Arista;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
 import edu.fiuba.algo3.modelo.tablero.terreno.TerrenoTipo;

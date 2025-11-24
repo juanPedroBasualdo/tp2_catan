@@ -1,9 +1,9 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.jugador;
 
+import edu.fiuba.algo3.modelo.banca.Banca;
 import edu.fiuba.algo3.modelo.tablero.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 

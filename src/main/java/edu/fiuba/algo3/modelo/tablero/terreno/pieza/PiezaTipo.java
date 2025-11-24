@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.modelo.tablero;
+package edu.fiuba.algo3.modelo.tablero.terreno.pieza;
 
 public enum PiezaTipo {
     INVALIDO,

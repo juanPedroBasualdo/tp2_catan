@@ -1,8 +1,8 @@
 package edu.fiuba.algo3.modelo.tablero.terreno.parte;
 
-import edu.fiuba.algo3.modelo.Jugador;
-import edu.fiuba.algo3.modelo.tablero.Pieza;
-import edu.fiuba.algo3.modelo.tablero.PiezaTipo;
+import edu.fiuba.algo3.modelo.jugador.Jugador;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Pieza;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.PiezaTipo;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.modelo.tablero.terreno.TerrenoTipo;
 import edu.fiuba.algo3.modelo.tablero.terreno.tipo.*;
@@ -84,7 +84,7 @@ public abstract class Terreno {
 
     public void colocarPobladoTerreno(Jugador jugador, int Vertice) {
         if(!vertices.get(Vertice).estaOcupado()) {
-            vertices.get(Vertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador), jugador);
+            vertices.get(Vertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador));
         }
     }
 
@@ -108,7 +108,7 @@ public abstract class Terreno {
     }
 
     public void colocarPoblado(Jugador jugador, int indiceVertice) {
-        this.vertices.get(indiceVertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador), jugador);
+        this.vertices.get(indiceVertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador));
     }
 
     public Object tieneCiudadDe(Jugador jugador1) {

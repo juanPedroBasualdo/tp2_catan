@@ -1,6 +1,6 @@
-package edu.fiuba.algo3.modelo.tablero;
+package edu.fiuba.algo3.modelo.tablero.terreno.pieza;
 
-import edu.fiuba.algo3.modelo.Jugador;
+import edu.fiuba.algo3.modelo.jugador.Jugador;
 
 public class Pieza {
 
@@ -8,7 +8,9 @@ public class Pieza {
     private PiezaTipo tipo;
     private int puntaje;
 
-    Pieza(Jugador propietario) {}
+    public Pieza(PiezaTipo tipo) {
+        this(tipo, null);
+    }
 
     public Pieza(PiezaTipo tipo, Jugador jugador) {
         this.tipo = tipo;
