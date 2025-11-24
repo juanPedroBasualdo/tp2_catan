@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.modelo.tablero;
+package edu.fiuba.algo3.modelo.tablero.coordenada;
 
 import java.util.ArrayList;
 import java.util.List;

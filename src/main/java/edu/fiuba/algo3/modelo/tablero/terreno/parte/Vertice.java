@@ -1,8 +1,8 @@
 package edu.fiuba.algo3.modelo.tablero.terreno.parte;
 
-import edu.fiuba.algo3.modelo.Jugador;
-import edu.fiuba.algo3.modelo.tablero.Pieza;
-import edu.fiuba.algo3.modelo.tablero.PiezaTipo;
+import edu.fiuba.algo3.modelo.jugador.Jugador;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Pieza;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.PiezaTipo;
 
 import java.util.ArrayList;
 import java.util.List;

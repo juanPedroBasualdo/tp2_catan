@@ -1,6 +1,6 @@
-package edu.fiuba.algo3.modelo.tablero;
+package edu.fiuba.algo3.modelo.tablero.terreno.pieza;
 
-import edu.fiuba.algo3.modelo.Jugador;
+import edu.fiuba.algo3.modelo.jugador.Jugador;
 
 public class Pieza {
 
