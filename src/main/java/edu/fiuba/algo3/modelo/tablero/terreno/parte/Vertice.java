@@ -15,7 +15,6 @@ public class Vertice {
     public Vertice(int indice) {
         this.indice = indice;
         adyacentes = new ArrayList<>();
-        this.propietario = new Jugador("Invalido");
     }
 
     protected boolean esValido() {
@@ -56,7 +55,7 @@ public class Vertice {
 
     private void invalidarAdyacentes() {
         for(Vertice ady : adyacentes) {
-            ady.asignarPieza(new Pieza(PiezaTipo.INVALIDO, this.propietario));
+            ady.asignarPieza(new Pieza(PiezaTipo.INVALIDO));
         }
     }
 
@@ -69,7 +68,6 @@ public class Vertice {
            // TODO Hacer la excepcion para cuando no es valido
         }
         this.pieza = Pieza.crearPieza(PiezaTipo.CIUDAD, jugador1);
-        this.propietario = jugador1; // Irrelevante ?
         this.invalidarAdyacentes();
     }
 }
