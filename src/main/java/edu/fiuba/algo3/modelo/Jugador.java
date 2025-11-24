@@ -3,6 +3,7 @@ package edu.fiuba.algo3.modelo;
 import edu.fiuba.algo3.modelo.tablero.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -11,12 +12,14 @@ public class Jugador {
     private final String nombre;
     private final List<Recurso> recursos;
     private final Random random = new Random();
-    private final Integer puntosVictoria;
+
+    // TODO hacer el puntaje con una clase de Puntaje
+    private Integer puntaje;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
         this.recursos = new ArrayList<>();
-        this.puntosVictoria = 0;
+        this.puntaje = 0;
     }
 
     public String obtenerNombre() {
@@ -66,8 +69,45 @@ public class Jugador {
         return recursos.remove(index);
     }
 
-    public List<Recurso> obtenerRecursos() { return recursos; };
+    public List<Recurso> obtenerRecursos() {return recursos;};
 
-    public int obtenerPuntaje() { return puntosVictoria; };
+    public boolean tieneRecursos(List<Recurso> listaDeRecursos) {
+        List<Recurso> copiaRecursos = new ArrayList<>(this.recursos);
+        for (Recurso r : listaDeRecursos) {
+            if (!copiaRecursos.remove(r)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    public void eliminarRecursos(List<Recurso> listaDeRecursos) {
+        for (Recurso r : listaDeRecursos) {
+            if (!recursos.remove(r)) {
+                throw new IllegalStateException("Recurso a eliminar de Jugador no existe.");
+            }
+        }
+    }
+
+    public int obtenerPuntaje() {
+        return puntaje;
+    }
+
+    // TODO Generalizar un método para recibír cierta cantidad de recursos de jugador por 1 recurso obtenido
+    // TODO crear Clases de Puerto para usar polimorfismo
+    public void intercambiarConTasaEstandar(Recurso recursoEntrante, Recurso recursoSaliente) {
+        Banca.intercambioDeTasaEstandar(this, recursoEntrante, recursoSaliente);
+    }
+
+    public void intercambiarConPuertoEspecifico(Recurso recursoEntrante, Recurso recursoSaliente) {
+        Banca.intercambioPuertoEspeficico(this, recursoEntrante,recursoSaliente);
+    }
+
+    public void intercambiarConPuertoGenerico(Recurso recursoEntrante, Recurso recursoSaliente) {
+        Banca.intercambioPuertoGenerico(this,recursoEntrante,recursoSaliente);
+    }
+
+    public void agregarPuntaje(int puntaje) {
+        this.puntaje += puntaje;
+    }
 }

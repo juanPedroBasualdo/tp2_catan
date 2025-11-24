@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.tablero;
 
 import java.util.*;
 
+import edu.fiuba.algo3.modelo.Banca;
 import edu.fiuba.algo3.modelo.Jugador;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Arista;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
@@ -175,14 +176,36 @@ public class Tablero {
         return produccion.stream().map(Terreno::getRecurso).collect(java.util.stream.Collectors.groupingBy(t -> t, java.util.stream.Collectors.counting()));
     }
 
+    // TODO ver si es apropiado usar banca en Tablero
+
+    public void mejorarPoblado(Jugador jugador, Coordenada coordenadaPoblado) {
+        if (this.puedeMejorarPoblado(jugador,coordenadaPoblado)) {
+
+            terrenos[coordenadaPoblado.x()][coordenadaPoblado.y()].construirCiudad(jugador, coordenadaPoblado.vertex());
+
+            List<Recurso> listaRecursosCiudad = Arrays.asList(Recurso.CEREAL, Recurso.CEREAL, Recurso.MINERAL, Recurso.MINERAL, Recurso.MINERAL);
+            Banca.extraerRecursos(jugador,listaRecursosCiudad);
+            Banca.otorgarPuntaje(jugador, 2);
+        }
+    }
+
     public void colocarPoblado(Jugador jugador, Coordenada coordenada) {
         if(this.puedeColocarPoblado(jugador, coordenada)) {
             terrenos[coordenada.x()][coordenada.y()].colocarPoblado(jugador, coordenada.vertex());
+
+            List<Recurso> listaRecursosPoblado = Arrays.asList(Recurso.MADERA, Recurso.ARCILLA, Recurso.LANA, Recurso.CEREAL);
+            Banca.extraerRecursos(jugador, listaRecursosPoblado);
+            Banca.otorgarPuntaje(jugador,1);
         }
+
     }
 
     public boolean puedeColocarPoblado(Jugador jugador1, Coordenada coordenada) {
         return this.terrenos[coordenada.x()][coordenada.y()].puedeColocarPoblado(coordenada.vertex());
+    }
+
+    public boolean puedeMejorarPoblado(Jugador jugador1, Coordenada coordenada) {
+        return this.terrenos[coordenada.x()][coordenada.y()].validarMejoraDePoblado(jugador1,coordenada.vertex());
     }
 
     public List<Terreno> getTerrenosAdyacentes(Coordenada coordenada) {
@@ -209,4 +232,5 @@ public class Tablero {
             jugador.agregarRecurso(terreno.getRecurso());
         }
     }
+
 }

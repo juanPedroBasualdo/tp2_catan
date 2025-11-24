@@ -82,6 +82,23 @@ public abstract class Terreno {
         return getClass().getSimpleName() + " (" + fichaNumero + ")";
     }
 
+    public void colocarPobladoTerreno(Jugador jugador, int Vertice) {
+        if(!vertices.get(Vertice).estaOcupado()) {
+            vertices.get(Vertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador), jugador);
+        }
+    }
+
+    public void construirCiudad(Jugador jugador1, int vertice) {
+        vertices.get(vertice).mejorarPoblado(jugador1);
+    }
+    public boolean validarMejoraDePoblado(Jugador jugador1, int vertice) {
+        return (vertices.get(vertice).validarDatosMejoraCiudad(jugador1));
+    }
+
+    public boolean tienePobladoDe(Jugador jugador1) {
+        return false;
+    }
+
     public boolean tieneLadron() {
         return false;
     }
@@ -98,10 +115,6 @@ public abstract class Terreno {
         return false;
     }
 
-    public Object tienePobladoDe(Jugador jugador1) {
-        return false;
-    }
-
     public Vertice verticeEn(int vertex) {
         return this.vertices.get(vertex);
     }
@@ -109,5 +122,6 @@ public abstract class Terreno {
     public boolean contieneVertice(Vertice vertice) {
         return this.vertices.contains(vertice);
     }
+
 }
 
