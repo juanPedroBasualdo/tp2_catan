@@ -8,11 +8,9 @@ public class Pieza {
     private PiezaTipo tipo;
     private int puntaje;
 
-    public Pieza(PiezaTipo tipo){
+    public Pieza(PiezaTipo tipo) {
         this(tipo, null);
     }
-
-    public Pieza(Jugador propietario) {}
 
     public Pieza(PiezaTipo tipo, Jugador jugador) {
         this.tipo = tipo;
