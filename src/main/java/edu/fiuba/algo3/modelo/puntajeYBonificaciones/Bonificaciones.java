@@ -24,7 +24,7 @@ public class Bonificaciones {
     /* Llamamos a actualizarBonificaciones cuando un jugador construye un camino, juega una carta de caballero, o cuando construye
     un poblado pues puede bloquear la mayor ruta comercial de otro jugador. */
     public void actualizarBonificaciones() {
-        actualizarMayorRutaComerial();
-        actualizarMayorEjercito();
+        //actualizarMayorRutaComerial();
+        //actualizarMayorEjercito();
     }
 }
