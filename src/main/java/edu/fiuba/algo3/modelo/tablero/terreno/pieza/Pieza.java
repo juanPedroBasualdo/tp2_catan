@@ -27,4 +27,7 @@ public class Pieza {
     public boolean valido() {
         return this.tipo != PiezaTipo.INVALIDO;
     }
+
+    public Jugador getPropietario() { return propietario; }
+    public int getPuntaje() { return puntaje; }
 }

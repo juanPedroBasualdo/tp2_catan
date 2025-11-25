@@ -70,4 +70,6 @@ public class Vertice {
         this.pieza = Pieza.crearPieza(PiezaTipo.CIUDAD, jugador1);
         this.invalidarAdyacentes();
     }
+
+    public Pieza obtenerPieza() { return pieza ;}
 }
