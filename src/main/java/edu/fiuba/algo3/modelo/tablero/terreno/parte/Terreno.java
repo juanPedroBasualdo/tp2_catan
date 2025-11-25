@@ -1,8 +1,8 @@
 package edu.fiuba.algo3.modelo.tablero.terreno.parte;
 
-import edu.fiuba.algo3.modelo.Jugador;
-import edu.fiuba.algo3.modelo.tablero.Pieza;
-import edu.fiuba.algo3.modelo.tablero.PiezaTipo;
+import edu.fiuba.algo3.modelo.jugador.Jugador;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Pieza;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.PiezaTipo;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.modelo.tablero.terreno.TerrenoTipo;
 import edu.fiuba.algo3.modelo.tablero.terreno.tipo.*;
@@ -82,6 +82,23 @@ public abstract class Terreno {
         return getClass().getSimpleName() + " (" + fichaNumero + ")";
     }
 
+    public void colocarPobladoTerreno(Jugador jugador, int Vertice) {
+        if(!vertices.get(Vertice).estaOcupado()) {
+            vertices.get(Vertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador));
+        }
+    }
+
+    public void construirCiudad(Jugador jugador1, int vertice) {
+        vertices.get(vertice).mejorarPoblado(jugador1);
+    }
+    public boolean validarMejoraDePoblado(Jugador jugador1, int vertice) {
+        return (vertices.get(vertice).validarDatosMejoraCiudad(jugador1));
+    }
+
+    public boolean tienePobladoDe(Jugador jugador1) {
+        return false;
+    }
+
     public boolean tieneLadron() {
         return false;
     }
@@ -91,14 +108,10 @@ public abstract class Terreno {
     }
 
     public void colocarPoblado(Jugador jugador, int indiceVertice) {
-        this.vertices.get(indiceVertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador), jugador);
+        this.vertices.get(indiceVertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador));
     }
 
     public Object tieneCiudadDe(Jugador jugador1) {
-        return false;
-    }
-
-    public Object tienePobladoDe(Jugador jugador1) {
         return false;
     }
 
@@ -109,5 +122,6 @@ public abstract class Terreno {
     public boolean contieneVertice(Vertice vertice) {
         return this.vertices.contains(vertice);
     }
+
 }
 

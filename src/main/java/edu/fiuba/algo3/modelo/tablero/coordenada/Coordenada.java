@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.modelo.tablero;
+package edu.fiuba.algo3.modelo.tablero.coordenada;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class Coordenada {
                 new Coordenada(-1,-1),
         };
         List<Coordenada> direcciones = new ArrayList<>(List.of(direccionesCoordenadas));
-        direcciones.removeIf(c -> !this.verificarInBounds(c));
+        direcciones.removeIf(c -> !this.verificarDentroDeRango(c));
         return direcciones;
     }
 
@@ -36,7 +36,7 @@ public class Coordenada {
     }
 
 
-    public boolean verificarInBounds(Coordenada direccion) {
+    public boolean verificarDentroDeRango(Coordenada direccion) {
         if(this.x + direccion.x() == 5) {
             return false;
         }

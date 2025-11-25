@@ -1,15 +1,20 @@
 package edu.fiuba.algo3.entrega_2;
 
-import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-import edu.fiuba.algo3.modelo.Banca;
-import edu.fiuba.algo3.modelo.Jugador;
-import edu.fiuba.algo3.modelo.tablero.Coordenada;
-import edu.fiuba.algo3.modelo.tablero.Recurso;
-import edu.fiuba.algo3.modelo.tablero.Tablero;
+import java.util.*;
+
+import edu.fiuba.algo3.modelo.jugador.Jugador;
+import edu.fiuba.algo3.modelo.tablero.*;
+
+
+import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class EntregaTest {
-	/*
+	
     private Tablero tablero, tableroMock;
     private Jugador jugador1;
 	
@@ -21,49 +26,75 @@ public class EntregaTest {
     }
 
     @Test
-    void test03JugadorMejoraPobladoYRecivePV() {
+    void test03JugadorMejoraPobladoYRecibePV() {
 
-        // Assign: El Jugador ya fue creado en el setUp()
-
-            // Supone que no cambiaremos el costo de mejorar una ciudad (3 Minerales y 1 Cereal/Trigo)
-        List<Recurso> recursosIniciales = Arrays.asList(Recurso.CEREAL, Recurso.CEREAL, Recurso.MINERAL, Recurso.MINERAL, Recurso.MINERAL);
-        jugador1.agregarRecursos(recursosIniciales);
+        // Assing
+        List<Recurso> listaRecursosCiudad = Arrays.asList(Recurso.CEREAL, Recurso.CEREAL, Recurso.MINERAL, Recurso.MINERAL, Recurso.MINERAL);
+        List<Recurso> listaRecursosPoblado = Arrays.asList(Recurso.MADERA, Recurso.ARCILLA, Recurso.LANA, Recurso.CEREAL);
+        jugador1.agregarRecursos(listaRecursosCiudad);
+        jugador1.agregarRecursos(listaRecursosPoblado);
         int puntosVictoriaIniciales = jugador1.obtenerPuntaje();
 
-        // Act:
-        when(tableroMock.puedeColocarPoblado(jugador1,any(Coordenada.class))).thenReturn(true);
+        // Act
         Coordenada coordenadaPoblado = new Coordenada(2,2,2);
-        tableroMock.colocarPoblado(jugador1, coordenadaPoblado);
-        tableroMock.mejorarPoblado(jugador1, coordenadaPoblado);
-        // TODO: ver como quitar Recursos del Jugador desde Tablero (En teoría debería funcionar para construirPueblo,
-        //  charlar sobre donde almacenar precios del juego 19/11 )
+        tablero.colocarPoblado(jugador1, coordenadaPoblado);  // +1 PV
+        tablero.mejorarPoblado(jugador1, coordenadaPoblado);  // +2 PV
+
 
         // Assert
-        boolean jugadorRecibioPuntajeCorrecto = (jugador1.obtenerPuntaje() - puntosVictoriaIniciales) == 1; // Paso un cambio de 1PV
-        boolean jugadorDescontadoDeRecursos = (jugador1.cantidadDeRecursos() == 0); // Se supone que no quedan recursos luego de construir
-        assertTrue(jugadorDescontadoDeRecursos && jugadorRecibioPuntajeCorrecto);
+        boolean puntosCorrectos = jugador1.obtenerPuntaje() - puntosVictoriaIniciales == 3;
+        boolean recursosDescontados = jugador1.cantidadDeRecursos() == 0;
+        assertTrue(puntosCorrectos && recursosDescontados);
     }
 
-    @Test
-    void test06ComercioMaritimoTasaEstadar() { // 4 cartas del mismo recurso por 1 carta de cualquier otro recurso.
 
-        //
+    @Test
+    void test04ComercioMaritimoTasaEstadar() { // 4 cartas del mismo recurso por 1 carta de cualquier otro recurso.
+
+        // Assign
+        List<Recurso> recursosIniciales = Arrays.asList(Recurso.MINERAL, Recurso.MINERAL, Recurso.MINERAL, Recurso.MINERAL);
+        jugador1.agregarRecursos(recursosIniciales);
+
+        // Act
+        jugador1.intercambiarConTasaEstandar(Recurso.MINERAL, Recurso.ARCILLA);
+
+        // Assign
+        // Se supone que intercambiamos 3 MINERALES por 1 ARCILLA
+        assertEquals(1, jugador1.cantidadDeRecursos());
 
     }
 
     @Test
     void test05ComercioMaritimoPuertoEspecifico() { // 2 cartas del recurso indicado en un puerto por 1 carta de cualquier otro recurso.
 
+        // Assign
+        List<Recurso> recursosIniciales = Arrays.asList(Recurso.MINERAL, Recurso.MINERAL);
+        jugador1.agregarRecursos(recursosIniciales);
 
-        //
+        // Act
+        jugador1.intercambiarConPuertoEspecifico(Recurso.MINERAL, Recurso.ARCILLA);
+
+        // Assign
+        // se supone que intercambiamos 2 MINERALES por 1 ARCILLA
+        assertEquals(1, jugador1.cantidadDeRecursos());
 
     }
     @Test
     void test06ComercioMaritimoPuertoGenerico() { // 3 cartas de cualquier recurso por 1 carta de cualquier otro recurso
 
-        //
+        // Assign
+        List<Recurso> recursosIniciales = Arrays.asList(Recurso.MINERAL, Recurso.MINERAL, Recurso.MINERAL);
+        jugador1.agregarRecursos(recursosIniciales);
+
+        // Act
+        jugador1.intercambiarConPuertoGenerico(Recurso.MINERAL, Recurso.ARCILLA);
+
+        // Assert
+        // se supone que intercambiamos 3 MINERALES por 1 ARCILLA
+        assertEquals(1,jugador1.cantidadDeRecursos());
 
     }
+/*
 
     @Test
     void test07intercambioInteriorDeberiaRealizarseSiElReceptorAcepta() {
@@ -149,9 +180,6 @@ public class EntregaTest {
                 () -> jugador.jugarCarta(carta, 10)
         );
     }
-
-
-
-	 */
+*/
 
 }
