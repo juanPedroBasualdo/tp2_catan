@@ -22,7 +22,7 @@ public class Puntaje {
                     puntajeJugador += pieza.getPuntaje();
                 }
         }
-        puntajeJugador += jugador.puntajeCartasPV;  // Supongo que cada jugador sabe las cartas PV que tiene y puede hacer el calculo.
-        puntajeJugador += bonificaciones.puntajeDe(jugador);
+        //puntajeJugador += jugador.puntajeCartasPV;  // Supongo que cada jugador sabe las cartas PV que tiene y puede hacer el calculo.
+        return puntajeJugador += bonificaciones.puntajeDe(jugador);
     }
 }
