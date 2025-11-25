@@ -234,4 +234,7 @@ public class Tablero {
         }
     }
 
+    public List<Vertice> getVertices() {
+        return Collections.unmodifiableList(vertices);
+    }
 }
