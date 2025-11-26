@@ -1,15 +1,15 @@
 package edu.fiuba.algo3.entrega_3;
 
-import edu.fiuba.algo3.modelo.juego.turno.Turno;
+import edu.fiuba.algo3.modelo.juego.turno.Turnos;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TurnoTest {
+public class TurnosTest {
 
-    Turno turnero;
+    Turnos turnero;
     List<Jugador> listaJugadores;
 
     @BeforeEach
@@ -18,7 +18,7 @@ public class TurnoTest {
         for(int i = 1 ; i <= 4 ; i++){
             listaJugadores.add(new Jugador("jugador" + i));
         }
-        turnero = new Turno(listaJugadores);
+        turnero = new Turnos(listaJugadores);
     }
 
     @Test

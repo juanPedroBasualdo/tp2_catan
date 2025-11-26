@@ -6,13 +6,13 @@ import java.util.Collection;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class Turno {
+public class Turnos {
+
     private final Queue<Jugador> turnero;
     private Jugador jugadorActual;
     private int numeroDeTurno;
 
-
-    public Turno(Collection<Jugador> listaJugadores) {
+    public Turnos(Collection<Jugador> listaJugadores) {
         turnero = new ConcurrentLinkedQueue<>();
         turnero.addAll(listaJugadores);
         this.jugadorActual = turnero.peek();
@@ -36,6 +36,10 @@ public class Turno {
 
     public int numeroDeTurno() {
         return this.numeroDeTurno;
+    }
+
+    public int verificarPuntajeJugador() {
+        return jugadorActual.obtenerPuntaje();
     }
 
 }
