@@ -14,13 +14,11 @@ public class Vertice {
 
     public Vertice(int indice) {
         this.indice = indice;
+        this.pieza = new Pieza(PiezaTipo.VACIO);
         adyacentes = new ArrayList<>();
     }
 
     protected boolean esValido() {
-        if(pieza == null) {
-            return true;
-        }
         return this.pieza.valido();
     }
 
@@ -29,7 +27,7 @@ public class Vertice {
     }
 
     public boolean estaOcupado() {
-        return pieza != null;
+        return !pieza.estaVacio();
     }
 
     public void asignarAdyacente(Vertice vertice) {
@@ -46,7 +44,6 @@ public class Vertice {
         this.pieza = pieza;
         this.invalidarAdyacentes();
     }
-
 
 
     private void asignarPieza(Pieza pieza) {
@@ -67,9 +64,14 @@ public class Vertice {
         if (!validarDatosMejoraCiudad(jugador1)) {
            // TODO Hacer la excepcion para cuando no es valido
         }
-        this.pieza = Pieza.crearPieza(PiezaTipo.CIUDAD, jugador1);
+        this.pieza = new Pieza(PiezaTipo.CIUDAD, jugador1);
         this.invalidarAdyacentes();
     }
 
     public Pieza obtenerPieza() { return pieza ;}
+
+    public boolean tienePropietario(Jugador jugador) {
+        return pieza.tienePropietario(jugador);
+    }
+
 }

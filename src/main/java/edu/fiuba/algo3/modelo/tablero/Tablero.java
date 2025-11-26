@@ -5,6 +5,8 @@ import java.util.*;
 import edu.fiuba.algo3.modelo.banca.Banca;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
+import edu.fiuba.algo3.modelo.tablero.puerto.PuertoEspecifico2_1;
+import edu.fiuba.algo3.modelo.tablero.puerto.PuertoGenerico3_1;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Arista;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
 import edu.fiuba.algo3.modelo.tablero.terreno.TerrenoTipo;
@@ -15,6 +17,8 @@ public class Tablero {
     private final List<Vertice> vertices = new ArrayList<>();
     private final Map<String, Arista> aristas = new HashMap<>();
 
+    private PuertoEspecifico2_1 puertos2_1;
+    private PuertoGenerico3_1 puertos3_1;
 
     public Tablero() {
         this(new Random());
@@ -29,6 +33,12 @@ public class Tablero {
         this.generarTerrenos(random);
         this.asignarVertices();
         this.asignarAristas();
+        this.generarPuertos();
+    }
+
+    private void generarPuertos() {
+        this.puertos2_1 = new PuertoEspecifico2_1();
+        this.puertos3_1 = new PuertoGenerico3_1();
     }
 
     private void generarTerrenos(Random random) {
@@ -237,4 +247,46 @@ public class Tablero {
     public List<Vertice> getVertices() {
         return Collections.unmodifiableList(vertices);
     }
+
+    private Vertice getVertice(Coordenada coordenada) { return this.getTerreno(coordenada).verticeEn(coordenada.vertex()); };
+
+    public boolean jugadorTienePiezaEn(Jugador jugador, Coordenada coordenada){
+        return this.getVertice(coordenada).tienePropietario(jugador);
+    }
+
+    // TODO falta cambiar obtenerCoordenadaPuertoDe para que no rompa encapsulamiento.
+
+    public void intercambiarConPuertoEspecifico(Recurso recursoACambiar, Jugador jugador, Recurso recursoARecibir) {
+        List<Coordenada> puertoCoordenadas = puertos2_1.obtenerCoordenadaPuertoDe(recursoACambiar);
+        boolean puedeComerciar = false;
+
+        for(Coordenada c : puertoCoordenadas) {
+            if(jugadorTienePiezaEn(jugador, c)){
+                puedeComerciar = true;
+            }
+        }
+
+        if(puedeComerciar){
+            puertos2_1.intercambiar(jugador,recursoACambiar,recursoARecibir);
+        }
+    }
+
+    public void intercambiarConPuertoGenerico(Recurso recursoACambiar, Jugador jugador, Recurso recursoARecibir) {
+
+        List<Coordenada> puertoCoordenadas = puertos3_1.obtenerCoordenadaPuertoDe();
+        boolean puedeComerciar = false;
+
+        for(Coordenada c : puertoCoordenadas) {
+            if(jugadorTienePiezaEn(jugador, c)){
+                puedeComerciar = true;
+            }
+        }
+
+        if(puedeComerciar){
+            puertos3_1.intercambiar(jugador,recursoACambiar,recursoARecibir);
+        }
+    }
+
+
+
 }

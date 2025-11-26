@@ -99,14 +99,6 @@ public class Jugador {
         Banca.intercambioDeTasaEstandar(this, recursoEntrante, recursoSaliente);
     }
 
-    public void intercambiarConPuertoEspecifico(Recurso recursoEntrante, Recurso recursoSaliente) {
-        Banca.intercambioPuertoEspeficico(this, recursoEntrante,recursoSaliente);
-    }
-
-    public void intercambiarConPuertoGenerico(Recurso recursoEntrante, Recurso recursoSaliente) {
-        Banca.intercambioPuertoGenerico(this,recursoEntrante,recursoSaliente);
-    }
-
     public void agregarPuntaje(int puntaje) {
         this.puntaje += puntaje;
     }
