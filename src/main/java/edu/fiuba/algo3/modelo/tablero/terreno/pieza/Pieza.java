@@ -17,10 +17,6 @@ public class Pieza {
         this.propietario = jugador;
     }
 
-    public static Pieza crearPieza(PiezaTipo tipo, Jugador propietario) {
-        return new Pieza(tipo, propietario);
-    }
-
     public boolean validarMejoraPoblado(Jugador jugador1) {
         return tipo == (PiezaTipo.POBLADO) && propietario == (jugador1);
     }
@@ -30,4 +26,12 @@ public class Pieza {
 
     public Jugador getPropietario() { return propietario; }
     public int getPuntaje() { return puntaje; }
+
+    public boolean tienePropietario(Jugador jugador) {
+        return jugador == propietario;
+    }
+
+    public boolean estaVacio() {
+        return this.tipo == PiezaTipo.VACIO;
+    }
 }

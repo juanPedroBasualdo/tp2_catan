@@ -84,7 +84,7 @@ public abstract class Terreno {
 
     public void colocarPobladoTerreno(Jugador jugador, int Vertice) {
         if(!vertices.get(Vertice).estaOcupado()) {
-            vertices.get(Vertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador));
+            vertices.get(Vertice).colocarPieza(new Pieza(PiezaTipo.POBLADO, jugador));
         }
     }
 
@@ -108,7 +108,7 @@ public abstract class Terreno {
     }
 
     public void colocarPoblado(Jugador jugador, int indiceVertice) {
-        this.vertices.get(indiceVertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador));
+        this.vertices.get(indiceVertice).colocarPieza(new Pieza(PiezaTipo.POBLADO, jugador));
     }
 
     public Object tieneCiudadDe(Jugador jugador1) {

@@ -10,6 +10,7 @@ import edu.fiuba.algo3.modelo.tablero.*;
 
 
 import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -69,10 +70,11 @@ public class EntregaTest {
 
         // Assign
         List<Recurso> recursosIniciales = Arrays.asList(Recurso.MINERAL, Recurso.MINERAL);
+        tablero.colocarPoblado(jugador1, new Coordenada(1, 3, 0));
         jugador1.agregarRecursos(recursosIniciales);
 
         // Act
-        jugador1.intercambiarConPuertoEspecifico(Recurso.MINERAL, Recurso.ARCILLA);
+        tablero.intercambiarConPuertoEspecifico(Recurso.MINERAL, jugador1, Recurso.ARCILLA);
 
         // Assign
         // se supone que intercambiamos 2 MINERALES por 1 ARCILLA
@@ -84,13 +86,15 @@ public class EntregaTest {
 
         // Assign
         List<Recurso> recursosIniciales = Arrays.asList(Recurso.MINERAL, Recurso.MINERAL, Recurso.MINERAL);
+        tablero.colocarPoblado(jugador1, new Coordenada(0, 0, 0));
         jugador1.agregarRecursos(recursosIniciales);
 
         // Act
-        jugador1.intercambiarConPuertoGenerico(Recurso.MINERAL, Recurso.ARCILLA);
+        tablero.intercambiarConPuertoGenerico(Recurso.MINERAL, jugador1, Recurso.ARCILLA);
 
         // Assert
         // se supone que intercambiamos 3 MINERALES por 1 ARCILLA
+
         assertEquals(1,jugador1.cantidadDeRecursos());
 
     }
