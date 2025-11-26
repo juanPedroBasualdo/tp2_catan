@@ -36,10 +36,7 @@ public class Tablero {
         this.generarPuertos();
     }
 
-    private void generarPuertos() {
-        this.puertos2_1 = new PuertoEspecifico2_1();
-        this.puertos3_1 = new PuertoGenerico3_1();
-    }
+    /* SECTION Creacion de Tablero */
 
     private void generarTerrenos(Random random) {
         List<TerrenoTipo> terrenosTipos = new ArrayList<>(List.of(
@@ -177,6 +174,72 @@ public class Tablero {
         return aristasDeTerreno;
     }
 
+    private static final List<Coordenada> coordenadasPuertosGenericos = Arrays.asList(
+            new Coordenada(0,0,0),
+            new Coordenada(0,0,5),
+
+            new Coordenada(2,4,1),
+            new Coordenada(2,4,2),
+
+            new Coordenada(4,0,3),
+            new Coordenada(4,0,4),
+
+            new Coordenada(4,1,2),
+            new Coordenada(4,1,3)
+    );
+
+    private List<Vertice> generarVerticesPuertosGenericos() {
+        List<Vertice> verticesPuertosGenericos = new ArrayList<>();
+        for(Coordenada c : coordenadasPuertosGenericos) {
+            verticesPuertosGenericos.add(this.getVertice(c));
+        }
+        return verticesPuertosGenericos;
+    }
+
+    private static final List<Coordenada> coordenadasPuertosEspecificos = Arrays.asList(
+            // Cereal
+            new Coordenada(0,1,0),
+            new Coordenada(0,1,1),
+            // Madera
+            new Coordenada(1,0,4),
+            new Coordenada(1,0,5),
+            // Mineral
+            new Coordenada(1,3,0),
+            new Coordenada(1,3,1),
+            // Arcilla
+            new Coordenada(3,0,4),
+            new Coordenada(3,0,5),
+            // Lana
+            new Coordenada(3,3,2),
+            new Coordenada(3,3,3)
+    );
+
+    private HashMap<Recurso,List<Vertice>> generarVerticesPuertosEspecificos() {
+        List<Recurso> recursos = Arrays.asList(Recurso.CEREAL,
+                Recurso.MADERA, Recurso.MINERAL,
+                Recurso.ARCILLA, Recurso.LANA);
+        HashMap<Recurso, List<Vertice>> verticesPuertosEspecificos = new HashMap<>();
+        for(int j = 0 ; j < recursos.size() ; j++) {
+            List<Vertice> vertices = new ArrayList<>();
+            for(int i = (j * 2) ; i < ((j+1) * 2) ; i++){
+                Coordenada c = coordenadasPuertosEspecificos.get(i);
+                vertices.add(this.getVertice(c));
+            }
+            verticesPuertosEspecificos.put(recursos.get(j), vertices);
+        }
+        return verticesPuertosEspecificos;
+    }
+
+    private void generarPuertos() {
+        HashMap<Recurso, List<Vertice>> verticesDePuertoEspecifico = this.generarVerticesPuertosEspecificos();
+        List<Vertice> verticesDePuertoGenerico = this.generarVerticesPuertosGenericos();
+
+        this.puertos2_1 = new PuertoEspecifico2_1(verticesDePuertoEspecifico);
+        this.puertos3_1 = new PuertoGenerico3_1(verticesDePuertoGenerico);
+    }
+
+    /* SECTION Comportamiento */
+
     public static Map<Recurso, Long> producirRecursos(int numero, List<Terreno> terreno) {
         List<Terreno> produccion = new ArrayList<>();
         for(Terreno t : terreno) {
@@ -250,41 +313,18 @@ public class Tablero {
 
     private Vertice getVertice(Coordenada coordenada) { return this.getTerreno(coordenada).verticeEn(coordenada.vertex()); };
 
+   /*
     public boolean jugadorTienePiezaEn(Jugador jugador, Coordenada coordenada){
         return this.getVertice(coordenada).tienePropietario(jugador);
     }
-
-    // TODO falta cambiar obtenerCoordenadaPuertoDe para que no rompa encapsulamiento.
+    */
 
     public void intercambiarConPuertoEspecifico(Recurso recursoACambiar, Jugador jugador, Recurso recursoARecibir) {
-        List<Coordenada> puertoCoordenadas = puertos2_1.obtenerCoordenadaPuertoDe(recursoACambiar);
-        boolean puedeComerciar = false;
-
-        for(Coordenada c : puertoCoordenadas) {
-            if(jugadorTienePiezaEn(jugador, c)){
-                puedeComerciar = true;
-            }
-        }
-
-        if(puedeComerciar){
-            puertos2_1.intercambiar(jugador,recursoACambiar,recursoARecibir);
-        }
+        puertos2_1.intercambiar(jugador,recursoACambiar,recursoARecibir);
     }
 
     public void intercambiarConPuertoGenerico(Recurso recursoACambiar, Jugador jugador, Recurso recursoARecibir) {
-
-        List<Coordenada> puertoCoordenadas = puertos3_1.obtenerCoordenadaPuertoDe();
-        boolean puedeComerciar = false;
-
-        for(Coordenada c : puertoCoordenadas) {
-            if(jugadorTienePiezaEn(jugador, c)){
-                puedeComerciar = true;
-            }
-        }
-
-        if(puedeComerciar){
-            puertos3_1.intercambiar(jugador,recursoACambiar,recursoARecibir);
-        }
+        puertos3_1.intercambiar(jugador,recursoACambiar,recursoARecibir);
     }
 
 
