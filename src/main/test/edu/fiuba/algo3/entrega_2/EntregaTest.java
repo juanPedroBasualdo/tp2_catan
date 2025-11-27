@@ -84,7 +84,7 @@ public class EntregaTest {
 
 
         // Act
-        tablero.intercambiarConPuertoEspecifico(Recurso.MINERAL, jugador1, Recurso.ARCILLA);
+        tablero.intercambiarConPuertoEspecifico(jugador1, Recurso.MINERAL, Recurso.ARCILLA);
 
         // Assign
         // se supone que intercambiamos 2 MINERALES por 1 ARCILLA
@@ -110,7 +110,7 @@ public class EntregaTest {
 
 
         // Act
-        tablero.intercambiarConPuertoGenerico(Recurso.MINERAL, jugador1, Recurso.ARCILLA);
+        tablero.intercambiarConPuertoGenerico(jugador1, Recurso.MINERAL, Recurso.ARCILLA);
 
         // Assert
         // se supone que intercambiamos 3 MINERALES por 1 ARCILLA

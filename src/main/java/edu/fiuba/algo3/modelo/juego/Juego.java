@@ -28,6 +28,10 @@ public class Juego {
        return dados.tirar();
     }
 
+    public void construirCamino(Coordenada coordenada) {
+        tablero.colocarCarretera(turnero.jugadorActual(), coordenada);
+    }
+
     public void construirPoblado(Coordenada coordenada) {
         tablero.colocarPoblado(turnero.jugadorActual(), coordenada);
     }
@@ -36,10 +40,28 @@ public class Juego {
         tablero.mejorarPoblado(turnero.jugadorActual(), coordenada);
     }
 
-    public void construirCamino(Coordenada coordenada) {
+    public void intercambioTasaEspecifica(Recurso recursoACambiar, Recurso recursoARecibir) {
+        tablero.intercambiarConPuertoEspecifico(turnero.jugadorActual(), recursoACambiar, recursoARecibir);
+    }
+
+    public void intercambioTasaGenerica(Recurso recursoACambiar, Recurso recursoARecibir) {
+        tablero.intercambiarConPuertoGenerico(turnero.jugadorActual(), recursoACambiar, recursoARecibir);
+    }
+
+    public void intercambioTasaEstandar(Recurso recursoACambiar, Recurso recursoARecibir) {
+        banca.intercambioDeTasaEstandar(turnero.jugadorActual(), recursoACambiar, recursoARecibir);
+    }
+
+    public void comprarCartaDesarrollo() {
         // TODO
     }
-    
+
+    public void jugadorCartaDesarrollo() {}
+
+    public void intercambioEntreJugadores() {
+        // TODO
+    }
+
     public void pasarTurno() {
         turnero.pasarTurno();
     }
@@ -47,12 +69,5 @@ public class Juego {
     public void obtenerPuntaje() {
         turnero.verificarPuntajeJugador();
     }
-
-    public void intercambioTasaEstandar(Recurso recursoACambiar, Recurso recursoARecibir) {
-        banca.intercambioDeTasaEstandar(turnero.jugadorActual(), recursoACambiar, recursoARecibir);
-    }
-
-
-
 
 }

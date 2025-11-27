@@ -98,11 +98,9 @@ public class Jugador {
         return Pieza.calcularPuntaje(piezas);
     }
 
-    /*
     public void intercambiarConTasaEstandar(Recurso recursoEntrante, Recurso recursoSaliente) {
-        Banca.intercambioDeTasaEstandar(this, recursoEntrante, recursoSaliente);
+        Banca.intercambioDeTasaEstandarEstatico(this, recursoEntrante, recursoSaliente);
     }
-    */
 
     public void agregarPieza(Pieza pieza) {
         piezas.add(pieza);

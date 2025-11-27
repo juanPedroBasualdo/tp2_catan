@@ -1,6 +1,10 @@
 package edu.fiuba.algo3.modelo.tablero.terreno.parte;
 
+import edu.fiuba.algo3.modelo.excepciones.CaminoDesconectadoException;
+import edu.fiuba.algo3.modelo.excepciones.PosicionInvalidaException;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Pieza;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Carretera;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +31,15 @@ public class Arista {
 
     public void colocarCamino(Jugador jugador) {
         if (estaOcupada()) {
-            throw new IllegalStateException("La arista ya tiene un camino");
+            throw new PosicionInvalidaException("La arista ya tiene un camino");
         }
+        if (!estaConectada()) {
+            throw new CaminoDesconectadoException("La arista no esta conectada con una pieza de este jugador");
+        }
+
+        Pieza camino = new Carretera(jugador);
+        camino.comprarPieza();
+
         this.propietario = jugador;
     }
 
@@ -36,6 +47,32 @@ public class Arista {
         if (v.equals(vertice1)) { return vertice2; }
         if (v.equals(vertice2)) { return vertice1; }
         throw new IllegalArgumentException("El vértice no pertenece a esta arista, esto nunca debería ocurrir.");
+    }
+
+    public Vertice vertice1() {
+        return this.vertice1;
+    }
+
+    public Vertice vertice2() {
+        return this.vertice2;
+    }
+
+    public void agregarAdyacente(Arista arista) {
+        adyacentes.add(arista);
+    }
+
+    public boolean estaConectada() {
+        for(Arista a : adyacentes) {
+            if(a.esDe(this.getPropietario())) {
+               return true;
+            }
+        }
+        for(Vertice v : getVertices()) {
+            if(v.esPropietario(this.getPropietario())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Jugador getPropietario() { return propietario; }
