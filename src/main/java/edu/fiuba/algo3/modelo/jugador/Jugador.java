@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.jugador;
 
 import edu.fiuba.algo3.modelo.banca.Banca;
 import edu.fiuba.algo3.modelo.tablero.*;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Pieza;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,8 @@ public class Jugador {
     private final String nombre;
     private final List<Recurso> recursos;
     private final Random random = new Random();
+    private List<Pieza> piezas;
+    private int cantidadDeCaballerosJugados;
 
     // TODO hacer el puntaje con una clase de Puntaje
     private Integer puntaje;
@@ -20,6 +23,7 @@ public class Jugador {
         this.nombre = nombre;
         this.recursos = new ArrayList<>();
         this.puntaje = 0;
+        this.cantidadDeCaballerosJugados = 0;
     }
 
     public String obtenerNombre() {
@@ -101,5 +105,13 @@ public class Jugador {
 
     public void agregarPuntaje(int puntaje) {
         this.puntaje += puntaje;
+    }
+
+    public void agregarPieza(Pieza pieza) {
+        piezas.add(pieza);
+    }
+
+    public int getCaballerosJugados() {
+        return cantidadDeCaballerosJugados;
     }
 }

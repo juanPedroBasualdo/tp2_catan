@@ -327,6 +327,7 @@ public class Tablero {
         puertos3_1.intercambiar(jugador,recursoACambiar,recursoARecibir);
     }
 
-
-
+    public Collection<Arista> getAristas() {
+        return Collections.unmodifiableCollection(aristas.values());
+    }
 }

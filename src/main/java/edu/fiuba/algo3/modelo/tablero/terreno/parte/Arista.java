@@ -17,6 +17,8 @@ public class Arista {
         this.key = key;
         this.vertice1 = v1;
         this.vertice2 = v2;
+        v1.asignarArista(this);
+        v2.asignarArista(this);
         adyacentes = new ArrayList<>();
     }
 
@@ -37,4 +39,13 @@ public class Arista {
         throw new IllegalArgumentException("El vértice no pertenece a esta arista, esto nunca debería ocurrir.");
     }
 
+    public Jugador getPropietario() { return propietario; }
+
+    public boolean esDe(Jugador jugador) {
+        return propietario != null && propietario.equals(jugador);
+    }
+
+    public Vertice[] getVertices() {
+        return new Vertice[]{vertice1, vertice2};
+    }
 }

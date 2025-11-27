@@ -11,6 +11,7 @@ public class Vertice {
     private Pieza pieza;  // Puede ser un Poblado o una Ciudad
     private final int indice;
     private final List<Vertice> adyacentes;
+    private final List<Arista> aristasAdyacentes = new ArrayList<>();
 
     public Vertice(int indice) {
         this.indice = indice;
@@ -42,6 +43,7 @@ public class Vertice {
             throw new IllegalStateException("No se puede colocar en este Vertice");
         }
         this.pieza = pieza;
+        pieza.getPropietario().agregarPieza(pieza);
         this.invalidarAdyacentes();
     }
 
@@ -74,4 +76,18 @@ public class Vertice {
         return pieza.tienePropietario(jugador);
     }
 
+    public void asignarArista(Arista arista) {
+        aristasAdyacentes.add(arista);
+    }
+
+    public List<Arista> getAristas() {
+        return aristasAdyacentes;
+    }
+
+    public boolean bloqueaMayorRutaComercial(Jugador jugador) {
+        if (!estaOcupado()) return false;         // estaOcupado() == false → return false
+        return !pieza.tienePropietario(jugador);
+        /* estaOcupado() == true, pieza.tienePropietario(jugador) == true, return !true → false
+        estaOcupado() == true, pieza.tienePropietario(jugador) == false, return !false → true */
+    }
 }
