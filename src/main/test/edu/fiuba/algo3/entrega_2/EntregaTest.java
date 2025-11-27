@@ -33,7 +33,7 @@ public class EntregaTest {
         List<Recurso> listaRecursosPoblado = Arrays.asList(Recurso.MADERA, Recurso.ARCILLA, Recurso.LANA, Recurso.CEREAL);
         jugador1.agregarRecursos(listaRecursosCiudad);
         jugador1.agregarRecursos(listaRecursosPoblado);
-        int puntosVictoriaIniciales = jugador1.obtenerPuntaje();
+        int puntosVictoriaIniciales = jugador1.calcularPuntajeVictoria();
 
         // Act
         Coordenada coordenadaPoblado = new Coordenada(2,2,2);
@@ -42,7 +42,7 @@ public class EntregaTest {
 
 
         // Assert
-        boolean puntosCorrectos = jugador1.obtenerPuntaje() - puntosVictoriaIniciales == 3;
+        boolean puntosCorrectos = jugador1.calcularPuntajeVictoria() - puntosVictoriaIniciales == 3;
         boolean recursosDescontados = jugador1.cantidadDeRecursos() == 0;
         assertTrue(puntosCorrectos && recursosDescontados);
     }
@@ -69,10 +69,22 @@ public class EntregaTest {
 
         // Assign
         List<Recurso> recursosIniciales = Arrays.asList(Recurso.MINERAL, Recurso.MINERAL);
+
+        List<Recurso> recursosPoblado = Arrays.asList(
+                Recurso.MADERA,
+                Recurso.ARCILLA,
+                Recurso.LANA,
+                Recurso.CEREAL
+        );
+
+
         jugador1.agregarRecursos(recursosIniciales);
+        jugador1.agregarRecursos(recursosPoblado);
+        tablero.colocarPoblado(jugador1, new Coordenada(1, 3, 0));
+
 
         // Act
-        jugador1.intercambiarConPuertoEspecifico(Recurso.MINERAL, Recurso.ARCILLA);
+        tablero.intercambiarConPuertoEspecifico(Recurso.MINERAL, jugador1, Recurso.ARCILLA);
 
         // Assign
         // se supone que intercambiamos 2 MINERALES por 1 ARCILLA
@@ -84,13 +96,25 @@ public class EntregaTest {
 
         // Assign
         List<Recurso> recursosIniciales = Arrays.asList(Recurso.MINERAL, Recurso.MINERAL, Recurso.MINERAL);
+
+        List<Recurso> recursosPoblado = Arrays.asList(
+                Recurso.MADERA,
+                Recurso.ARCILLA,
+                Recurso.LANA,
+                Recurso.CEREAL
+        );
+
         jugador1.agregarRecursos(recursosIniciales);
+        jugador1.agregarRecursos(recursosPoblado);
+        tablero.colocarPoblado(jugador1, new Coordenada(0, 0, 0));
+
 
         // Act
-        jugador1.intercambiarConPuertoGenerico(Recurso.MINERAL, Recurso.ARCILLA);
+        tablero.intercambiarConPuertoGenerico(Recurso.MINERAL, jugador1, Recurso.ARCILLA);
 
         // Assert
         // se supone que intercambiamos 3 MINERALES por 1 ARCILLA
+
         assertEquals(1,jugador1.cantidadDeRecursos());
 
     }

@@ -5,6 +5,8 @@ import java.util.*;
 import edu.fiuba.algo3.modelo.banca.Banca;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
+import edu.fiuba.algo3.modelo.tablero.puerto.PuertoEspecifico2_1;
+import edu.fiuba.algo3.modelo.tablero.puerto.PuertoGenerico3_1;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Arista;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
 import edu.fiuba.algo3.modelo.tablero.terreno.TerrenoTipo;
@@ -15,6 +17,8 @@ public class Tablero {
     private final List<Vertice> vertices = new ArrayList<>();
     private final Map<String, Arista> aristas = new HashMap<>();
 
+    private PuertoEspecifico2_1 puertos2_1;
+    private PuertoGenerico3_1 puertos3_1;
 
     public Tablero() {
         this(new Random());
@@ -29,7 +33,10 @@ public class Tablero {
         this.generarTerrenos(random);
         this.asignarVertices();
         this.asignarAristas();
+        this.generarPuertos();
     }
+
+    /* SECTION Creacion de Tablero */
 
     private void generarTerrenos(Random random) {
         List<TerrenoTipo> terrenosTipos = new ArrayList<>(List.of(
@@ -167,6 +174,72 @@ public class Tablero {
         return aristasDeTerreno;
     }
 
+    private static final List<Coordenada> coordenadasPuertosGenericos = Arrays.asList(
+            new Coordenada(0,0,0),
+            new Coordenada(0,0,5),
+
+            new Coordenada(2,4,1),
+            new Coordenada(2,4,2),
+
+            new Coordenada(4,0,3),
+            new Coordenada(4,0,4),
+
+            new Coordenada(4,1,2),
+            new Coordenada(4,1,3)
+    );
+
+    private List<Vertice> generarVerticesPuertosGenericos() {
+        List<Vertice> verticesPuertosGenericos = new ArrayList<>();
+        for(Coordenada c : coordenadasPuertosGenericos) {
+            verticesPuertosGenericos.add(this.getVertice(c));
+        }
+        return verticesPuertosGenericos;
+    }
+
+    private static final List<Coordenada> coordenadasPuertosEspecificos = Arrays.asList(
+            // Cereal
+            new Coordenada(0,1,0),
+            new Coordenada(0,1,1),
+            // Madera
+            new Coordenada(1,0,4),
+            new Coordenada(1,0,5),
+            // Mineral
+            new Coordenada(1,3,0),
+            new Coordenada(1,3,1),
+            // Arcilla
+            new Coordenada(3,0,4),
+            new Coordenada(3,0,5),
+            // Lana
+            new Coordenada(3,3,2),
+            new Coordenada(3,3,3)
+    );
+
+    private HashMap<Recurso,List<Vertice>> generarVerticesPuertosEspecificos() {
+        List<Recurso> recursos = Arrays.asList(Recurso.CEREAL,
+                Recurso.MADERA, Recurso.MINERAL,
+                Recurso.ARCILLA, Recurso.LANA);
+        HashMap<Recurso, List<Vertice>> verticesPuertosEspecificos = new HashMap<>();
+        for(int j = 0 ; j < recursos.size() ; j++) {
+            List<Vertice> vertices = new ArrayList<>();
+            for(int i = (j * 2) ; i < ((j+1) * 2) ; i++){
+                Coordenada c = coordenadasPuertosEspecificos.get(i);
+                vertices.add(this.getVertice(c));
+            }
+            verticesPuertosEspecificos.put(recursos.get(j), vertices);
+        }
+        return verticesPuertosEspecificos;
+    }
+
+    private void generarPuertos() {
+        HashMap<Recurso, List<Vertice>> verticesDePuertoEspecifico = this.generarVerticesPuertosEspecificos();
+        List<Vertice> verticesDePuertoGenerico = this.generarVerticesPuertosGenericos();
+
+        this.puertos2_1 = new PuertoEspecifico2_1(verticesDePuertoEspecifico);
+        this.puertos3_1 = new PuertoGenerico3_1(verticesDePuertoGenerico);
+    }
+
+    /* SECTION Comportamiento */
+
     public static Map<Recurso, Long> producirRecursos(int numero, List<Terreno> terreno) {
         List<Terreno> produccion = new ArrayList<>();
         for(Terreno t : terreno) {
@@ -177,30 +250,21 @@ public class Tablero {
         return produccion.stream().map(Terreno::getRecurso).collect(java.util.stream.Collectors.groupingBy(t -> t, java.util.stream.Collectors.counting()));
     }
 
-    // TODO ver si es apropiado usar banca en Tablero
-
+    // TODO hacer una excepcion para mejorar y colocar poblado
     public void mejorarPoblado(Jugador jugador, Coordenada coordenadaPoblado) {
         if (this.puedeMejorarPoblado(jugador,coordenadaPoblado)) {
-
             terrenos[coordenadaPoblado.x()][coordenadaPoblado.y()].construirCiudad(jugador, coordenadaPoblado.vertex());
-
-            List<Recurso> listaRecursosCiudad = Arrays.asList(Recurso.CEREAL, Recurso.CEREAL, Recurso.MINERAL, Recurso.MINERAL, Recurso.MINERAL);
-            Banca.extraerRecursos(jugador,listaRecursosCiudad);
-            Banca.otorgarPuntaje(jugador, 2);
         }
     }
 
     public void colocarPoblado(Jugador jugador, Coordenada coordenada) {
         if(this.puedeColocarPoblado(jugador, coordenada)) {
             terrenos[coordenada.x()][coordenada.y()].colocarPoblado(jugador, coordenada.vertex());
-
-            List<Recurso> listaRecursosPoblado = Arrays.asList(Recurso.MADERA, Recurso.ARCILLA, Recurso.LANA, Recurso.CEREAL);
-            Banca.extraerRecursos(jugador, listaRecursosPoblado);
-            Banca.otorgarPuntaje(jugador,1);
         }
 
     }
 
+    // Esto solo verifica que el vertica donde existe la coordenada no es INVALIDO, no prueba regla distancia
     public boolean puedeColocarPoblado(Jugador jugador1, Coordenada coordenada) {
         return this.terrenos[coordenada.x()][coordenada.y()].puedeColocarPoblado(coordenada.vertex());
     }
@@ -236,5 +300,25 @@ public class Tablero {
 
     public List<Vertice> getVertices() {
         return Collections.unmodifiableList(vertices);
+    }
+
+    private Vertice getVertice(Coordenada coordenada) { return this.getTerreno(coordenada).verticeEn(coordenada.vertex()); };
+
+   /*
+    public boolean jugadorTienePiezaEn(Jugador jugador, Coordenada coordenada){
+        return this.getVertice(coordenada).tienePropietario(jugador);
+    }
+    */
+
+    public void intercambiarConPuertoEspecifico(Recurso recursoACambiar, Jugador jugador, Recurso recursoARecibir) {
+        puertos2_1.intercambiar(jugador,recursoACambiar,recursoARecibir);
+    }
+
+    public void intercambiarConPuertoGenerico(Recurso recursoACambiar, Jugador jugador, Recurso recursoARecibir) {
+        puertos3_1.intercambiar(jugador,recursoACambiar,recursoARecibir);
+    }
+
+    public Collection<Arista> getAristas() {
+        return Collections.unmodifiableCollection(aristas.values());
     }
 }

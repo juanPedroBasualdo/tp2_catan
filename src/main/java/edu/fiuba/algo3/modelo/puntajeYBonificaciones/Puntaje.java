@@ -15,14 +15,9 @@ public class Puntaje {
     }
 
     public int calcularPuntaje(Jugador jugador) {
-        int puntajeJugador = 0;
-        for (Vertice vertice : tablero.getVertices()) {
-            Pieza pieza = vertice.obtenerPieza();
-                if (pieza != null && pieza.getPropietario() == jugador) {
-                    puntajeJugador += pieza.getPuntaje();
-                }
-        }
-        //puntajeJugador += jugador.puntajeCartasPV;  // Supongo que cada jugador sabe las cartas PV que tiene y puede hacer el calculo.
+
+        int puntajeJugador = jugador.calcularPuntajeVictoria();
+        // puntajeJugador += jugador.puntajeCartasPV;  // Supongo que cada jugador sabe las cartas PV que tiene y puede hacer el calculo.
         return puntajeJugador += bonificaciones.puntajeDe(jugador);
     }
 }

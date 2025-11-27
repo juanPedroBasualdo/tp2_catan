@@ -80,6 +80,9 @@ public class EntregaTest {
         Coordenada coord1 = new Coordenada(0, 0, 0);
         Coordenada coord2 = new Coordenada(0, 0, 1);
 
+        List<Recurso> recursos = Arrays.asList(Recurso.LANA, Recurso.MADERA, Recurso.ARCILLA, Recurso.CEREAL);
+        jugador1.agregarRecursos(recursos);
+
     	tablero.colocarPoblado(jugador1, coord1);
 
         boolean permitido = tablero.puedeColocarPoblado(jugador1, coord2);

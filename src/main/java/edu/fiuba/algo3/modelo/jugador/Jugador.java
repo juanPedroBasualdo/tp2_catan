@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.jugador;
 
 import edu.fiuba.algo3.modelo.banca.Banca;
 import edu.fiuba.algo3.modelo.tablero.*;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Pieza;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,8 @@ public class Jugador {
     private final String nombre;
     private final List<Recurso> recursos;
     private final Random random = new Random();
+    private List<Pieza> piezas;
+    private int cantidadDeCaballerosJugados;
 
     // TODO hacer el puntaje con una clase de Puntaje
     private Integer puntaje;
@@ -19,7 +22,9 @@ public class Jugador {
     public Jugador(String nombre) {
         this.nombre = nombre;
         this.recursos = new ArrayList<>();
+        this.piezas = new ArrayList<Pieza>();
         this.puntaje = 0;
+        this.cantidadDeCaballerosJugados = 0;
     }
 
     public String obtenerNombre() {
@@ -89,25 +94,19 @@ public class Jugador {
         }
     }
 
-    public int obtenerPuntaje() {
-        return puntaje;
+    public int calcularPuntajeVictoria() {
+        return Pieza.calcularPuntaje(piezas);
     }
 
-    // TODO Generalizar un método para recibír cierta cantidad de recursos de jugador por 1 recurso obtenido
-    // TODO crear Clases de Puerto para usar polimorfismo
     public void intercambiarConTasaEstandar(Recurso recursoEntrante, Recurso recursoSaliente) {
         Banca.intercambioDeTasaEstandar(this, recursoEntrante, recursoSaliente);
     }
 
-    public void intercambiarConPuertoEspecifico(Recurso recursoEntrante, Recurso recursoSaliente) {
-        Banca.intercambioPuertoEspeficico(this, recursoEntrante,recursoSaliente);
+    public void agregarPieza(Pieza pieza) {
+        piezas.add(pieza);
     }
 
-    public void intercambiarConPuertoGenerico(Recurso recursoEntrante, Recurso recursoSaliente) {
-        Banca.intercambioPuertoGenerico(this,recursoEntrante,recursoSaliente);
-    }
-
-    public void agregarPuntaje(int puntaje) {
-        this.puntaje += puntaje;
+    public int getCaballerosJugados() {
+        return cantidadDeCaballerosJugados;
     }
 }
