@@ -22,6 +22,7 @@ public class Jugador {
     public Jugador(String nombre) {
         this.nombre = nombre;
         this.recursos = new ArrayList<>();
+        this.piezas = new ArrayList<Pieza>();
         this.puntaje = 0;
         this.cantidadDeCaballerosJugados = 0;
     }

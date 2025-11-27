@@ -39,7 +39,7 @@ public class PuertoEspecifico2_1 implements Puerto {
     public boolean puedeIntercambiar(Jugador jugador, Recurso recurso) {
         List<Vertice> verticesDelIntercambio = this.obtenerVerticesPuertoDe(recurso);
         for(Vertice v : verticesDelIntercambio) {
-            if(v.tienePropietario(jugador)){
+            if(v.esPropietario(jugador)){
                 return true;
             }
         }

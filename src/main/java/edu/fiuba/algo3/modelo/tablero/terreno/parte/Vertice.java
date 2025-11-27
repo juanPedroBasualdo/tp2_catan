@@ -1,8 +1,10 @@
 package edu.fiuba.algo3.modelo.tablero.terreno.parte;
 
+import edu.fiuba.algo3.modelo.excepciones.JugadorInvalidoException;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Pieza;
 import edu.fiuba.algo3.modelo.tablero.terreno.pieza.PiezaTipo;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Ciudad;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +44,13 @@ public class Vertice {
         if(!esValido()) {
             throw new IllegalStateException("No se puede colocar en este Vertice");
         }
+
+        // Esto verifica que el jugador contenga los recursos antes de agregar la Pieza al vertice y extrae los recursos
+        pieza.comprarPieza();
+
         this.pieza = pieza;
-        pieza.getPropietario().agregarPieza(pieza);
         this.invalidarAdyacentes();
+
     }
 
 
@@ -64,15 +70,20 @@ public class Vertice {
 
     public void mejorarPoblado(Jugador jugador1) {
         if (!validarDatosMejoraCiudad(jugador1)) {
-           // TODO Hacer la excepcion para cuando no es valido
+           throw new JugadorInvalidoException();
         }
-        this.pieza = new Pieza(PiezaTipo.CIUDAD, jugador1);
+
+        // Creamos la pieza ciudad y la compramos de Banca para reemplazar el Poblado
+        Pieza ciudad = new Ciudad(jugador1);
+        ciudad.comprarPieza();
+        this.pieza = ciudad;
+
         this.invalidarAdyacentes();
     }
 
     public Pieza obtenerPieza() { return pieza ;}
 
-    public boolean tienePropietario(Jugador jugador) {
+    public boolean esPropietario(Jugador jugador) {
         return pieza.tienePropietario(jugador);
     }
 

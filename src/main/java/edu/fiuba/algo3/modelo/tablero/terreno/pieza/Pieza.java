@@ -1,5 +1,7 @@
 package edu.fiuba.algo3.modelo.tablero.terreno.pieza;
 
+import edu.fiuba.algo3.modelo.banca.Banca;
+import edu.fiuba.algo3.modelo.excepciones.RecursosInsuficientesException;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 
@@ -20,6 +22,14 @@ public class Pieza {
         this.propietario = jugador;
     }
 
+    public void comprarPieza() {
+        if (!propietario.tieneRecursos(this.obtenerPrecioPieza())){
+            throw new RecursosInsuficientesException();
+        }
+        propietario.agregarPieza(this);
+        Banca.extraerRecursos(propietario, this.obtenerPrecioPieza());
+    }
+
     /**
      * Este metodo toma una lista de Piezas y devuelve su puntaje de victoria total
      * @param listaPiezas una lista de piezas de un jugador
@@ -35,7 +45,9 @@ public class Pieza {
 
     public int obtenerPuntajeVictoria() { return puntajeVictoria; };
 
-
+    protected List<Recurso> obtenerPrecioPieza() {
+        return precioConstruccion;
+    }
 
     public boolean validarMejoraPoblado(Jugador jugador1) {
         return tipo == (PiezaTipo.POBLADO) && propietario == (jugador1);

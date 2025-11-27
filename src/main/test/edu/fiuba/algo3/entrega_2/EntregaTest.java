@@ -69,8 +69,19 @@ public class EntregaTest {
 
         // Assign
         List<Recurso> recursosIniciales = Arrays.asList(Recurso.MINERAL, Recurso.MINERAL);
-        tablero.colocarPoblado(jugador1, new Coordenada(1, 3, 0));
+
+        List<Recurso> recursosPoblado = Arrays.asList(
+                Recurso.MADERA,
+                Recurso.ARCILLA,
+                Recurso.LANA,
+                Recurso.CEREAL
+        );
+
+
         jugador1.agregarRecursos(recursosIniciales);
+        jugador1.agregarRecursos(recursosPoblado);
+        tablero.colocarPoblado(jugador1, new Coordenada(1, 3, 0));
+
 
         // Act
         tablero.intercambiarConPuertoEspecifico(Recurso.MINERAL, jugador1, Recurso.ARCILLA);
@@ -85,8 +96,18 @@ public class EntregaTest {
 
         // Assign
         List<Recurso> recursosIniciales = Arrays.asList(Recurso.MINERAL, Recurso.MINERAL, Recurso.MINERAL);
-        tablero.colocarPoblado(jugador1, new Coordenada(0, 0, 0));
+
+        List<Recurso> recursosPoblado = Arrays.asList(
+                Recurso.MADERA,
+                Recurso.ARCILLA,
+                Recurso.LANA,
+                Recurso.CEREAL
+        );
+
         jugador1.agregarRecursos(recursosIniciales);
+        jugador1.agregarRecursos(recursosPoblado);
+        tablero.colocarPoblado(jugador1, new Coordenada(0, 0, 0));
+
 
         // Act
         tablero.intercambiarConPuertoGenerico(Recurso.MINERAL, jugador1, Recurso.ARCILLA);

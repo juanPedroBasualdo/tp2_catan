@@ -250,29 +250,21 @@ public class Tablero {
         return produccion.stream().map(Terreno::getRecurso).collect(java.util.stream.Collectors.groupingBy(t -> t, java.util.stream.Collectors.counting()));
     }
 
-    // TODO ver si es apropiado usar banca en Tablero
+    // TODO hacer una excepcion para mejorar y colocar poblado
     public void mejorarPoblado(Jugador jugador, Coordenada coordenadaPoblado) {
         if (this.puedeMejorarPoblado(jugador,coordenadaPoblado)) {
-
             terrenos[coordenadaPoblado.x()][coordenadaPoblado.y()].construirCiudad(jugador, coordenadaPoblado.vertex());
-
-            List<Recurso> listaRecursosCiudad = Arrays.asList(Recurso.CEREAL, Recurso.CEREAL, Recurso.MINERAL, Recurso.MINERAL, Recurso.MINERAL);
-            Banca.extraerRecursos(jugador,listaRecursosCiudad);
-            Banca.otorgarPuntaje(jugador, 2);
         }
     }
 
     public void colocarPoblado(Jugador jugador, Coordenada coordenada) {
         if(this.puedeColocarPoblado(jugador, coordenada)) {
             terrenos[coordenada.x()][coordenada.y()].colocarPoblado(jugador, coordenada.vertex());
-
-            List<Recurso> listaRecursosPoblado = Arrays.asList(Recurso.MADERA, Recurso.ARCILLA, Recurso.LANA, Recurso.CEREAL);
-            Banca.extraerRecursos(jugador, listaRecursosPoblado);
-            Banca.otorgarPuntaje(jugador,1);
         }
 
     }
 
+    // Esto solo verifica que el vertica donde existe la coordenada no es INVALIDO, no prueba regla distancia
     public boolean puedeColocarPoblado(Jugador jugador1, Coordenada coordenada) {
         return this.terrenos[coordenada.x()][coordenada.y()].puedeColocarPoblado(coordenada.vertex());
     }

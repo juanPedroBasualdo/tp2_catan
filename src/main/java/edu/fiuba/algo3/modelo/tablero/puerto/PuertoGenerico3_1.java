@@ -37,7 +37,7 @@ public class PuertoGenerico3_1 implements Puerto {
 
     public boolean puedeComerciar(Jugador jugador) {
         for(Vertice v : verticesDePuerto) {
-            if(v.tienePropietario(jugador)){
+            if(v.esPropietario(jugador)){
                 return true;
             }
         }

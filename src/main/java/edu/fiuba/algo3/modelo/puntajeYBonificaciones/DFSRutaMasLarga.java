@@ -21,7 +21,11 @@ public class DFSRutaMasLarga {
         int max = 0;
 
         // Tomamos solo las aristas del jugador
+
+        return 0;
+/*      TODO arreglar esto despues.
         List<Arista> caminos = tablero.getAristas().stream().filter(a -> a.esDe(jugador)).toList();
+
 
         // DFS desde cada arista como inicio posible
         for (Arista arista : caminos) {
@@ -30,6 +34,7 @@ public class DFSRutaMasLarga {
             if (largo > max) max = largo;
         }
         return max;
+*/
     }
 
     private int dfs(Jugador jugador, Arista actual, Set<Arista> visitadas) {
