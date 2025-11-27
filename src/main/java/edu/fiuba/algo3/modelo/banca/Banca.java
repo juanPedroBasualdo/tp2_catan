@@ -22,15 +22,16 @@ public class Banca {
         }
     }
 
-    public static void intercambioDeTasaEstandar(Jugador jugador, Recurso recursoEntrante, Recurso recursoSaliente) {
+    public void intercambioDeTasaEstandar(Jugador jugador, Recurso recursoEntrante, Recurso recursoSaliente) {
         List<Recurso> listaRequiriente = Arrays.asList(recursoEntrante, recursoEntrante,recursoEntrante,recursoEntrante);
         if (jugador.tieneRecursos(listaRequiriente)){
              jugador.eliminarRecursos(listaRequiriente);
-             jugador.agregarRecursos(Arrays.asList(recursoSaliente));
+             jugador.agregarRecurso(recursoSaliente);
         }
     }
 
     private List<Recurso> generarRecursosIniciales() {
+        List<Recurso> listaDeRecursosDisponibles = new ArrayList<>();
         Recurso[] tiposDeRecursos = Recurso.values();
         for(Recurso recurso : tiposDeRecursos){
             for (int i = 0; i < 5; i++) {

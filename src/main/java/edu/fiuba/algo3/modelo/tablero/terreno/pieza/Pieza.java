@@ -10,7 +10,7 @@ import java.util.List;
 public class Pieza {
 
     private Jugador propietario;
-    private PiezaTipo tipo;
+    private final PiezaTipo tipo;
 
     protected int puntajeVictoria;
     protected List<Recurso> precioConstruccion;

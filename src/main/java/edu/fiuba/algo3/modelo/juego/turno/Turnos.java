@@ -13,17 +13,22 @@ public class Turnos {
     private int numeroDeTurno;
 
     public Turnos(Collection<Jugador> listaJugadores) {
-        turnero = new ConcurrentLinkedQueue<>();
-        turnero.addAll(listaJugadores);
+        turnero = new ConcurrentLinkedQueue<>(listaJugadores);
         this.jugadorActual = turnero.peek();
         this.numeroDeTurno = 1;
     }
 
     public void pasarTurno() {
+        this.siguienteJugador();
+        this.numeroDeTurno++;
+    }
+
+    /* Desfasa la lista de jugadores por uno, pero no cambia el numero de turno,
+     * Auxiliar usado simplemente para el "set up" del juego.  */
+    public void siguienteJugador() {
         Jugador jugadorAnterior = turnero.remove();
         this.jugadorActual = turnero.peek();
         turnero.add(jugadorAnterior);
-        this.numeroDeTurno++;
     }
 
     public Jugador jugadorActual() {

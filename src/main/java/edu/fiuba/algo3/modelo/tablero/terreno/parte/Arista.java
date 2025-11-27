@@ -12,7 +12,6 @@ public class Arista {
     private Jugador propietario;
     private final List<Arista> adyacentes;
 
-
     public Arista(String key, Vertice v1, Vertice v2) {
         this.key = key;
         this.vertice1 = v1;
