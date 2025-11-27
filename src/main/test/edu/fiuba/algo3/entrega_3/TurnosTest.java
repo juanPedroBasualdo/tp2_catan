@@ -102,4 +102,18 @@ public class TurnosTest {
         Assertions.assertEquals(primerJugador, turnero.jugadorActual());
         Assertions.assertEquals("jugador1", primerJugador.obtenerNombre());
     }
+
+    @Test
+    void test06ElNumeroNoDebeCambiarAPesarDeCederElTurnoSiNoSeUsaPasar() {
+        // Arrange
+        Jugador primerJugador = turnero.jugadorActual();
+        int numeroTurnoPrimerTurno = turnero.numeroDeTurno();
+
+        // Act
+        turnero.siguienteJugador();
+
+        // Assert
+        Assertions.assertEquals(numeroTurnoPrimerTurno, turnero.numeroDeTurno());
+        Assertions.assertNotEquals(primerJugador, turnero.jugadorActual());
+    }
 }

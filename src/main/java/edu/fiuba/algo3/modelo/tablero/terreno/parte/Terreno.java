@@ -106,7 +106,16 @@ public abstract class Terreno {
         this.vertices.get(indiceVertice).colocarPieza(new Poblado(jugador));
     }
 
-    public Object tieneCiudadDe(Jugador jugador1) {
+    public void colocarCarretera(Jugador jugador, int indiceArista) {
+        this.aristas.get(indiceArista).colocarCamino(jugador);
+    }
+
+    public Object tieneCiudadDe(Jugador jugador) {
+        for(Vertice v : vertices) {
+            if(v.esPropietario(jugador)) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -117,6 +126,7 @@ public abstract class Terreno {
     public boolean contieneVertice(Vertice vertice) {
         return this.vertices.contains(vertice);
     }
+
 
 }
 

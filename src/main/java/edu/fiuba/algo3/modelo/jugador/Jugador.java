@@ -99,7 +99,7 @@ public class Jugador {
     }
 
     public void intercambiarConTasaEstandar(Recurso recursoEntrante, Recurso recursoSaliente) {
-        Banca.intercambioDeTasaEstandar(this, recursoEntrante, recursoSaliente);
+        Banca.intercambioDeTasaEstandarEstatico(this, recursoEntrante, recursoSaliente);
     }
 
     public void agregarPieza(Pieza pieza) {

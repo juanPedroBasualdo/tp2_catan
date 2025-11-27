@@ -2,7 +2,7 @@ package edu.fiuba.algo3.modelo.randomizados;
 import java.util.Random;
 
 public class Dados {
-    private Random random;
+    private final Random random;
 
     public Dados() {
         random = new Random();

@@ -33,6 +33,7 @@ public class Tablero {
         this.generarTerrenos(random);
         this.asignarVertices();
         this.asignarAristas();
+        this.asignarAdyacentesAristas();
         this.generarPuertos();
     }
 
@@ -174,6 +175,20 @@ public class Tablero {
         return aristasDeTerreno;
     }
 
+    private void asignarAdyacentesAristas() {
+        List<Arista> listaDeAristas = new ArrayList<Arista>(aristas.values());
+        for(Arista a1 : listaDeAristas){
+            for(Arista a2 : listaDeAristas) {
+                if(!a1.equals(a2)) {
+                    if(a1.vertice1().equals(a2.vertice1()) || a1.vertice1().equals(a2.vertice2()) ||
+                    a1.vertice2().equals(a2.vertice1()) || a1.vertice2().equals(a2.vertice2())) {
+                        a1.agregarAdyacente(a2);
+                    }
+                }
+            }
+        }
+    }
+
     private static final List<Coordenada> coordenadasPuertosGenericos = Arrays.asList(
             new Coordenada(0,0,0),
             new Coordenada(0,0,5),
@@ -264,6 +279,10 @@ public class Tablero {
 
     }
 
+    public void colocarCarretera(Jugador jugador, Coordenada coordenada) {
+        terrenos[coordenada.x()][coordenada.y()].colocarCarretera(jugador, coordenada.vertex());
+    }
+
     // Esto solo verifica que el vertica donde existe la coordenada no es INVALIDO, no prueba regla distancia
     public boolean puedeColocarPoblado(Jugador jugador1, Coordenada coordenada) {
         return this.terrenos[coordenada.x()][coordenada.y()].puedeColocarPoblado(coordenada.vertex());
@@ -310,11 +329,11 @@ public class Tablero {
     }
     */
 
-    public void intercambiarConPuertoEspecifico(Recurso recursoACambiar, Jugador jugador, Recurso recursoARecibir) {
+    public void intercambiarConPuertoEspecifico(Jugador jugador, Recurso recursoACambiar, Recurso recursoARecibir) {
         puertos2_1.intercambiar(jugador,recursoACambiar,recursoARecibir);
     }
 
-    public void intercambiarConPuertoGenerico(Recurso recursoACambiar, Jugador jugador, Recurso recursoARecibir) {
+    public void intercambiarConPuertoGenerico(Jugador jugador, Recurso recursoACambiar, Recurso recursoARecibir) {
         puertos3_1.intercambiar(jugador,recursoACambiar,recursoARecibir);
     }
 
