@@ -251,7 +251,6 @@ public class Tablero {
     }
 
     // TODO ver si es apropiado usar banca en Tablero
-
     public void mejorarPoblado(Jugador jugador, Coordenada coordenadaPoblado) {
         if (this.puedeMejorarPoblado(jugador,coordenadaPoblado)) {
 

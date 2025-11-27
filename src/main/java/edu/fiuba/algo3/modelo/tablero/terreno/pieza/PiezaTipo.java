@@ -4,5 +4,6 @@ public enum PiezaTipo {
     INVALIDO,
     POBLADO,
     CIUDAD,
-    VACIO
+    VACIO,
+    CARRETERA
 }

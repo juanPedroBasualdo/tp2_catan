@@ -16,11 +16,6 @@ public class Banca {
         this.listaDeRecursosDisponibles = generarRecursosIniciales();
     }
 
-    // TODO cuando tengan la clase de Puntaje y las de Piezas le corresponden a estas
-    public static void otorgarPuntaje(Jugador jugador, int puntaje) {
-        jugador.agregarPuntaje(puntaje);
-    }
-
     public static void extraerRecursos(Jugador jugador, List<Recurso> listaDeRecursos) {
         if (jugador.tieneRecursos(listaDeRecursos)) {
             jugador.eliminarRecursos(listaDeRecursos);
@@ -34,7 +29,6 @@ public class Banca {
              jugador.agregarRecursos(Arrays.asList(recursoSaliente));
         }
     }
-
 
     private List<Recurso> generarRecursosIniciales() {
         Recurso[] tiposDeRecursos = Recurso.values();

@@ -39,7 +39,7 @@ public class Turnos {
     }
 
     public int verificarPuntajeJugador() {
-        return jugadorActual.obtenerPuntaje();
+        return jugadorActual.calcularPuntajeVictoria();
     }
 
 }

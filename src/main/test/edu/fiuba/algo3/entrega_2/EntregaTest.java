@@ -10,7 +10,6 @@ import edu.fiuba.algo3.modelo.tablero.*;
 
 
 import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +33,7 @@ public class EntregaTest {
         List<Recurso> listaRecursosPoblado = Arrays.asList(Recurso.MADERA, Recurso.ARCILLA, Recurso.LANA, Recurso.CEREAL);
         jugador1.agregarRecursos(listaRecursosCiudad);
         jugador1.agregarRecursos(listaRecursosPoblado);
-        int puntosVictoriaIniciales = jugador1.obtenerPuntaje();
+        int puntosVictoriaIniciales = jugador1.calcularPuntajeVictoria();
 
         // Act
         Coordenada coordenadaPoblado = new Coordenada(2,2,2);
@@ -43,7 +42,7 @@ public class EntregaTest {
 
 
         // Assert
-        boolean puntosCorrectos = jugador1.obtenerPuntaje() - puntosVictoriaIniciales == 3;
+        boolean puntosCorrectos = jugador1.calcularPuntajeVictoria() - puntosVictoriaIniciales == 3;
         boolean recursosDescontados = jugador1.cantidadDeRecursos() == 0;
         assertTrue(puntosCorrectos && recursosDescontados);
     }

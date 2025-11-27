@@ -93,18 +93,12 @@ public class Jugador {
         }
     }
 
-    public int obtenerPuntaje() {
-        return puntaje;
+    public int calcularPuntajeVictoria() {
+        return Pieza.calcularPuntaje(piezas);
     }
 
-    // TODO Generalizar un método para recibír cierta cantidad de recursos de jugador por 1 recurso obtenido
-    // TODO crear Clases de Puerto para usar polimorfismo
     public void intercambiarConTasaEstandar(Recurso recursoEntrante, Recurso recursoSaliente) {
         Banca.intercambioDeTasaEstandar(this, recursoEntrante, recursoSaliente);
-    }
-
-    public void agregarPuntaje(int puntaje) {
-        this.puntaje += puntaje;
     }
 
     public void agregarPieza(Pieza pieza) {

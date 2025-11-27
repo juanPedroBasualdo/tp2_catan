@@ -1,21 +1,41 @@
 package edu.fiuba.algo3.modelo.tablero.terreno.pieza;
 
 import edu.fiuba.algo3.modelo.jugador.Jugador;
+import edu.fiuba.algo3.modelo.tablero.Recurso;
+
+import java.util.List;
 
 public class Pieza {
 
     private Jugador propietario;
     private PiezaTipo tipo;
-    private int puntaje;
 
-    public Pieza(PiezaTipo tipo) {
-        this(tipo, null);
-    }
+    protected int puntajeVictoria;
+    protected List<Recurso> precioConstruccion;
+
+    public Pieza(PiezaTipo tipo) { this.tipo = tipo; }
 
     public Pieza(PiezaTipo tipo, Jugador jugador) {
         this.tipo = tipo;
         this.propietario = jugador;
     }
+
+    /**
+     * Este metodo toma una lista de Piezas y devuelve su puntaje de victoria total
+     * @param listaPiezas una lista de piezas de un jugador
+     * @return el puntaje de victoria
+     */
+    public static int calcularPuntaje(List<Pieza> listaPiezas) {
+        int sum = 0;
+        for (Pieza pieza : listaPiezas) {
+            sum += pieza.obtenerPuntajeVictoria();
+        }
+        return sum;
+    }
+
+    public int obtenerPuntajeVictoria() { return puntajeVictoria; };
+
+
 
     public boolean validarMejoraPoblado(Jugador jugador1) {
         return tipo == (PiezaTipo.POBLADO) && propietario == (jugador1);
@@ -25,7 +45,6 @@ public class Pieza {
     }
 
     public Jugador getPropietario() { return propietario; }
-    public int getPuntaje() { return puntaje; }
 
     public boolean tienePropietario(Jugador jugador) {
         return jugador == propietario;
@@ -34,4 +53,5 @@ public class Pieza {
     public boolean estaVacio() {
         return this.tipo == PiezaTipo.VACIO;
     }
+
 }
