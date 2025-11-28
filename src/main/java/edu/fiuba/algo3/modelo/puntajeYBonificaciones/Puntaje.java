@@ -2,8 +2,6 @@ package edu.fiuba.algo3.modelo.puntajeYBonificaciones;
 
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
-import edu.fiuba.algo3.modelo.tablero.terreno.parte.Vertice;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Pieza;
 
 public class Puntaje {
     private final Tablero tablero;
@@ -15,9 +13,9 @@ public class Puntaje {
     }
 
     public int calcularPuntaje(Jugador jugador) {
-
-        int puntajeJugador = jugador.calcularPuntajeVictoria();
-        // puntajeJugador += jugador.puntajeCartasPV;  // Supongo que cada jugador sabe las cartas PV que tiene y puede hacer el calculo.
+        int puntajeJugador = 0;
+        puntajeJugador += jugador.calcularPuntajeVictoria();
+        puntajeJugador += jugador.puntajeCartasPV();
         return puntajeJugador += bonificaciones.puntajeDe(jugador);
     }
 }

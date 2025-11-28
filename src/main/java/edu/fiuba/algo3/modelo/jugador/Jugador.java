@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.jugador;
 
 import edu.fiuba.algo3.modelo.banca.Banca;
+import edu.fiuba.algo3.modelo.cartasDesarrollo.CartaDesarrollo;
 import edu.fiuba.algo3.modelo.tablero.*;
 import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Pieza;
 
@@ -12,6 +13,7 @@ public class Jugador {
 
     private final String nombre;
     private final List<Recurso> recursos;
+    private List<CartaDesarrollo> cartasDesarrollo;
     private final Random random = new Random();
     private List<Pieza> piezas;
     private int cantidadDeCaballerosJugados;
@@ -22,6 +24,7 @@ public class Jugador {
     public Jugador(String nombre) {
         this.nombre = nombre;
         this.recursos = new ArrayList<>();
+        this.cartasDesarrollo = new ArrayList<CartaDesarrollo>();
         this.piezas = new ArrayList<Pieza>();
         this.puntaje = 0;
         this.cantidadDeCaballerosJugados = 0;
@@ -98,6 +101,14 @@ public class Jugador {
         return Pieza.calcularPuntaje(piezas);
     }
 
+    public int puntajeCartasPV() {
+        int puntosCartasPV = 0;
+        for (CartaDesarrollo carta : cartasDesarrollo) {
+            puntosCartasPV += carta.puntajeCarta();
+        }
+        return puntosCartasPV;
+    }
+
     public void intercambiarConTasaEstandar(Recurso recursoEntrante, Recurso recursoSaliente) {
         Banca.intercambioDeTasaEstandarEstatico(this, recursoEntrante, recursoSaliente);
     }
@@ -108,5 +119,16 @@ public class Jugador {
 
     public int getCaballerosJugados() {
         return cantidadDeCaballerosJugados;
+    }
+
+    public void incrementarCaballerosJugados() { this.cantidadDeCaballerosJugados += 1; }
+
+    public List<Recurso> extraerTotalidadDe(Recurso recurso) {
+        List<Recurso> extraidos = new ArrayList<>();
+        while (this.recursos.contains(recurso)) {
+            this.recursos.remove(recurso);
+            extraidos.add(recurso);
+        }
+        return extraidos;
     }
 }
