@@ -95,7 +95,7 @@ public class Jugador {
     }
 
     public int calcularPuntajeVictoria() {
-        return Pieza.calcularPuntaje(piezas);
+            return Pieza.calcularPuntaje(piezas);
     }
 
     public void intercambiarConTasaEstandar(Recurso recursoEntrante, Recurso recursoSaliente) {

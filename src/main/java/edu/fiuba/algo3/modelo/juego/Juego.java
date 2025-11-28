@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo.juego;
 
+import edu.fiuba.algo3.modelo.excepciones.RecursosInsuficientesException;
 import edu.fiuba.algo3.modelo.juego.turno.Turnos;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.randomizados.Dados;
@@ -9,6 +10,7 @@ import edu.fiuba.algo3.modelo.banca.*;
 import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 
 import java.util.Collection;
+import java.util.List;
 
 public class Juego {
 
@@ -58,8 +60,18 @@ public class Juego {
 
     public void jugadorCartaDesarrollo() {}
 
-    public void intercambioEntreJugadores() {
-        // TODO
+    public void intercambioEntreJugadores(Jugador jugador1, Jugador jugador2, List<Recurso> listaRecursosJ1, List<Recurso> listaRecursosJ2) {
+
+        if(!(jugador1.tieneRecursos(listaRecursosJ1) && jugador2.tieneRecursos(listaRecursosJ2))){
+            throw new RecursosInsuficientesException();
+        }
+
+        jugador1.eliminarRecursos(listaRecursosJ1);
+        jugador1.agregarRecursos(listaRecursosJ2);
+
+        jugador2.eliminarRecursos(listaRecursosJ2);
+        jugador2.agregarRecursos(listaRecursosJ1);
+
     }
 
     public void pasarTurno() {
