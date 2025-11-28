@@ -1,20 +1,16 @@
 package edu.fiuba.algo3.entrega_3;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 import java.util.*;
 
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.*;
-import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-public class EntregaTest {
+public class JuegoTest {
 
     private Jugador jugador1;
     private Jugador jugador2;
