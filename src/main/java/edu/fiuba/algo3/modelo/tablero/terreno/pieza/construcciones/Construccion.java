@@ -33,11 +33,11 @@ public abstract class Construccion {
         return jugador == propietario;
     }
 
-    public boolean estaVacio() {
-        return this.getClass().equals(Vacio.class);
+    public boolean esNoVacio() {
+        return !this.getClass().equals(Vacio.class);
     }
 
-    public boolean valido() {
+    public boolean esValido() {
         return !this.getClass().equals(Invalido.class);
     }
 

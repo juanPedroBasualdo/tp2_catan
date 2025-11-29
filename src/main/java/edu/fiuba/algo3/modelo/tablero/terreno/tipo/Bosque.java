@@ -3,6 +3,7 @@ package edu.fiuba.algo3.modelo.tablero.terreno.tipo;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
 import edu.fiuba.algo3.modelo.tablero.terreno.TerrenoTipo;
+import edu.fiuba.algo3.modelo.tablero.terreno.parte.Vertice;
 
 public class Bosque extends Terreno {
 

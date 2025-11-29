@@ -2,16 +2,14 @@ package edu.fiuba.algo3.modelo.tablero.terreno.parte;
 
 import edu.fiuba.algo3.modelo.excepciones.JugadorInvalidoException;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Ciudad;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Construccion;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Invalido;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Vacio;
+import edu.fiuba.algo3.modelo.tablero.Recurso;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Vertice {
-    private Construccion construccion;  // Puede ser un Poblado o una Ciudad
+    private Productor construccion;  // Puede ser un Poblado o una Ciudad
     private final int indice;
     private final List<Vertice> adyacentes;
     private final List<Arista> aristasAdyacentes = new ArrayList<>();
@@ -23,7 +21,7 @@ public class Vertice {
     }
 
     protected boolean esValido() {
-        return this.construccion.valido();
+        return this.construccion.esValido();
     }
 
     public boolean tieneIndice(int indice) {
@@ -31,14 +29,14 @@ public class Vertice {
     }
 
     public boolean estaOcupado() {
-        return !construccion.estaVacio();
+        return construccion.esNoVacio();
     }
 
     public void asignarAdyacente(Vertice vertice) {
         adyacentes.add(vertice);
     }
 
-    public void colocarPieza(Construccion pieza) {
+    public void colocarPieza(Productor pieza) {
         if (estaOcupado()) {
             throw new IllegalStateException("El vértice ya está ocupado");
         }
@@ -55,7 +53,7 @@ public class Vertice {
     }
 
 
-    private void asignarPieza(Construccion pieza) {
+    private void asignarPieza(Productor pieza) {
         this.construccion = pieza;
     }
 
@@ -75,7 +73,7 @@ public class Vertice {
         }
 
         // Creamos la pieza ciudad y la compramos de Banca para reemplazar el Poblado
-        Construccion ciudad = new Ciudad(jugador1);
+        Productor ciudad = new Ciudad(jugador1);
         ciudad.comprarPieza();
         this.construccion = ciudad;
 
@@ -101,5 +99,11 @@ public class Vertice {
         return !construccion.tienePropietario(jugador);
         /* estaOcupado() == true, pieza.tienePropietario(jugador) == true, return !true → false
         estaOcupado() == true, pieza.tienePropietario(jugador) == false, return !false → true */
+    }
+
+    public void producir(Recurso recurso) {
+        if(this.construccion.esValido() && this.construccion.esNoVacio()) {
+            this.construccion.producir(recurso);
+        }
     }
 }

@@ -6,7 +6,7 @@ import edu.fiuba.algo3.modelo.tablero.Recurso;
 import java.util.Arrays;
 import java.util.List;
 
-public class Poblado extends Construccion {
+public class Poblado extends Productor {
 
     private final List<Recurso> precioConstruccion = Arrays.asList(
       Recurso.MADERA,
@@ -28,4 +28,10 @@ public class Poblado extends Construccion {
     public int puntosDeVictoria() {
         return 1;
     }
+
+    @Override
+    public void producir(Recurso recurso) {
+        this.getPropietario().agregarRecurso(recurso);
+    }
+
 }

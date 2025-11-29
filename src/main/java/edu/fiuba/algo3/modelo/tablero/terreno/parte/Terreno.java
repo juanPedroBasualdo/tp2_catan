@@ -128,5 +128,14 @@ public abstract class Terreno {
     }
 
 
+    public boolean tieneNumero(int numeroFicha) {
+        return this.fichaNumero == numeroFicha;
+    }
+
+    public void producir() {
+        for(Vertice v : vertices) {
+            v.producir(this.getRecurso());
+        }
+    }
 }
 

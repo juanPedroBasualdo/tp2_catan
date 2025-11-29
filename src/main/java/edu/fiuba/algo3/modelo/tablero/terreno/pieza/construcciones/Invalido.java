@@ -4,7 +4,7 @@ import edu.fiuba.algo3.modelo.tablero.Recurso;
 
 import java.util.List;
 
-public class Invalido extends Construccion{
+public class Invalido extends NoProductor {
 
     public Invalido() {
         super(null);
@@ -15,8 +15,4 @@ public class Invalido extends Construccion{
         return null;
     }
 
-    @Override
-    public int puntosDeVictoria() {
-        return 0;
-    }
 }

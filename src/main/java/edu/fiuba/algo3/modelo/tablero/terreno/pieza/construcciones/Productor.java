@@ -3,23 +3,17 @@ package edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class Carretera extends Construccion {
+public abstract class Productor extends Construccion{
 
-    private final List<Recurso> precioConstruccion = Arrays.asList(
-            Recurso.MADERA,
-            Recurso.ARCILLA
-    );
-
-    public Carretera(Jugador jugador) {
-        super(jugador);
+    protected Productor(Jugador propietario) {
+        super(propietario);
     }
 
     @Override
     public List<Recurso> obtenerPrecioPieza() {
-        return precioConstruccion;
+        return List.of();
     }
 
     @Override
@@ -27,4 +21,5 @@ public class Carretera extends Construccion {
         return 0;
     }
 
+    public abstract void producir(Recurso recurso);
 }
