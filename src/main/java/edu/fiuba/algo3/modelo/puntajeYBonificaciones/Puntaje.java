@@ -13,9 +13,9 @@ public class Puntaje {
     }
 
     public int calcularPuntaje(Jugador jugador) {
-
-        int puntajeJugador = jugador.calcularPuntajeVictoria();
-        // puntajeJugador += jugador.puntajeCartasPV;  // Supongo que cada jugador sabe las cartas PV que tiene y puede hacer el calculo.
+        int puntajeJugador = 0;
+        puntajeJugador += jugador.calcularPuntajeVictoria();
+        puntajeJugador += jugador.puntajeCartasPV();
         return puntajeJugador += bonificaciones.puntajeDe(jugador);
     }
 }
