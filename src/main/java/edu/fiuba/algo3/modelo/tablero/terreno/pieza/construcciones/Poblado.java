@@ -2,22 +2,36 @@ package edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones;
 
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Pieza;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.PiezaTipo;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Poblado extends Pieza {
+public class Poblado extends Productor {
 
-    public Poblado(Jugador jugador) {
-        super(PiezaTipo.POBLADO,jugador);
-        this.puntajeVictoria = 1;
-        this.precioConstruccion = Arrays.asList(
-                Recurso.MADERA,
-                Recurso.ARCILLA,
-                Recurso.LANA,
-                Recurso.CEREAL
-        );
+    private final List<Recurso> precioConstruccion = Arrays.asList(
+      Recurso.MADERA,
+      Recurso.LANA,
+      Recurso.ARCILLA,
+      Recurso.CEREAL
+    );
+
+    public Poblado(Jugador propietario) {
+        super(propietario);
     }
+
+    @Override
+    public List<Recurso> obtenerPrecioPieza() {
+        return precioConstruccion;
+    }
+
+    @Override
+    public int puntosDeVictoria() {
+        return 1;
+    }
+
+    @Override
+    public void producir(Recurso recurso) {
+        this.getPropietario().agregarRecurso(recurso);
+    }
+
 }

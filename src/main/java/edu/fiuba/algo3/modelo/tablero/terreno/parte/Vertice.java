@@ -2,27 +2,26 @@ package edu.fiuba.algo3.modelo.tablero.terreno.parte;
 
 import edu.fiuba.algo3.modelo.excepciones.JugadorInvalidoException;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Pieza;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.PiezaTipo;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Ciudad;
+import edu.fiuba.algo3.modelo.tablero.Recurso;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Vertice {
-    private Pieza pieza;  // Puede ser un Poblado o una Ciudad
+    private Productor construccion;  // Puede ser un Poblado o una Ciudad
     private final int indice;
     private final List<Vertice> adyacentes;
     private final List<Arista> aristasAdyacentes = new ArrayList<>();
 
     public Vertice(int indice) {
         this.indice = indice;
-        this.pieza = new Pieza(PiezaTipo.VACIO);
+        this.construccion = new Vacio();
         adyacentes = new ArrayList<>();
     }
 
     protected boolean esValido() {
-        return this.pieza.valido();
+        return this.construccion.esValido();
     }
 
     public boolean tieneIndice(int indice) {
@@ -30,14 +29,14 @@ public class Vertice {
     }
 
     public boolean estaOcupado() {
-        return !pieza.estaVacio();
+        return construccion.esNoVacio();
     }
 
     public void asignarAdyacente(Vertice vertice) {
         adyacentes.add(vertice);
     }
 
-    public void colocarPieza(Pieza pieza) {
+    public void colocarPieza(Productor pieza) {
         if (estaOcupado()) {
             throw new IllegalStateException("El vértice ya está ocupado");
         }
@@ -48,24 +47,24 @@ public class Vertice {
         // Esto verifica que el jugador contenga los recursos antes de agregar la Pieza al vertice y extrae los recursos
         pieza.comprarPieza();
 
-        this.pieza = pieza;
+        this.construccion = pieza;
         this.invalidarAdyacentes();
 
     }
 
 
-    private void asignarPieza(Pieza pieza) {
-        this.pieza = pieza;
+    private void asignarPieza(Productor pieza) {
+        this.construccion = pieza;
     }
 
     private void invalidarAdyacentes() {
         for(Vertice ady : adyacentes) {
-            ady.asignarPieza(new Pieza(PiezaTipo.INVALIDO));
+            ady.asignarPieza(new Invalido());
         }
     }
 
     public boolean validarDatosMejoraCiudad(Jugador jugador1) {
-        return pieza.validarMejoraPoblado(jugador1);
+        return construccion.validarMejoraPoblado(jugador1);
     }
 
     public void mejorarPoblado(Jugador jugador1) {
@@ -74,17 +73,17 @@ public class Vertice {
         }
 
         // Creamos la pieza ciudad y la compramos de Banca para reemplazar el Poblado
-        Pieza ciudad = new Ciudad(jugador1);
+        Productor ciudad = new Ciudad(jugador1);
         ciudad.comprarPieza();
-        this.pieza = ciudad;
+        this.construccion = ciudad;
 
         this.invalidarAdyacentes();
     }
 
-    public Pieza obtenerPieza() { return pieza ;}
+    public Construccion obtenerPieza() { return construccion;}
 
     public boolean esPropietario(Jugador jugador) {
-        return pieza.tienePropietario(jugador);
+        return construccion.tienePropietario(jugador);
     }
 
     public void asignarArista(Arista arista) {
@@ -97,8 +96,14 @@ public class Vertice {
 
     public boolean bloqueaMayorRutaComercial(Jugador jugador) {
         if (!estaOcupado()) return false;         // estaOcupado() == false → return false
-        return !pieza.tienePropietario(jugador);
+        return !construccion.tienePropietario(jugador);
         /* estaOcupado() == true, pieza.tienePropietario(jugador) == true, return !true → false
         estaOcupado() == true, pieza.tienePropietario(jugador) == false, return !false → true */
+    }
+
+    public void producir(Recurso recurso) {
+        if(this.construccion.esValido() && this.construccion.esNoVacio()) {
+            this.construccion.producir(recurso);
+        }
     }
 }

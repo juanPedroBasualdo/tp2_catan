@@ -20,4 +20,7 @@ public class Desierto extends Terreno {
         return null;
     }
 
+    @Override
+    public void producir() {}
+
 }

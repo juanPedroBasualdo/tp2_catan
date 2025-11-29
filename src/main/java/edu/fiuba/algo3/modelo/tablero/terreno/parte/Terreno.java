@@ -1,8 +1,6 @@
 package edu.fiuba.algo3.modelo.tablero.terreno.parte;
 
 import edu.fiuba.algo3.modelo.jugador.Jugador;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Pieza;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.PiezaTipo;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.modelo.tablero.terreno.TerrenoTipo;
 import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Poblado;
@@ -15,10 +13,12 @@ import java.util.List;
 
 public abstract class Terreno {
 
+    // Atributos
     private final int fichaNumero;
     private final List<Vertice> vertices;
     private final List<Arista> aristas;
 
+    // Constructores
     protected Terreno(int fichaNumero) {
         this.fichaNumero = fichaNumero;
         this.vertices = new ArrayList<>();
@@ -128,5 +128,14 @@ public abstract class Terreno {
     }
 
 
+    public boolean tieneNumero(int numeroFicha) {
+        return this.fichaNumero == numeroFicha;
+    }
+
+    public void producir() {
+        for(Vertice v : vertices) {
+            v.producir(this.getRecurso());
+        }
+    }
 }
 

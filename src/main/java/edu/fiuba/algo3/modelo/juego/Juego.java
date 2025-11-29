@@ -42,6 +42,10 @@ public class Juego {
         tablero.mejorarPoblado(turnero.jugadorActual(), coordenada);
     }
 
+    public void otorgarRecursos(int fichaNumero) {
+        // TODO
+    }
+
     public void intercambioTasaEspecifica(Recurso recursoACambiar, Recurso recursoARecibir) {
         tablero.intercambiarConPuertoEspecifico(turnero.jugadorActual(), recursoACambiar, recursoARecibir);
     }
@@ -58,7 +62,9 @@ public class Juego {
         // TODO
     }
 
-    public void jugadorCartaDesarrollo() {}
+    public void jugarCartaDesarrollo() {
+        // TODO
+    }
 
     /**
      * Metodo para intercambio entre dos jugadores una vez aceptada la oferta y teniendo ambas listas de recursos

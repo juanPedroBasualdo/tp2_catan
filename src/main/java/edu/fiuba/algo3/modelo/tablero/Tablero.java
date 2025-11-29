@@ -255,6 +255,15 @@ public class Tablero {
 
     /* SECTION Comportamiento */
 
+    public void producirRecursos(int numeroFicha) {
+        List<Terreno> terrenosProduccion = this.getTerrenos();
+        for(Terreno t : terrenosProduccion) {
+            if(!t.tieneLadron() && t.tieneNumero(numeroFicha)) {
+                t.producir();
+            }
+        }
+    }
+
     public static Map<Recurso, Long> producirRecursos(int numero, List<Terreno> terreno) {
         List<Terreno> produccion = new ArrayList<>();
         for(Terreno t : terreno) {
