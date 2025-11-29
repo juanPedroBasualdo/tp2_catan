@@ -1,7 +1,6 @@
 package edu.fiuba.algo3.modelo.banca;
 
 import edu.fiuba.algo3.modelo.jugador.Jugador;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.PiezaTipo;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 
 import java.util.ArrayList;

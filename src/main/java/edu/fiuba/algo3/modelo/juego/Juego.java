@@ -41,7 +41,7 @@ public class Juego {
     }
 
     public void otorgarRecursos(int fichaNumero) {
-        // TODO
+        tablero.producirRecursos(fichaNumero);
     }
 
     public void intercambioTasaEspecifica(Recurso recursoACambiar, Recurso recursoARecibir) {
