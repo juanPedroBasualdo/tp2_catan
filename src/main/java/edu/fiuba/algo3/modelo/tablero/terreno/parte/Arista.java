@@ -3,8 +3,8 @@ package edu.fiuba.algo3.modelo.tablero.terreno.parte;
 import edu.fiuba.algo3.modelo.excepciones.CaminoDesconectadoException;
 import edu.fiuba.algo3.modelo.excepciones.PosicionInvalidaException;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Pieza;
 import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Carretera;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Construccion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class Arista {
             throw new CaminoDesconectadoException("La arista no esta conectada con una pieza de este jugador");
         }
 
-        Pieza camino = new Carretera(jugador);
+        Construccion camino = new Carretera(jugador);
         camino.comprarPieza();
 
         this.propietario = jugador;

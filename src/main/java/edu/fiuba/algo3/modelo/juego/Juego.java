@@ -40,6 +40,10 @@ public class Juego {
         tablero.mejorarPoblado(turnero.jugadorActual(), coordenada);
     }
 
+    public void otorgarRecursos(int fichaNumero) {
+        // TODO
+    }
+
     public void intercambioTasaEspecifica(Recurso recursoACambiar, Recurso recursoARecibir) {
         tablero.intercambiarConPuertoEspecifico(turnero.jugadorActual(), recursoACambiar, recursoARecibir);
     }
@@ -56,7 +60,9 @@ public class Juego {
         // TODO
     }
 
-    public void jugadorCartaDesarrollo() {}
+    public void jugarCartaDesarrollo() {
+        // TODO
+    }
 
     public void intercambioEntreJugadores() {
         // TODO
