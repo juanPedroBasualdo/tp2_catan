@@ -11,6 +11,7 @@ class Recurso
 class Tablero
 class Coordenada
 class Banca
+class Turno
 
 abstract Construccion
 abstract Productor
@@ -32,6 +33,7 @@ interface Puerto
 class PuertoEspecifico2_1
 class PuertoGenerico3_1
 
+Turno --> Jugador
 
 Arista --> Vertice
 Arista --> Jugador

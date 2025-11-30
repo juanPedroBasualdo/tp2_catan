@@ -12,5 +12,6 @@
 !include clases/vertice.puml
 !include clases/puertos.puml
 !include clases/excepciones.puml
+!include clases/turnos.puml
 
 @enduml
