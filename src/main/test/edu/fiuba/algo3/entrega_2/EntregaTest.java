@@ -44,9 +44,8 @@ public class EntregaTest {
         // Assert
         assertEquals(2, jugador1.calcularPuntajeVictoria());
 
-        boolean puntosCorrectos = jugador1.calcularPuntajeVictoria() == 2;
         boolean recursosDescontados = jugador1.cantidadDeRecursos() == 0;
-        assertTrue(puntosCorrectos && recursosDescontados);
+        assertTrue(recursosDescontados);
     }
 
 

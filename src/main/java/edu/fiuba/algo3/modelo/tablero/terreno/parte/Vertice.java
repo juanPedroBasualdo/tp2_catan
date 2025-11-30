@@ -75,6 +75,7 @@ public class Vertice {
         // Creamos la pieza ciudad y la compramos de Banca para reemplazar el Poblado
         Productor ciudad = new Ciudad(jugador1);
         ciudad.comprarPieza();
+        jugador1.removerConstruccion(this.construccion);
         this.construccion = ciudad;
 
         this.invalidarAdyacentes();

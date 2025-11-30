@@ -1,7 +1,5 @@
 package edu.fiuba.algo3.modelo.cartasDesarrollo;
 
-import edu.fiuba.algo3.modelo.banca.Banca;
-import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 
@@ -9,36 +7,38 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class Monopolio implements CartaDesarrollo {
-    private final Collection<Jugador> jugadores;
-    private List<Recurso> recursosExtraidos;
 
-    public Monopolio(Collection<Jugador> jugadores) {
+public class Monopolio extends CartaDesarrollo implements Jugable {
+
+    private Collection<Jugador> jugadores;
+    private Recurso recursoElegido;
+
+    public Monopolio(Jugador propietario, int numeroTurno) {
+        super(propietario, numeroTurno);
+    }
+
+    public Monopolio(Jugador propietario, int numeroTurno, Collection<Jugador> jugadores, Recurso recurso) {
+        this(propietario, numeroTurno);
         this.jugadores = jugadores;
-        this.recursosExtraidos = new ArrayList<>();
+        this.recursoElegido = recurso;
+    }
+
+    public void jugar(int numeroTurno, Recurso recurso) {
+        this.elegirRecurso(recurso);
+        this.jugar(numeroTurno);
     }
 
     @Override
-    public boolean esJugable() {return true; }
-
-    @Override
-    public void jugar(Juego juego, Jugador jugador, Recurso recursoElegido) {
-        recursosExtraidos.clear();
-
-        for (Jugador j : jugadores) {
-            if (j == jugador) continue;
-            List<Recurso> delJugador = j.extraerTotalidadDe(recursoElegido);
-            recursosExtraidos.addAll(delJugador);
+    protected void efecto() {
+        List<Recurso> monopolio = new ArrayList<>();
+        for(Jugador j : jugadores) {
+            List<Recurso> obtenido = j.extraerTotalidadDe(this.recursoElegido);
+            monopolio.addAll(obtenido);
         }
-
-        for (Recurso r : recursosExtraidos) {
-            jugador.agregarRecurso(r);
-        }
+        this.propietario.agregarRecursos(monopolio);
     }
 
-    @Override
-    public int puntajeCarta() { return 0; }
-
-    @Override
-    public void jugar(Juego juego, Jugador jugador) { }
+    public void elegirRecurso(Recurso recurso) {
+        this.recursoElegido = recurso;
+    }
 }

@@ -2,10 +2,14 @@ package edu.fiuba.algo3.modelo.jugador;
 
 import edu.fiuba.algo3.modelo.banca.Banca;
 import edu.fiuba.algo3.modelo.cartasDesarrollo.CartaDesarrollo;
+import edu.fiuba.algo3.modelo.cartasDesarrollo.PuntoDeVictoria;
+import edu.fiuba.algo3.modelo.puntajeYBonificaciones.Puntaje;
 import edu.fiuba.algo3.modelo.tablero.*;
 import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Construccion;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Productor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -98,16 +102,27 @@ public class Jugador {
     }
 
     public int calcularPuntajeVictoria() {
-        //return Pieza.calcularPuntaje(construcciones);
-        return 2;
+        return Puntaje.calcularPuntajeJugador(this);
     }
 
     public int puntajeCartasPV() {
+        List<PuntoDeVictoria> cartasPV = this.filtrarCartasDePuntos();
         int puntosCartasPV = 0;
-        for (CartaDesarrollo carta : cartasDesarrollo) {
+        for (PuntoDeVictoria carta : cartasPV) {
             puntosCartasPV += carta.puntajeCarta();
         }
         return puntosCartasPV;
+    }
+
+    private List<PuntoDeVictoria> filtrarCartasDePuntos() {
+        List<PuntoDeVictoria> listaCartasPV = new ArrayList<>();
+        for(CartaDesarrollo c : this.cartasDesarrollo) {
+            if(c.getClass().equals(PuntoDeVictoria.class)){
+                listaCartasPV.add((PuntoDeVictoria) c);
+            }
+        }
+        return listaCartasPV;
+
     }
 
     public void intercambiarConTasaEstandar(Recurso recursoEntrante, Recurso recursoSaliente) {
@@ -131,5 +146,19 @@ public class Jugador {
             extraidos.add(recurso);
         }
         return extraidos;
+    }
+
+    public int puntajeConstrucciones() {
+        int res = 0;
+        for(Construccion c : construcciones) {
+            res += c.puntosDeVictoria();
+        }
+        return res;
+    }
+
+    public void removerConstruccion(Productor construccion) {
+        if(this.construcciones.contains(construccion)) {
+            this.construcciones.remove(construccion);
+        }
     }
 }
