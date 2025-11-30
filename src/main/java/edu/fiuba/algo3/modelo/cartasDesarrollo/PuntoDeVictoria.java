@@ -13,8 +13,12 @@ public class PuntoDeVictoria extends CartaDesarrollo implements OtorgaPuntajes {
         return false;
     }
 
+
     @Override
-    protected void efecto() {}
+    protected void efecto() {
+        /* Dejo vacio el efecto por no poder hacer herencia multiple.
+         * Ya que en el caso de poder, Jugable seria una clase abstracta y no una interfaz. */
+    }
 
     @Override
     public int puntajeCarta() {
