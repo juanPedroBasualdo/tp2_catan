@@ -1,0 +1,36 @@
+@startuml test03JugadorMejoraPobladoYRecibePV
+
+title test03JugadorMejoraPobladoYRecibePV
+
+actor TestCase03
+participant "tablero: Tablero" as tablero
+participant "jugador1 : Jugador" as jugador
+participant "coordenadaPoblado: Coordenada" as coordenada
+
+TestCase03 -> tablero : new()
+activate tablero
+deactivate tablero
+TestCase03 -> jugador : new("Jugador 1")
+activate jugador
+deactivate jugador
+
+
+
+jugador -> jugador : agregarRecursos(listaRecursosCiudad)
+activate jugador
+deactivate jugador
+
+jugador -> jugador : agregarRecursos(listaRecursosCiudad)
+activate jugador
+deactivate jugador
+
+TestCase03 -> coordenada : new(2,2,2)
+activate coordenada
+deactivate coordenada
+
+
+
+
+
+
+@enduml
