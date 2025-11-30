@@ -1,0 +1,54 @@
+@startuml
+
+interface CartaDesarrollo {
+    + esJugable() : boolean
+    + jugar(juego : Juego, jugador : Jugador) : void
+    + jugar(juego : Juego, jugador : Jugador, recurso : Recurso) : void
+    + puntajeCarta() : int
+}
+
+class Caballero {
+    + esJugable() : boolean
+    + jugar(juego : Juego, jugador : Jugador) : void
+    + puntajeCarta() : int
+}
+
+class Monopolio {
+    - jugadores : Collection<Jugador>
+    - recursosExtraidos : List<Recurso>
+
+    + Monopolio(jugadores : Collection<Jugador>)
+    + esJugable() : boolean
+    + jugar(juego : Juego, jugador : Jugador, recursoElegido : Recurso) : void
+    + jugar(juego : Juego, jugador : Jugador) : void
+    + puntajeCarta() : int
+}
+
+class PuntoDeVictoria {
+    + esJugable() : boolean
+    + jugar(juego : Juego, jugador : Jugador) : void
+    + puntajeCarta() : int
+}
+
+class Invencion {
+    + esJugable() : boolean
+    + puntajeCarta() : int
+    + jugar(juego : Juego, jugador : Jugador) : void
+}
+
+class ConstruccionDeCarreteras {
+    + esJugable() : boolean
+    + puntajeCarta() : int
+    + jugar(juego : Juego, jugador : Jugador) : void
+}
+
+CartaDesarrollo <|.. Caballero
+CartaDesarrollo <|.. Monopolio
+CartaDesarrollo <|.. PuntoDeVictoria
+CartaDesarrollo <|.. Invencion
+CartaDesarrollo <|.. ConstruccionDeCarreteras
+
+Monopolio "1" o-- "*" Jugador
+Monopolio "1" o-- "*" Recurso
+
+@enduml

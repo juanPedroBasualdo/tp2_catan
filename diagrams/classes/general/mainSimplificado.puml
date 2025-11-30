@@ -1,0 +1,89 @@
+@startuml DiagramaDeRelaciones
+
+skinparam classAttributeIconSize 0
+skinparam defaultFontName Arial
+skinparam shadowing false
+
+class Arista
+class Vertice
+class Jugador
+class Recurso
+class Tablero
+class Coordenada
+class Banca
+
+abstract Construccion
+abstract Productor
+class Carretera
+class Ciudad
+class Poblado
+class Vacio
+class Invalido
+class NoProductor
+
+interface CartaDesarrollo
+class Monopolio
+
+abstract Terreno
+
+enum TerrenoTipo
+
+interface Puerto
+class PuertoEspecifico2_1
+class PuertoGenerico3_1
+
+
+Arista --> Vertice
+Arista --> Jugador
+
+Banca --> Recurso
+Banca --> Jugador
+
+Monopolio o-- Jugador
+Monopolio o-- Recurso
+
+Construccion <|-- Productor
+Productor <|-- NoProductor
+Construccion <|-- Carretera
+Productor <|-- Ciudad
+Productor <|-- Poblado
+NoProductor <|-- Vacio
+NoProductor <|-- Invalido
+
+Construccion o-- Jugador
+Construccion --> Recurso
+
+Jugador *-- Recurso
+Jugador *-- Construccion
+Jugador o-- CartaDesarrollo
+
+Puerto <|.. PuertoEspecifico2_1
+Puerto <|.. PuertoGenerico3_1
+PuertoEspecifico2_1 --> Jugador
+PuertoEspecifico2_1 --> Recurso
+PuertoEspecifico2_1 --> Vertice
+
+PuertoGenerico3_1 --> Jugador
+PuertoGenerico3_1 --> Recurso
+PuertoGenerico3_1 --> Vertice
+
+Tablero *-- Terreno
+Tablero *-- Vertice
+Tablero *-- Arista
+Tablero --> Jugador
+Tablero --> Recurso
+Tablero --> Coordenada
+Tablero --> PuertoEspecifico2_1
+Tablero --> PuertoGenerico3_1
+
+Terreno --> Vertice
+Terreno --> Arista
+Terreno --> Jugador
+Terreno --> Recurso
+Terreno --> TerrenoTipo
+
+Vertice o-- Productor
+Vertice o-- Vertice
+Vertice o-- Arista
+
+@enduml

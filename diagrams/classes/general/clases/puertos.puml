@@ -1,0 +1,52 @@
+@startuml
+
+interface Puerto {
+    + intercambiar(jugador : Jugador,
+                   recursoACambiar : Recurso,
+                   recursoARecibir : Recurso) : void
+}
+
+class PuertoEspecifico2_1 {
+    - verticesDePuerto : HashMap<Recurso, List<Vertice>>
+
+    + PuertoEspecifico2_1(verticesDePuerto : HashMap<Recurso, List<Vertice>>)
+    + intercambiar(jugador : Jugador,
+                   recursoACambiar : Recurso,
+                   recursoARecibir : Recurso) : void
+    + puedeIntercambiar(jugador : Jugador, recurso : Recurso) : boolean
+    + obtenerVerticesPuertoDe(recurso : Recurso) : List<Vertice>
+}
+
+Puerto <|.. PuertoEspecifico2_1
+
+PuertoEspecifico2_1 --> Jugador
+PuertoEspecifico2_1 --> Recurso
+PuertoEspecifico2_1 --> Vertice
+
+class NoTieneRecursosParaIntercambioException
+class PuertoNoAdyacenteException
+
+PuertoEspecifico2_1 --> NoTieneRecursosParaIntercambioException
+PuertoEspecifico2_1 --> PuertoNoAdyacenteException
+
+class PuertoGenerico3_1 {
+    - verticesDePuerto : List<Vertice>
+
+    + PuertoGenerico3_1(verticesDePuerto : List<Vertice>)
+    + intercambiar(jugador : Jugador,
+                   recursoACambiar : Recurso,
+                   recursoARecibir : Recurso) : void
+    + puedeComerciar(jugador : Jugador) : boolean
+}
+
+Puerto <|.. PuertoGenerico3_1
+
+PuertoGenerico3_1 --> Jugador
+PuertoGenerico3_1 --> Recurso
+PuertoGenerico3_1 --> Vertice
+
+PuertoGenerico3_1 --> NoTieneRecursosParaIntercambioException
+PuertoGenerico3_1 --> PuertoNoAdyacenteException
+
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+
+class Banca {
+    - listaDeRecursosDisponibles : List<Recurso>
+
+    + Banca()
+    + intercambioDeTasaEstandar(jugador : Jugador, recursoEntrante : Recurso, recursoSaliente : Recurso) : void
+    + generarRecursosIniciales() : List<Recurso>
+    + {static} extraerRecursos(jugador : Jugador, listaDeRecursos : List<Recurso>) : void
+    + {static} intercambioDeTasaEstandarEstatico(jugador : Jugador, recursoEntrante : Recurso, recursoSaliente : Recurso) : void
+}
+
+Banca --> Recurso
+Banca --> Jugador
+
+@enduml
