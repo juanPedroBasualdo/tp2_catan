@@ -1,6 +1,18 @@
 package edu.fiuba.algo3.modelo.cartasDesarrollo;
 
-public interface Jugable {
+import edu.fiuba.algo3.modelo.jugador.Jugador;
 
-    void jugar(int numeroTurno);
+public abstract class Jugable extends CartaDesarrollo {
+
+    public Jugable(Jugador propietario, int turnoObtenido) {
+        super(propietario, turnoObtenido);
+    }
+
+    public void jugar(int numeroTurno) {
+        if(esJugable(numeroTurno)) {
+            this.efecto();
+        }
+    }
+
+    protected abstract void efecto();
 }

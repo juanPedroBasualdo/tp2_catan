@@ -3,7 +3,7 @@ package edu.fiuba.algo3.modelo.cartasDesarrollo;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 
-public class ConstruccionDeCarreteras extends CartaDesarrollo implements Jugable {
+public class ConstruccionDeCarreteras extends Jugable {
 
     private Coordenada coordenada1;
     private Coordenada coordenada2;

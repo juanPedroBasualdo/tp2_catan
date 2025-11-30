@@ -5,7 +5,7 @@ import edu.fiuba.algo3.modelo.tablero.Recurso;
 
 import java.util.Arrays;
 
-public class Invencion extends CartaDesarrollo implements Jugable {
+public class Invencion extends Jugable {
 
     private Recurso recurso1;
     private Recurso recurso2;

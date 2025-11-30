@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 
-public class Monopolio extends CartaDesarrollo implements Jugable {
+public class Monopolio extends Jugable {
 
     private Collection<Jugador> jugadores;
     private Recurso recursoElegido;

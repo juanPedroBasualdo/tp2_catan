@@ -15,12 +15,4 @@ public abstract class CartaDesarrollo {
     public boolean esJugable(int numeroTurno) {
         return !(numeroTurno == this.turnoObtenido);
     }
-
-    public void jugar(int numeroTurno) {
-        if(esJugable(numeroTurno)) {
-            this.efecto();
-        }
-    }
-
-    protected abstract void efecto();
 }

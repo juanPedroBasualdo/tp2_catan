@@ -59,11 +59,15 @@ public class Juego {
     }
 
     public void comprarCartaDesarrollo() {
+        banca.venderCartaDesarrollo(turnero.jugadorActual(), turnero.numeroDeTurno());
+    }
+
+    public void jugarCartaCaballero(Coordenada coordenada) {
         // TODO
     }
 
-    public void jugarCartaDesarrollo() {
-        // TODO
+    public void jugarConstruccionDeCarreteras(Coordenada c1, Coordenada c2) {
+
     }
 
     /**
@@ -76,7 +80,7 @@ public class Juego {
     public void intercambioEntreJugadores(Jugador jugador1, Jugador jugador2, List<Recurso> listaRecursosJ1, List<Recurso> listaRecursosJ2) {
 
         if(!(jugador1.tieneRecursos(listaRecursosJ1) && jugador2.tieneRecursos(listaRecursosJ2))){
-            throw new RecursosInsuficientesException();
+            throw new RecursosInsuficientesException("El jugador no tiene recursos necesarios.");
         }
 
         jugador1.eliminarRecursos(listaRecursosJ1);
