@@ -14,10 +14,13 @@ import java.util.List;
 
 public class Juego {
 
+    /*-- Atributos --*/
     private final Turnos turnero;
     private final Tablero tablero;
     private final Banca banca;
     private final Dados dados;
+
+    /*-- Constructores --*/
 
     public Juego(Collection<Jugador> listaJugadores) {
         turnero = new Turnos(listaJugadores);
@@ -25,6 +28,8 @@ public class Juego {
         banca = new Banca();
         dados = new Dados();
     }
+
+    /*-- Metodos de fachada --*/
 
     public int tirarDados() {
        return dados.tirar();
@@ -43,7 +48,7 @@ public class Juego {
     }
 
     public void otorgarRecursos(int fichaNumero) {
-        // TODO
+        tablero.producirRecursos(fichaNumero);
     }
 
     public void intercambioTasaEspecifica(Recurso recursoACambiar, Recurso recursoARecibir) {
@@ -59,11 +64,15 @@ public class Juego {
     }
 
     public void comprarCartaDesarrollo() {
+        banca.venderCartaDesarrollo(turnero.jugadorActual(), turnero.numeroDeTurno());
+    }
+
+    public void jugarCartaCaballero(Coordenada coordenada) {
         // TODO
     }
 
-    public void jugarCartaDesarrollo() {
-        // TODO
+    public void jugarConstruccionDeCarreteras(Coordenada c1, Coordenada c2) {
+
     }
 
     /**
@@ -76,7 +85,7 @@ public class Juego {
     public void intercambioEntreJugadores(Jugador jugador1, Jugador jugador2, List<Recurso> listaRecursosJ1, List<Recurso> listaRecursosJ2) {
 
         if(!(jugador1.tieneRecursos(listaRecursosJ1) && jugador2.tieneRecursos(listaRecursosJ2))){
-            throw new RecursosInsuficientesException();
+            throw new RecursosInsuficientesException("El jugador no tiene recursos necesarios.");
         }
 
         jugador1.eliminarRecursos(listaRecursosJ1);

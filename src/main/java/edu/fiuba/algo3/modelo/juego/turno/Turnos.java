@@ -8,15 +8,21 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Turnos {
 
+    /*-- Atributos --*/
+
     private final Queue<Jugador> turnero;
     private Jugador jugadorActual;
     private int numeroDeTurno;
+
+    /*-- Constructores --*/
 
     public Turnos(Collection<Jugador> listaJugadores) {
         turnero = new ConcurrentLinkedQueue<>(listaJugadores);
         this.jugadorActual = turnero.peek();
         this.numeroDeTurno = 1;
     }
+
+    /*-- Auxiliares --*/
 
     public void pasarTurno() {
         this.siguienteJugador();
@@ -30,6 +36,8 @@ public class Turnos {
         this.jugadorActual = turnero.peek();
         turnero.add(jugadorAnterior);
     }
+
+    /*-- Getters --*/
 
     public Jugador jugadorActual() {
         return this.jugadorActual;

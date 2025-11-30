@@ -11,14 +11,15 @@ import java.util.List;
 
 public class PuertoGenerico3_1 implements Puerto {
 
+    /*-- Atributos --*/
     List<Vertice> verticesDePuerto;
 
+    /*-- Constructores --*/
     public PuertoGenerico3_1(List<Vertice> verticesDePuerto) {
         this.verticesDePuerto = verticesDePuerto;
     }
 
-    // TODO se supone que el puerto tiene que estar en una arista para que Jugador la pueda usar, discutir en llamada
-
+    /*-- Metodo de intercambio --*/
     @Override
     public void intercambiar(Jugador jugador, Recurso recursoACambiar, Recurso recursoARecibir) {
         if(puedeComerciar(jugador)){
@@ -35,6 +36,7 @@ public class PuertoGenerico3_1 implements Puerto {
         }
     }
 
+    /*-- Metodo de Verificacion de intercambio valido --*/
     public boolean puedeComerciar(Jugador jugador) {
         for(Vertice v : verticesDePuerto) {
             if(v.esPropietario(jugador)){

@@ -17,9 +17,9 @@ public abstract class Construccion {
 
     public void comprarPieza() {
         if (!propietario.tieneRecursos(this.obtenerPrecioPieza())){
-            throw new RecursosInsuficientesException();
+            throw new RecursosInsuficientesException("El jugador no tiene recursos suficientes para comprar la pieza. ");
         }
-        propietario.agregarPieza(this);
+        propietario.agregarConstruccion(this);
         Banca.extraerRecursos(propietario, this.obtenerPrecioPieza());
     }
 

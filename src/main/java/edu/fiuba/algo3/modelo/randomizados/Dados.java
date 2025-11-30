@@ -2,6 +2,8 @@ package edu.fiuba.algo3.modelo.randomizados;
 import java.util.Random;
 
 public class Dados {
+
+    /*----*/
     private final Random random;
 
     public Dados() {

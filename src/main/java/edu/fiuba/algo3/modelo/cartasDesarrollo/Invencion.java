@@ -1,19 +1,46 @@
 package edu.fiuba.algo3.modelo.cartasDesarrollo;
 
-import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 
-public class Invencion implements CartaDesarrollo {
-    @Override
-    public boolean esJugable() {return true; }
+import java.util.Arrays;
+
+public class Invencion extends Jugable {
+
+    /*-- Atributos --*/
+
+    private Recurso recurso1;
+    private Recurso recurso2;
+
+    /*-- Constructores --*/
+
+    public Invencion(Jugador propietario, int turnoObtenido) {
+        super(propietario, turnoObtenido);
+    }
+
+    public Invencion(Jugador propietario, int turnoObtenido, Recurso recurso1, Recurso recurso2) {
+        this(propietario, turnoObtenido);
+        this.recurso1 = recurso1;
+        this.recurso2 = recurso2;
+    }
+
+    /*-- Metodos de comportamiento --*/
+
+    public void jugar(int numeroTurno, Recurso recurso1, Recurso recurso2){
+        this.elegirRecursos(recurso1, recurso2);
+        this.jugar(numeroTurno);
+    }
 
     @Override
-    public int puntajeCarta() { return 0; }
+    protected void efecto() {
+        this.propietario.agregarRecursos(Arrays.asList(this.recurso1, this.recurso2));
+    }
 
-    public void jugar(Juego juego, Jugador jugador) {
-        Recurso recurso1, recurso2;
-        // jugador.agregarRecurso(recurso1);
-        // jugador.agregarRecurso(recurso2);
+    /*-- Setter --*/
+
+    private void elegirRecursos(Recurso recurso1, Recurso recurso2) {
+        this.recurso1 = recurso1;
+        this.recurso2 = recurso2;
     }
 }
+
