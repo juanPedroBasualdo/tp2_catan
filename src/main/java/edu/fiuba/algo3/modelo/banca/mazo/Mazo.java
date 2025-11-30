@@ -7,7 +7,11 @@ import java.util.Random;
 
 public class Mazo {
 
+    /*-- Atributos --*/
+
     private final Random random;
+
+    /*-- Constructores --*/
 
     public Mazo(Random random) {
         this.random = random;
@@ -20,6 +24,8 @@ public class Mazo {
     public Mazo() {
         this(new Random());
     }
+
+    /*-- Metodo de creacion de Cartas --*/
 
     public CartaDesarrollo robarCartaDesarrollo(Jugador jugador, int numeroTurno) {
         int eleccion = (random.nextInt(25) + 1);

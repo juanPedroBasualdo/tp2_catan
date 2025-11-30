@@ -10,11 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Arista {
+    
+    /*-- Atributos --*/
+
     private final String key;
     private final Vertice vertice1;
     private final Vertice vertice2;
     private Jugador propietario;
     private final List<Arista> adyacentes;
+
+    /*-- Constructor --*/
 
     public Arista(String key, Vertice v1, Vertice v2) {
         this.key = key;
@@ -25,9 +30,37 @@ public class Arista {
         adyacentes = new ArrayList<>();
     }
 
+    /*-- Metodos de creacion --*/
+
+    public void agregarAdyacente(Arista arista) {
+        adyacentes.add(arista);
+    }
+
+    /*-- Verificaciones --*/
+
     public boolean estaOcupada() {
         return propietario != null;
     }
+
+    public boolean estaConectada() {
+        for(Arista a : adyacentes) {
+            if(a.esDe(this.getPropietario())) {
+                return true;
+            }
+        }
+        for(Vertice v : getVertices()) {
+            if(v.esPropietario(this.getPropietario())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean esDe(Jugador jugador) {
+        return propietario != null && propietario.equals(jugador);
+    }
+
+    /*-- Metodos de comportamiento --*/
 
     public void colocarCamino(Jugador jugador) {
         if (estaOcupada()) {
@@ -43,11 +76,7 @@ public class Arista {
         this.propietario = jugador;
     }
 
-    public Vertice getElOtroVertice(Vertice v) {
-        if (v.equals(vertice1)) { return vertice2; }
-        if (v.equals(vertice2)) { return vertice1; }
-        throw new IllegalArgumentException("El vértice no pertenece a esta arista, esto nunca debería ocurrir.");
-    }
+    /*-- Getters --*/
 
     public Vertice vertice1() {
         return this.vertice1;
@@ -57,29 +86,7 @@ public class Arista {
         return this.vertice2;
     }
 
-    public void agregarAdyacente(Arista arista) {
-        adyacentes.add(arista);
-    }
-
-    public boolean estaConectada() {
-        for(Arista a : adyacentes) {
-            if(a.esDe(this.getPropietario())) {
-               return true;
-            }
-        }
-        for(Vertice v : getVertices()) {
-            if(v.esPropietario(this.getPropietario())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Jugador getPropietario() { return propietario; }
-
-    public boolean esDe(Jugador jugador) {
-        return propietario != null && propietario.equals(jugador);
-    }
 
     public Vertice[] getVertices() {
         return new Vertice[]{vertice1, vertice2};

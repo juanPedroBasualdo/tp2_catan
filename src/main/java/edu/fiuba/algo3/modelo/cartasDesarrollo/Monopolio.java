@@ -10,8 +10,12 @@ import java.util.List;
 
 public class Monopolio extends Jugable {
 
+    /*-- Atributos --*/
+
     private Collection<Jugador> jugadores;
     private Recurso recursoElegido;
+
+    /*-- Constructores --*/
 
     public Monopolio(Jugador propietario, int numeroTurno) {
         super(propietario, numeroTurno);
@@ -22,6 +26,8 @@ public class Monopolio extends Jugable {
         this.jugadores = jugadores;
         this.recursoElegido = recurso;
     }
+
+    /*-- Metodos de comportamiento --*/
 
     public void jugar(int numeroTurno, Recurso recurso) {
         this.elegirRecurso(recurso);
@@ -37,6 +43,8 @@ public class Monopolio extends Jugable {
         }
         this.propietario.agregarRecursos(monopolio);
     }
+
+    /*-- Setter --*/
 
     public void elegirRecurso(Recurso recurso) {
         this.recursoElegido = recurso;

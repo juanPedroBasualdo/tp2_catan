@@ -12,14 +12,15 @@ import java.util.List;
 
 public class PuertoEspecifico2_1 implements Puerto {
 
+    /*-- Atributos --*/
     private final HashMap<Recurso, List<Vertice>> verticesDePuerto;
 
-    // TODO se supone que el puerto tiene que estar en una arista para que Jugador la pueda usar, discutir en llamada
-
+    /*-- Constructores --*/
     public PuertoEspecifico2_1(HashMap<Recurso, List<Vertice>> verticesDePuerto) {
         this.verticesDePuerto = verticesDePuerto;
     }
 
+    /*-- Metodo de intercambio--*/
     @Override
     public void intercambiar(Jugador jugador, Recurso recursoACambiar, Recurso recursoARecibir) {
         if(puedeIntercambiar(jugador, recursoACambiar)) {
@@ -36,6 +37,7 @@ public class PuertoEspecifico2_1 implements Puerto {
         }
     }
 
+    /*-- Metodo de verificacion de intercambio valido--*/
     public boolean puedeIntercambiar(Jugador jugador, Recurso recurso) {
         List<Vertice> verticesDelIntercambio = this.obtenerVerticesPuertoDe(recurso);
         for(Vertice v : verticesDelIntercambio) {
@@ -46,6 +48,7 @@ public class PuertoEspecifico2_1 implements Puerto {
         return false;
     }
 
+    /*-- Getter --*/
     public List<Vertice> obtenerVerticesPuertoDe(Recurso recurso) {
         return verticesDePuerto.get(recurso);
     }

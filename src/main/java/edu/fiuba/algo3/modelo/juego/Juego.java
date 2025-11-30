@@ -14,10 +14,13 @@ import java.util.List;
 
 public class Juego {
 
+    /*-- Atributos --*/
     private final Turnos turnero;
     private final Tablero tablero;
     private final Banca banca;
     private final Dados dados;
+
+    /*-- Constructores --*/
 
     public Juego(Collection<Jugador> listaJugadores) {
         turnero = new Turnos(listaJugadores);
@@ -25,6 +28,8 @@ public class Juego {
         banca = new Banca();
         dados = new Dados();
     }
+
+    /*-- Metodos de fachada --*/
 
     public int tirarDados() {
        return dados.tirar();

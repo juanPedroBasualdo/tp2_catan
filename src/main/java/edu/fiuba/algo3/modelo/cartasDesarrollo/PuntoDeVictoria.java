@@ -4,6 +4,7 @@ import edu.fiuba.algo3.modelo.jugador.Jugador;
 
 public class PuntoDeVictoria extends CartaDesarrollo implements OtorgaPuntajes {
 
+    /*-- Metodo de comportamiento --*/
     public PuntoDeVictoria(Jugador propietario, int turnoObtenido) {
         super(propietario, turnoObtenido);
     }

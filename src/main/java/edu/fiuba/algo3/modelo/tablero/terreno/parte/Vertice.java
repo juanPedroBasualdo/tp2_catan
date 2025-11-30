@@ -9,16 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Vertice {
+
+    /*-- Atributos --*/
+
     private Productor construccion;  // Puede ser un Poblado o una Ciudad
     private final int indice;
     private final List<Vertice> adyacentes;
     private final List<Arista> aristasAdyacentes = new ArrayList<>();
+
+    /*-- Constructores --*/
 
     public Vertice(int indice) {
         this.indice = indice;
         this.construccion = new Vacio();
         adyacentes = new ArrayList<>();
     }
+
+    /*-- Metodos de creacion --*/
+
+    public void asignarAdyacente(Vertice vertice) {
+        adyacentes.add(vertice);
+    }
+
+    /*-- Verificaciones --*/
 
     protected boolean esValido() {
         return this.construccion.esValido();
@@ -32,11 +45,13 @@ public class Vertice {
         return construccion.esNoVacio();
     }
 
-    public void asignarAdyacente(Vertice vertice) {
-        adyacentes.add(vertice);
+    public boolean esPropietario(Jugador jugador) {
+        return construccion.tienePropietario(jugador);
     }
 
-    public void colocarPieza(Productor pieza) {
+    /*-- Metodos de comportamiento --*/
+
+    public void colocarPoblado(Productor poblado) {
         if (estaOcupado()) {
             throw new IllegalStateException("El vértice ya está ocupado");
         }
@@ -45,13 +60,12 @@ public class Vertice {
         }
 
         // Esto verifica que el jugador contenga los recursos antes de agregar la Pieza al vertice y extrae los recursos
-        pieza.comprarPieza();
+        poblado.comprarPieza();
 
-        this.construccion = pieza;
+        this.construccion = poblado;
         this.invalidarAdyacentes();
 
     }
-
 
     private void asignarPieza(Productor pieza) {
         this.construccion = pieza;
@@ -71,8 +85,6 @@ public class Vertice {
         if (!validarDatosMejoraCiudad(jugador1)) {
            throw new JugadorInvalidoException();
         }
-
-        // Creamos la pieza ciudad y la compramos de Banca para reemplazar el Poblado
         Productor ciudad = new Ciudad(jugador1);
         ciudad.comprarPieza();
         jugador1.removerConstruccion(this.construccion);
@@ -81,10 +93,16 @@ public class Vertice {
         this.invalidarAdyacentes();
     }
 
-    public Construccion obtenerPieza() { return construccion;}
+    public void producir(Recurso recurso) {
+        if(this.construccion.esValido() && this.construccion.esNoVacio()) {
+            this.construccion.producir(recurso);
+        }
+    }
 
-    public boolean esPropietario(Jugador jugador) {
-        return construccion.tienePropietario(jugador);
+    /*-- Getters --*/
+
+    public Construccion obtenerPieza() {
+        return construccion;
     }
 
     public void asignarArista(Arista arista) {
@@ -100,11 +118,5 @@ public class Vertice {
         return !construccion.tienePropietario(jugador);
         /* estaOcupado() == true, pieza.tienePropietario(jugador) == true, return !true → false
         estaOcupado() == true, pieza.tienePropietario(jugador) == false, return !false → true */
-    }
-
-    public void producir(Recurso recurso) {
-        if(this.construccion.esValido() && this.construccion.esNoVacio()) {
-            this.construccion.producir(recurso);
-        }
     }
 }
