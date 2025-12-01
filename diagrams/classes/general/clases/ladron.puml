@@ -1,0 +1,19 @@
+@startuml
+
+class Ladron {
+
+- posicionActual : Terreno
+- random : Random
+
++ Ladron(posicionActualInicial : Terreno)
+
++ obtenerPosicionActual() : Terreno
++ moverA(nuevoTerreno : Terreno) : void
++ robarCartaAleatoria(jugadorRobado : Jugador, jugadorRobador : Jugador) : Recurso
+
+}
+
+Ladron --> Recurso
+Ladron --> Terreno
+
+@enduml

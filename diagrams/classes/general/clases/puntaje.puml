@@ -1,0 +1,7 @@
+@startuml
+
+class Puntaje {
+    + {static} calcularPuntajeJugador(Jugador jugador) + int
+}
+
+@enduml

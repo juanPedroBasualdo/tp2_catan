@@ -13,5 +13,9 @@
 !include clases/puertos.puml
 !include clases/excepciones.puml
 !include clases/turnos.puml
+!include clases/mazo.puml
+!include clases/puntaje.puml
+!include clases/dados.puml
+!include clases/puntaje.puml
 
 @enduml

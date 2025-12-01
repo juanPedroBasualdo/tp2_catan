@@ -1,17 +1,20 @@
 @startuml
 
 class Jugador {
+
     - nombre : String
     - recursos : List<Recurso>
     - cartasDesarrollo : List<CartaDesarrollo>
     - random : Random
     - construcciones : List<Construccion>
     - cantidadDeCaballerosJugados : int
-    - puntaje : Integer
 
     + Jugador(nombre : String)
+
     + obtenerNombre() : String
     + agregarRecursos(nuevos : List<Recurso>) : void
+    + agregarConstruccion(construccion : Construccion)
+    + removerConstruccion(construccion : Productor)
     + agregarRecurso(recurso : Recurso) : void
     + tieneRecurso(recursoBuscado : Recurso) : boolean
     + cantidadDeRecursos() : int
@@ -24,6 +27,8 @@ class Jugador {
     + eliminarRecursos(listaDeRecursos : List<Recurso>) : void
     + calcularPuntajeVictoria() : int
     + puntajeCartasPV() : int
+    + filtrarCartasDePuntos() : List<PuntoDeVictoria>
+    + puntajeConstrucciones() : int
     + intercambiarConTasaEstandar(recursoEntrante : Recurso, recursoSaliente : Recurso) : void
     + agregarPieza(pieza : Construccion) : void
     + getCaballerosJugados() : int
@@ -33,6 +38,7 @@ class Jugador {
 
 Jugador "1" *-- "*" Recurso
 Jugador "1" *-- "*" Construccion
+Jugador --> Puntaje
 Jugador "1" o-- "*" CartaDesarrollo
 
 @enduml

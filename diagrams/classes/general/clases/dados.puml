@@ -1,0 +1,12 @@
+@startuml
+
+class Dados {
+    - random : Random
+
+    + Dados()
+    + tirar() : int
+    + tirarDado() : int
+
+}
+
+@enduml

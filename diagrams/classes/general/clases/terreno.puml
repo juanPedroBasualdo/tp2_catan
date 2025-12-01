@@ -1,36 +1,37 @@
 @startuml
 
+/'TODO actualizar Terreno, sacando terrenoTipo de todas los diagramas'/
+
 abstract class Terreno {
     - fichaNumero : int
     - vertices : List<Vertice>
     - aristas : List<Arista>
 
-    -- Constructores --
     # Terreno(fichaNumero : int)
-
-    -- Métodos --
-    + getFichaNumero() : int
-    + getTipo() : TerrenoTipo
-    + getRecurso() : Recurso
 
     + agregarVertice(vertices : Collection<Vertice>) : void
     + agregarArista(aristas : Collection<Arista>) : void
 
-    + construirCiudad(jugador : Jugador, vertice : int) : void
-    + validarMejoraDePoblado(jugador : Jugador, vertice : int) : boolean
     + tienePobladoDe(jugador : Jugador) : boolean
     + tieneCiudadDe(jugador : Jugador) : boolean
 
     + puedeColocarPoblado(indiceVertice : int) : boolean
-    + colocarPoblado(jugador : Jugador, indiceVertice : int) : void
-    + colocarCarretera(jugador : Jugador, indiceArista : int) : void
+    + contieneVertice(vertice : Vertice) : boolean
+    + construirCiudad(jugador : Jugador, vertice : Vertice) : void
+    + validarMejoraDePoblado(jugador : Jugador, vertice : int) : boolean
+    + colocarPoblado(jugador : Jugador, indiceVertice : int)) : void
+    + colocarCarretera(jugador : Jugador, indiceArista : int)) : void
+
+    + getTipo() : TerrenoTipo
+    + getRecurso() : Recurso
+    + getFichaNumero : int
+    + verticeEn(vertex : int) : Vertice
+    + equals(obj : Object) : boolean
+    + toString() : String
 
     + tieneNumero(numeroFicha : int) : boolean
     + producir() : void
-    + verticeEn(vertex : int) : Vertice
     + contieneVertice(vertice : Vertice) : boolean
-    + equals(obj : Object) : boolean
-    + toString() : String
 
     + crear(tipo : TerrenoTipo, fichaNumero : int) : Terreno
 }

@@ -42,6 +42,12 @@ class ConstruccionDeCarreteras {
     + jugar(juego : Juego, jugador : Jugador) : void
 }
 
+class Jugable() {
+    + Jugable(propietario : Jugador, turnoObtenido : int)
+    + jugar(numeroTurno: int) : void
+    + efecto() : void
+}
+
 CartaDesarrollo <|.. Caballero
 CartaDesarrollo <|.. Monopolio
 CartaDesarrollo <|.. PuntoDeVictoria

@@ -8,20 +8,15 @@ class Arista {
     - adyacentes : List<Arista>
 
     + Arista(key : String, v1 : Vertice, v2 : Vertice)
-
     + estaOcupada() : boolean
     + colocarCamino(jugador : Jugador) : void
-
-    + getElOtroVertice(v : Vertice) : Vertice
     + vertice1() : Vertice
     + vertice2() : Vertice
-
+    + estaConectada() : boolean
     + agregarAdyacente(arista : Arista) : void
     + estaConectada() : boolean
-
     + getPropietario() : Jugador
     + esDe(jugador : Jugador) : boolean
-
     + getVertices() : Vertice[]
 }
 
