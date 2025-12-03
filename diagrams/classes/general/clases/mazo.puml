@@ -1,0 +1,16 @@
+@startuml
+
+class Mazo {
+
+    - random : Random
+    + Mazo (random : Random)
+    + Mazo (seed : Long)
+    + Mazo ()
+
+    + robarCartaDesarrollo(jugador :Jugador, numeroTurno: int) : CartaDesarrollo
+}
+
+Mazo --> Jugador
+Mazo --> CartaDesarrollo
+
+@enduml

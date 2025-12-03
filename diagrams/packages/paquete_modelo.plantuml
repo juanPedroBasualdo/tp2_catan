@@ -1,0 +1,98 @@
+@startuml diagrama clase simple
+
+package modelo {
+    package banca {
+        class Banca
+    }
+
+    package exepciones {
+        exception CaminoDesconectadoException
+        exception CartaDePVNoSePuedeJugar
+        exception FueraDeTurnoException
+        exception JugadorInvalidoException
+        exception NoTieneRecursosParaIntercambioException
+        exception PosicionInvalidaException
+        exception CaminoDePuertoExceptionsconectadoException
+        exception CaminoDesPuertoNoAdyacenteExceptionconectadoException
+        exception RecursosInsuficientesException
+    }
+
+    package cartasDesarrolo {
+        class Caballero
+        interface CartaDesarrollo
+        class ConstruccionDeCarretera
+        class Intervencion
+        class Monopolio
+        class PuntoDeVictoria
+    }
+
+    package juego {
+        package turno {
+            class Turnos
+        }
+        class Juego
+    }
+    package jugador {
+        class Jugador
+    }
+    package puntajeYBonificiones {
+        class Bonificaciones
+        class DFSRutaMasLarga
+        class MayorEjercito
+        class MayorRutaComercial
+        class Puntaje
+    }
+
+    package tablero {
+        package coordenada {
+            class Coordenada
+        }
+        package puerto{
+            interface Puerto
+            class PuertoEspecifico2_1
+            class PuertoGenerico3_1
+        }
+        package terreno {
+            package parte {
+                class Arista
+                class Terreno
+                class Vertice
+            }
+            package pieza {
+                package construcciones {
+                    class Carretera
+                    abstract Construccion
+                    class Invalido
+                    class NoProductor
+                    class Poblado
+                    abstract Productor
+                    class Vacio
+                }
+                class Ladron
+                enum PiezaTipo
+            }
+            package tipo {
+                class Bosque
+                class Campo
+                class Cerro
+                class Desierto
+                class Montaña
+                class Pastizal
+            }
+            enum TerrenoTipo
+        }
+        enum Recurso
+        class Tablero
+    }
+
+    package randomizados {
+        class Dados
+    }
+
+
+}
+
+
+
+
+@enduml

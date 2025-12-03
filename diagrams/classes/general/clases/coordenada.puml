@@ -1,0 +1,20 @@
+@startuml
+
+class Coordenada {
+    - x : int
+    - y : int
+    - v : int
+
+    + Coordenada(offsetX : int, offsetY : int, vertex : int)
+    + Coordenada(offsetX : int, offsetY : int)
+
+    + obtenerDireccionesAdyacentes() : List<Coordenada>
+    + aplicarDireccion(direccion : Coordenada) : Coordenada
+    + verificarDentroDeRango(direccion : Coordenada) : boolean
+
+    + x() : int
+    + y() : int
+    + vertex() : int
+}
+
+@enduml

@@ -1,73 +1,57 @@
 package edu.fiuba.algo3.modelo.banca;
 
+import edu.fiuba.algo3.modelo.banca.mazo.Mazo;
+import edu.fiuba.algo3.modelo.excepciones.RecursosInsuficientesException;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.PiezaTipo;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Banca {
 
-    private final List<Recurso> listaDeRecursosDisponibles;
+    /*-- Atributos --*/
+
+    private final Mazo mazoDeDesarrollo;
+    private final List<Recurso> precioCartasDesarrollo = Arrays.asList(
+        Recurso.MINERAL, Recurso.LANA, Recurso.CEREAL
+    );
+
+    /*-- Constructor --*/
 
     public Banca() {
-        this.listaDeRecursosDisponibles = generarRecursosIniciales();
+        this.mazoDeDesarrollo = new Mazo();
     }
 
-    // TODO
-    public static int puntajeDe(PiezaTipo piezaTipo) { return 0; }
-
-    // TODO
-    public static void otorgarPuntaje(Jugador jugador, int puntaje) {
-        jugador.agregarPuntaje(puntaje);
-    }
-
-    // TODO
-    public static List<Recurso> precioDe(PiezaTipo tipo) { return new ArrayList<>(); }
+    /*-- Auxiliar --*/
 
     public static void extraerRecursos(Jugador jugador, List<Recurso> listaDeRecursos) {
         if (jugador.tieneRecursos(listaDeRecursos)) {
             jugador.eliminarRecursos(listaDeRecursos);
+        } else {
+            throw new RecursosInsuficientesException("El jugador no tiene suficientes recursos para hacer esta operacion.");
         }
     }
 
-    // TODO Generalizar intercambios de puerto con una Clase Abstracta y polimorfismo
-    // TODO Recursos de Banca tienen que ser modificados en vez de crear nuevos RECURSOS
+    /*-- Metodos de intercambio --*/
 
-    public static void intercambioDeTasaEstandar(Jugador jugador, Recurso recursoEntrante, Recurso recursoSaliente) {
-        List<Recurso> listaRequiriente = Arrays.asList(recursoEntrante, recursoEntrante, recursoEntrante, recursoEntrante);
-        if (jugador.tieneRecursos(listaRequiriente)){
-             jugador.eliminarRecursos(listaRequiriente);
-             jugador.agregarRecursos(Arrays.asList(recursoSaliente));
-        }
+    public void intercambioDeTasaEstandar(Jugador jugador, Recurso recursoEntrante, Recurso recursoSaliente) {
+        List<Recurso> listaRequiriente = Arrays.asList(recursoEntrante, recursoEntrante,recursoEntrante,recursoEntrante);
+        Banca.extraerRecursos(jugador, listaRequiriente);
+        jugador.agregarRecurso(recursoSaliente);
     }
 
-    public static void intercambioPuertoEspeficico(Jugador jugador, Recurso recursoEntrante, Recurso recursoSaliente) {
-        List<Recurso> listaRequiriente = Arrays.asList(recursoEntrante, recursoEntrante);
-        if (jugador.tieneRecursos(listaRequiriente)){
-            jugador.eliminarRecursos(listaRequiriente);
-            jugador.agregarRecursos(Arrays.asList(recursoSaliente));
-        }
+    public static void intercambioDeTasaEstandarEstatico(Jugador jugador, Recurso recursoEntrante, Recurso recursoSaliente) {
+        List<Recurso> listaRequiriente = Arrays.asList(recursoEntrante, recursoEntrante,recursoEntrante,recursoEntrante);
+        Banca.extraerRecursos(jugador, listaRequiriente);
+        jugador.agregarRecurso(recursoSaliente);
     }
 
-    public static void intercambioPuertoGenerico(Jugador jugador, Recurso recursoEntrante, Recurso recursoSaliente) {
-        List<Recurso> listaRequiriente = Arrays.asList(recursoEntrante, recursoEntrante, recursoEntrante);
-        if (jugador.tieneRecursos(listaRequiriente)){
-            jugador.eliminarRecursos(listaRequiriente);
-            jugador.agregarRecursos(Arrays.asList(recursoSaliente));
-        }
-    }
+    /*-- Metodo de mazo --*/
 
-    private List<Recurso> generarRecursosIniciales() {
-        Recurso[] tiposDeRecursos = Recurso.values();
-        for(Recurso recurso : tiposDeRecursos){
-            for (int i = 0; i < 5; i++) {
-                listaDeRecursosDisponibles.add(recurso);
-            }
-        }
-        return listaDeRecursosDisponibles;
+    public void venderCartaDesarrollo(Jugador jugador, int numeroTurno) {
+        Banca.extraerRecursos(jugador, this.precioCartasDesarrollo);
+        this.mazoDeDesarrollo.robarCartaDesarrollo(jugador, numeroTurno);
     }
 
 

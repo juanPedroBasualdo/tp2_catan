@@ -1,6 +1,7 @@
-# test01AsignacionAleatoriaDeHexagonosYFichas()
 
-@startuml
+@startuml test01AsignacionAleatoriaDeHexagonosYFichas()
+title test01AsignacionAleatoriaDeHexagonosYFichas()
+
 actor TestCase01
 participant ":Tablero" as tablero
 participant "tableroA : Tablero" as tableroA
@@ -31,9 +32,10 @@ TestCase01 -> TestCase01 : verificarDistribucionFichasNumericas()
 TestCase01 -> TestCase01 : compararTableros()
 @enduml
 
-# test02ReglaDeDistanciaEntrePobladosIniciales
 
-@startuml
+
+@startuml test02ReglaDeDistanciaEntrePobladosIniciales
+title test02ReglaDeDistanciaEntrePobladosIniciales
 actor TestCase02
 participant "tablero : Tablero" as Tablero
 
@@ -50,9 +52,11 @@ deactivate Tablero
 
 @enduml
 
-# test03RecursosInicialesDelSegundoPoblado
 
-@startuml
+
+@startuml test03RecursosInicialesDelSegundoPoblado
+title test03RecursosInicialesDelSegundoPoblado
+
 actor TestCase03
 participant "tablero : Tablero" as Tablero
 participant "jugador1 : Jugador" as Jugador
@@ -97,9 +101,11 @@ deactivate Tablero
 
 @enduml
 
-# test04LanzamientoDeDadosGeneraNumeroValido
 
-@startuml
+
+@startuml test04LanzamientoDeDadosGeneraNumeroValido
+title test04LanzamientoDeDadosGeneraNumeroValido
+
 actor TestCase04
 participant "dados : Dado" as dados
 
@@ -114,9 +120,11 @@ TestCase04 -> TestCase04 : assertTrue(resultado >= 2 && resultado <= 12)
 
 @enduml
 
-# test05ProduccionCorrectaDeRecursos
 
-@startuml
+
+@startuml test05ProduccionCorrectaDeRecursos
+title test05ProduccionCorrectaDeRecursos
+
 actor TestCase05
 participant "dados : Dado" as dados
 participant "produccion : Produccion" as Produccion
@@ -149,9 +157,11 @@ deactivate Produccion
 deactivate bosque
 @enduml
 
-# test06TerrenoBajoLadronNoProduceRecursos
 
-@startuml
+
+@startuml test06TerrenoBajoLadronNoProduceRecursos
+title test06TerrenoBajoLadronNoProduceRecursos
+
 actor TestCase06
 participant "dados : Dado" as dados
 participant "tablero : Tablero" as tablero
@@ -178,9 +188,11 @@ deactivate bosque
 
 @enduml
 
-# test07JugadorDescartaLaMitadAlLanzar7
 
-@startuml
+
+@startuml test07JugadorDescartaLaMitadAlLanzar7
+title test07JugadorDescartaLaMitadAlLanzar7
+
 actor TestCase07
 participant "dados : Dado" as dados
 participant "jugador : Jugador" as jugador
@@ -203,9 +215,11 @@ deactivate jugador
 
 @enduml
 
-# test08MoverLadronYRobarCartaAleatoria
 
-@startuml
+
+@startuml test08MoverLadronYRobarCartaAleatoria
+title test08MoverLadronYRobarCartaAleatoria
+
 actor TestCase08
 participant "ladron : Ladron" as ladron
 

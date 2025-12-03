@@ -1,0 +1,44 @@
+@startuml
+
+class Jugador {
+
+    - nombre : String
+    - recursos : List<Recurso>
+    - cartasDesarrollo : List<CartaDesarrollo>
+    - random : Random
+    - construcciones : List<Construccion>
+    - cantidadDeCaballerosJugados : int
+
+    + Jugador(nombre : String)
+
+    + obtenerNombre() : String
+    + agregarRecursos(nuevos : List<Recurso>) : void
+    + agregarConstruccion(construccion : Construccion)
+    + removerConstruccion(construccion : Productor)
+    + agregarRecurso(recurso : Recurso) : void
+    + tieneRecurso(recursoBuscado : Recurso) : boolean
+    + cantidadDeRecursos() : int
+    + descartarPorLadron() : void
+    + robarCartaAleatoria(objetivo : Jugador) : Recurso
+    + eliminarRecurso(index : int) : Recurso
+    + eliminarRecurso(recurso : Recurso) : Recurso
+    + obtenerRecursos() : List<Recurso>
+    + tieneRecursos(listaDeRecursos : List<Recurso>) : boolean
+    + eliminarRecursos(listaDeRecursos : List<Recurso>) : void
+    + calcularPuntajeVictoria() : int
+    + puntajeCartasPV() : int
+    + filtrarCartasDePuntos() : List<PuntoDeVictoria>
+    + puntajeConstrucciones() : int
+    + intercambiarConTasaEstandar(recursoEntrante : Recurso, recursoSaliente : Recurso) : void
+    + agregarPieza(pieza : Construccion) : void
+    + getCaballerosJugados() : int
+    + incrementarCaballerosJugados() : void
+    + extraerTotalidadDe(recurso : Recurso) : List<Recurso>
+}
+
+Jugador "1" *-- "*" Recurso
+Jugador "1" *-- "*" Construccion
+Jugador --> Puntaje
+Jugador "1" o-- "*" CartaDesarrollo
+
+@enduml

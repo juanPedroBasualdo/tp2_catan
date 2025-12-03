@@ -1,0 +1,19 @@
+@startuml
+
+class Turnos {
+    - Queue<Jugador> turnero
+    - Jugador jugadorActual
+    - int numeroDeTurno
+
+    + Turnos(Collection<Jugador> listaJugadores)
+    + void pasarTurno()
+    + void siguienteJugador()
+    + Jugador jugadorActual()
+    + int cantidadJugadores()
+    + int numeroDeTurno()
+    + void verificarPuntajeJugador()
+}
+
+Turnos --> Jugador
+
+@enduml

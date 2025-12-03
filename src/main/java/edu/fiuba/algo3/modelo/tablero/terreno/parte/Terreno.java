@@ -1,22 +1,24 @@
 package edu.fiuba.algo3.modelo.tablero.terreno.parte;
 
 import edu.fiuba.algo3.modelo.jugador.Jugador;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Pieza;
-import edu.fiuba.algo3.modelo.tablero.terreno.pieza.PiezaTipo;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.modelo.tablero.terreno.TerrenoTipo;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Poblado;
 import edu.fiuba.algo3.modelo.tablero.terreno.tipo.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
 public abstract class Terreno {
+
+    /*-- Atributos --*/
 
     private final int fichaNumero;
     private final List<Vertice> vertices;
     private final List<Arista> aristas;
+
+    /*-- Constructores --*/
 
     protected Terreno(int fichaNumero) {
         this.fichaNumero = fichaNumero;
@@ -24,9 +26,7 @@ public abstract class Terreno {
         this.aristas = new ArrayList<>();
     }
 
-    public int getFichaNumero() {
-        return fichaNumero;
-    }
+    /*-- Metodo fabrica --*/
 
     public static Terreno crear(TerrenoTipo tipo, int fichaNumero) throws IllegalArgumentException {
         switch (tipo) {
@@ -47,9 +47,7 @@ public abstract class Terreno {
         }
     }
 
-    public abstract TerrenoTipo getTipo();
-
-    public abstract Recurso getRecurso();
+    /*-- Metodos de creacion --*/
 
     public void agregarVertice(Collection<Vertice> vertices) {
         this.vertices.addAll(vertices);
@@ -58,6 +56,77 @@ public abstract class Terreno {
     public void agregarArista(Collection<Arista> aristas) {
         this.aristas.addAll(aristas);
     }
+
+    /*-- Verificaciones --*/
+
+    public boolean tienePobladoDe(Jugador jugador1) {
+        return false;
+    }
+
+    public boolean tieneLadron() {
+        return false;
+    }
+
+    public boolean puedeColocarPoblado(int indiceVertice) {
+        return vertices.get(indiceVertice).esValido();
+    }
+
+    public Object tieneCiudadDe(Jugador jugador) {
+        for (Vertice v : vertices) {
+            if (v.esPropietario(jugador)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean tieneNumero(int numeroFicha) {
+        return this.fichaNumero == numeroFicha;
+    }
+
+    public boolean contieneVertice(Vertice vertice) {
+        return this.vertices.contains(vertice);
+    }
+
+    /*-- Metodos de comportamiento --*/
+
+    public void construirCiudad(Jugador jugador1, int vertice) {
+        vertices.get(vertice).mejorarPoblado(jugador1);
+    }
+
+    public boolean validarMejoraDePoblado(Jugador jugador1, int vertice) {
+        return (vertices.get(vertice).validarDatosMejoraCiudad(jugador1));
+    }
+
+    public void colocarPoblado(Jugador jugador, int indiceVertice) {
+        this.vertices.get(indiceVertice).colocarPoblado(new Poblado(jugador));
+    }
+
+    public void colocarCarretera(Jugador jugador, int indiceArista) {
+        this.aristas.get(indiceArista).colocarCamino(jugador);
+    }
+
+    public void producir() {
+        for(Vertice v : vertices) {
+            v.producir(this.getRecurso());
+        }
+    }
+
+    /*-- Getters --*/
+
+    public abstract TerrenoTipo getTipo();
+
+    public abstract Recurso getRecurso();
+
+    public int getFichaNumero() {
+        return fichaNumero;
+    }
+
+    public Vertice verticeEn(int vertex) {
+        return this.vertices.get(vertex);
+    }
+
+    /*-- Overrides --*/
 
     @Override
     public boolean equals(Object obj) {
@@ -81,47 +150,5 @@ public abstract class Terreno {
     public String toString() {
         return getClass().getSimpleName() + " (" + fichaNumero + ")";
     }
-
-    public void colocarPobladoTerreno(Jugador jugador, int Vertice) {
-        if(!vertices.get(Vertice).estaOcupado()) {
-            vertices.get(Vertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador));
-        }
-    }
-
-    public void construirCiudad(Jugador jugador1, int vertice) {
-        vertices.get(vertice).mejorarPoblado(jugador1);
-    }
-    public boolean validarMejoraDePoblado(Jugador jugador1, int vertice) {
-        return (vertices.get(vertice).validarDatosMejoraCiudad(jugador1));
-    }
-
-    public boolean tienePobladoDe(Jugador jugador1) {
-        return false;
-    }
-
-    public boolean tieneLadron() {
-        return false;
-    }
-
-    public boolean puedeColocarPoblado(int indiceVertice) {
-        return vertices.get(indiceVertice).esValido();
-    }
-
-    public void colocarPoblado(Jugador jugador, int indiceVertice) {
-        this.vertices.get(indiceVertice).colocarPieza(Pieza.crearPieza(PiezaTipo.POBLADO, jugador));
-    }
-
-    public Object tieneCiudadDe(Jugador jugador1) {
-        return false;
-    }
-
-    public Vertice verticeEn(int vertex) {
-        return this.vertices.get(vertex);
-    }
-
-    public boolean contieneVertice(Vertice vertice) {
-        return this.vertices.contains(vertice);
-    }
-
 }
 

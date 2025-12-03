@@ -1,0 +1,19 @@
+@startuml
+
+class Banca {
+
+    - mazoDeDesarrollo : Mazo
+    - precioCartasDesarrollo : List<Recurso>
+
+    + Banca()
+    + {static} extraerRecursos(jugador : Jugador, listaDeRecursos : List<Recurso>) : void
+    + {static} intercambioDeTasaEstandarEstatico(jugador : Jugador, recursoEntrante : Recurso, recursoSaliente : Recurso) : void
+    + intercambioDeTasaEstandar(jugador : Jugador, recursoEntrante : Recurso, recursoSaliente : Recurso) : void
+    + venderCartaDesarrollo(jugador : Jugador, numeroTurno: int)
+}
+
+Banca --> Recurso
+Banca --> Jugador
+Banca --> Mazo
+
+@enduml

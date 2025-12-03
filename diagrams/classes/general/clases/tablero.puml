@@ -1,0 +1,57 @@
+@startuml
+
+class Tablero {
+    - terrenos : Terreno[][]
+    - vertices : List<Vertice>
+    - aristas : Map<String, Arista>
+
+    - puertos2_1 : PuertoEspecifico2_1
+    - puertos3_1 : PuertoGenerico3_1
+
+    + Tablero()
+    + Tablero(seed : long)
+    + Tablero(random : Random)
+
+    + getTerrenos() : List<Terreno>
+    + producirRecursos(numeroFicha : int) : void
+    + {static} producirRecursos(numero : int, terrenos : List<Terreno>) : Map<Recurso, Long>
+
+    + colocarPoblado(jugador : Jugador, coordenada : Coordenada) : void
+    + colocarCarretera(jugador : Jugador, coordenada : Coordenada) : void
+    + mejorarPoblado(jugador : Jugador, coordenada : Coordenada) : void
+
+    + puedeColocarPoblado(jugador : Jugador, coordenada : Coordenada) : boolean
+    + puedeMejorarPoblado(jugador : Jugador, coordenada : Coordenada) : boolean
+
+    + otorgarRecursosIniciales(jugador : Jugador, coordenada : Coordenada) : void
+
+    + getTerrenosAdyacentes(coordenada : Coordenada) : List<Terreno>
+    + getTerreno(coordenada : Coordenada) : Terreno
+    + getVertices() : List<Vertice>
+    + getAristas() : Collection<Arista>
+
+    + intercambiarConPuertoEspecifico(jugador : Jugador, recursoACambiar : Recurso, recursoARecibir : Recurso) : void
+    + intercambiarConPuertoGenerico(jugador : Jugador, recursoACambiar : Recurso, recursoARecibir : Recurso) : void
+}
+
+Tablero *-- Terreno
+Tablero *-- Vertice
+Tablero *-- Arista
+
+Tablero --> Jugador
+Tablero --> Recurso
+Tablero --> Coordenada
+
+Tablero --> PuertoEspecifico2_1
+Tablero --> PuertoGenerico3_1
+
+
+class Terreno
+class Vertice
+class Arista
+class PuertoEspecifico2_1
+class PuertoGenerico3_1
+class Coordenada
+
+
+@enduml

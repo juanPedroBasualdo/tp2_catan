@@ -1,0 +1,23 @@
+@startuml
+
+    class CaminoDesconectadoexcepcion <<excepcion>>
+    class CartaDePVNoSePuedeJugar <<excepcion>>
+    class FueraDeTurnoexcepcion <<excepcion>>
+    class JugadorInvalidoexcepcion <<excepcion>>
+    class NoTieneRecursosParaIntercambioexcepcion <<excepcion>>
+    class PosicionInvalidaexcepcion <<excepcion>>
+    class Puertoexcepcion <<excepcion>>
+    class PuertoNoAdyacenteexcepcion <<excepcion>>
+    class RecursosInsuficientesexcepcion <<excepcion>>
+
+    CaminoDesconectadoexcepcion --|> Runtimeexcepcion
+    CartaDePVNoSePuedeJugar --|> Runtimeexcepcion
+    FueraDeTurnoexcepcion --|> Runtimeexcepcion
+    JugadorInvalidoexcepcion --|> Runtimeexcepcion
+    NoTieneRecursosParaIntercambioexcepcion --|> Runtimeexcepcion
+    PosicionInvalidaexcepcion --|> Runtimeexcepcion
+    Puertoexcepcion --|> Runtimeexcepcion
+    PuertoNoAdyacenteexcepcion --|> Runtimeexcepcion
+    RecursosInsuficientesexcepcion --|> Runtimeexcepcion
+    
+@enduml

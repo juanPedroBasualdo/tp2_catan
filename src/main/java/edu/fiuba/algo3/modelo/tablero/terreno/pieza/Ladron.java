@@ -22,14 +22,12 @@ public class Ladron {
         return posicionActual;
     }
 
-    public boolean moverA(Terreno nuevoTerreno) {
-        if (nuevoTerreno == null) return false;
+    public void moverA(Terreno nuevoTerreno) {
         this.posicionActual = nuevoTerreno;
-        return true;
     }
 
     public Recurso robarCartaAleatoria(Jugador jugadorRobado, Jugador jugadorRobador) {
-        if (jugadorRobado == null || jugadorRobador == null) {return null;}
+        if (jugadorRobado == null || jugadorRobador == null) { return null; }
         if (jugadorRobado.cantidadDeRecursos() == 0) {return null;}
 
         int idx = random.nextInt(jugadorRobado.obtenerRecursos().size());

@@ -1,0 +1,74 @@
+@startuml
+
+abstract class Construccion {
+    - propietario : Jugador
+
+    # Construccion(propietario : Jugador)
+    + comprarPieza() : void
+    + obtenerPrecioPieza() : List<Recurso>
+    + puntosDeVictoria() : int
+    + getPropietario() : Jugador
+    + tienePropietario(jugador : Jugador) : boolean
+    + esNoVacio() : boolean
+    + esValido() : boolean
+    + validarMejoraPoblado(jugador1 : Jugador) : boolean
+}
+
+abstract class Productor {
+    # Productor(propietario : Jugador)
+    + obtenerPrecioPieza() : List<Recurso>
+    + puntosDeVictoria() : int
+    + producir(recurso : Recurso)
+}
+
+class NoProductor {
+    # NoProductor(propietario : Jugador)
+    + producir(recurso : Recurso)
+}
+
+class Carretera {
+    - precioConstruccion : List<Recurso>
+    + Carretera(jugador : Jugador)
+    + obtenerPrecioPieza() : List<Recurso>
+    + puntosDeVictoria() : int
+}
+
+class Ciudad {
+    - precioConstruccion : List<Recurso>
+    + Ciudad(jugador : Jugador)
+    + obtenerPrecioPieza() : List<Recurso>
+    + puntosDeVictoria() : int
+    + producir(recurso : Recurso)
+}
+
+class Poblado {
+    - precioConstruccion : List<Recurso>
+    + Poblado(propietario : Jugador)
+    + obtenerPrecioPieza() : List<Recurso>
+    + puntosDeVictoria() : int
+    + producir(recurso : Recurso)
+}
+
+class Vacio {
+    + Vacio()
+    + obtenerPrecioPieza() : List<Recurso>
+}
+
+class Invalido {
+    + Invalido()
+    + obtenerPrecioPieza() : List<Recurso>
+}
+
+Construccion <|-- Productor
+Productor <|-- NoProductor
+
+Construccion <|-- Carretera
+Productor <|-- Ciudad
+Productor <|-- Poblado
+NoProductor <|-- Vacio
+NoProductor <|-- Invalido
+
+Construccion "1" o-- "1" Jugador
+Construccion "1" --> "*" Recurso
+
+@enduml

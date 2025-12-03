@@ -1,0 +1,36 @@
+@startuml
+
+class Vertice {
+    - construccion : Productor
+    - indice : int
+    - adyacentes : List<Vertice>
+    - aristasAdyacentes : List<Arista>
+
+    + Vertice(indice : int)
+
+    # esValido() : boolean
+    + tieneIndice(indice : int) : boolean
+    + estaOcupado() : boolean
+
+    + asignarAdyacente(vertice : Vertice) : void
+    + colocarPieza(pieza : Productor) : void
+    + mejorarPoblado(jugador : Jugador) : void
+
+    + obtenerPieza() : Construccion
+    + esPropietario(jugador : Jugador) : boolean
+
+    + asignarArista(arista : Arista) : void
+    + getAristas() : List<Arista>
+
+    + validarDatosMejoraCiudad(jugador : Jugador) : boolean
+
+    + bloqueaMayorRutaComercial(jugador : Jugador) : boolean
+    + producir(recurso : Recurso) : void
+}
+
+
+Vertice "1" o-- "1" Productor
+Vertice "1" o-- "*" Vertice
+Vertice "1" o-- "*" Arista
+
+@enduml

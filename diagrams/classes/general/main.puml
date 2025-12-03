@@ -1,0 +1,21 @@
+@startuml
+
+!include clases/jugador.puml
+!include clases/recurso.puml
+!include clases/cartas.puml
+!include clases/construcciones.puml
+!include clases/banca.puml
+!include clases/tablero.puml
+!include clases/coordenada.puml
+!include clases/terreno.puml
+!include clases/arista.puml
+!include clases/vertice.puml
+!include clases/puertos.puml
+!include clases/excepciones.puml
+!include clases/turnos.puml
+!include clases/mazo.puml
+!include clases/puntaje.puml
+!include clases/dados.puml
+!include clases/puntaje.puml
+
+@enduml

@@ -1,0 +1,111 @@
+@startuml
+
+/'TODO actualizar Terreno, sacando terrenoTipo de todas los diagramas'/
+
+abstract class Terreno {
+    - fichaNumero : int
+    - vertices : List<Vertice>
+    - aristas : List<Arista>
+
+    # Terreno(fichaNumero : int)
+
+    + agregarVertice(vertices : Collection<Vertice>) : void
+    + agregarArista(aristas : Collection<Arista>) : void
+
+    + tienePobladoDe(jugador : Jugador) : boolean
+    + tieneCiudadDe(jugador : Jugador) : boolean
+
+    + puedeColocarPoblado(indiceVertice : int) : boolean
+    + contieneVertice(vertice : Vertice) : boolean
+    + construirCiudad(jugador : Jugador, vertice : Vertice) : void
+    + validarMejoraDePoblado(jugador : Jugador, vertice : int) : boolean
+    + colocarPoblado(jugador : Jugador, indiceVertice : int)) : void
+    + colocarCarretera(jugador : Jugador, indiceArista : int)) : void
+
+    + getTipo() : TerrenoTipo
+    + getRecurso() : Recurso
+    + getFichaNumero : int
+    + verticeEn(vertex : int) : Vertice
+    + equals(obj : Object) : boolean
+    + toString() : String
+
+    + tieneNumero(numeroFicha : int) : boolean
+    + producir() : void
+    + contieneVertice(vertice : Vertice) : boolean
+
+    + crear(tipo : TerrenoTipo, fichaNumero : int) : Terreno
+}
+
+
+Terreno --> Vertice
+Terreno --> Arista
+Terreno --> Jugador
+Terreno --> Recurso
+Terreno --> TerrenoTipo
+
+class Bosque {
+    - recurso : Recurso = MADERA
+
+    + Bosque(fichaNumero : int)
+    + getRecurso() : Recurso
+    + getTipo() : TerrenoTipo
+}
+
+class Campo {
+    - recurso : Recurso = LANA
+
+    + Campo(fichaNumero : int)
+    + getRecurso() : Recurso
+    + getTipo() : TerrenoTipo
+}
+
+class Cerro {
+    - recurso : Recurso = ARCILLA
+
+    + Cerro(fichaNumero : int)
+    + getRecurso() : Recurso
+    + getTipo() : TerrenoTipo
+}
+
+class Desierto {
+    + Desierto()
+    + getTipo() : TerrenoTipo
+    + getRecurso() : Recurso
+    + producir() : void
+}
+
+class Montania {
+    - recurso : Recurso = MINERAL
+
+    + Montania(fichaNumero : int)
+    + getRecurso() : Recurso
+    + getTipo() : TerrenoTipo
+}
+
+class Pastizal {
+    - recurso : Recurso = LANA
+
+    + Pastizal(fichaNumero : int)
+    + getRecurso() : Recurso
+    + getTipo() : TerrenoTipo
+}
+
+enum TerrenoTipo {
+    CAMPO,
+    BOSQUE,
+    PASTIZAL,
+    CERRO,
+    MONTANIA,
+    DESIERTO,
+}
+
+
+Terreno <|-- Bosque
+Terreno <|-- Campo
+Terreno <|-- Cerro
+Terreno <|-- Desierto
+Terreno <|-- Montania
+Terreno <|-- Pastizal
+
+
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+
+enum Recurso {
+    ARCILLA
+    MADERA
+    LANA
+    MINERAL
+    CEREAL
+}
+
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+
+class Arista {
+    - key : String
+    - vertice1 : Vertice
+    - vertice2 : Vertice
+    - propietario : Jugador
+    - adyacentes : List<Arista>
+
+    + Arista(key : String, v1 : Vertice, v2 : Vertice)
+    + estaOcupada() : boolean
+    + colocarCamino(jugador : Jugador) : void
+    + vertice1() : Vertice
+    + vertice2() : Vertice
+    + estaConectada() : boolean
+    + agregarAdyacente(arista : Arista) : void
+    + estaConectada() : boolean
+    + getPropietario() : Jugador
+    + esDe(jugador : Jugador) : boolean
+    + getVertices() : Vertice[]
+}
+
+Arista --> Vertice
+
+
+@enduml
