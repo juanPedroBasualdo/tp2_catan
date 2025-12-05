@@ -2,10 +2,11 @@ package edu.fiuba.algo3.modelo.jugador;
 
 import edu.fiuba.algo3.modelo.banca.Banca;
 import edu.fiuba.algo3.modelo.cartasDesarrollo.CartaDesarrollo;
+import edu.fiuba.algo3.modelo.cartasDesarrollo.Jugable;
 import edu.fiuba.algo3.modelo.cartasDesarrollo.PuntoDeVictoria;
+import edu.fiuba.algo3.modelo.excepciones.CartaNoEsJugableException;
 import edu.fiuba.algo3.modelo.puntajeYBonificaciones.Puntaje;
 import edu.fiuba.algo3.modelo.tablero.*;
-import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Construccion;
 import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Productor;
 
@@ -91,8 +92,18 @@ public class Jugador {
 
     /*-- Metodos de Carta --*/
 
-    public void jugarCaballero(Coordenada coordenada) {
-        // TODO
+    public void jugarCarta(Jugable carta, int numeroTurno) {
+        Jugable cartaAJugar = tieneCartasJugablesDeTipo(carta, numeroTurno);
+        if(cartaAJugar != null) {
+            carta.jugar(numeroTurno);
+            this.cartasDesarrollo.remove(cartaAJugar);
+        } else {
+            throw new CartaNoEsJugableException("No se puede jugar esta carta " + carta.getClass() + ". [Turno: " + numeroTurno + "]");
+        }
+    }
+
+    public void agregarCarta(CartaDesarrollo carta) {
+        this.cartasDesarrollo.add(carta);
     }
 
     /*-- Auxiliares de Carta --*/
@@ -104,6 +115,32 @@ public class Jugador {
             extraidos.add(recurso);
         }
         return extraidos;
+    }
+
+    private List<Jugable> filtrarCartasJugablesDeTipo(Jugable carta) {
+        List<Jugable> cartasFiltradas = new ArrayList<>();
+        for(CartaDesarrollo c : cartasDesarrollo) {
+            if(c.getClass().equals(carta.getClass())) {
+                cartasFiltradas.add((Jugable) c);
+            }
+        }
+        return cartasFiltradas;
+    }
+
+    protected Jugable tieneCartasJugablesDeTipo(CartaDesarrollo carta, int numeroTurno) {
+        if(carta.getClass().equals(PuntoDeVictoria.class)) {
+            return null;
+        }
+        List<Jugable> listaDeCartasDeTipo = this.filtrarCartasJugablesDeTipo((Jugable) carta);
+        if(listaDeCartasDeTipo.isEmpty()) {
+            return null;
+        }
+        for(Jugable c : listaDeCartasDeTipo) {
+            if(c.esJugable(numeroTurno)) {
+                return c;
+            }
+        }
+        return null;
     }
 
     /*-- Auxiliares de Puntaje --*/
@@ -149,12 +186,18 @@ public class Jugador {
 
     /*-- Auxiliares de Ladron --*/
 
+    public boolean debeDescartar() {
+        return this.recursos.size() >= 7;
+    }
+
     public void descartarPorLadron() {
-        int cantADescartar = (recursos.size() / 2);
-        for (int i = 0; i <= cantADescartar; i++) {
-            if (!recursos.isEmpty()) {
-                int idx = random.nextInt(recursos.size());
-                recursos.remove(idx);
+        if(this.debeDescartar()) {
+            int cantADescartar = (recursos.size() / 2);
+            for (int i = 0; i <= cantADescartar; i++) {
+                if (!recursos.isEmpty()) {
+                    int idx = random.nextInt(recursos.size());
+                    recursos.remove(idx);
+                }
             }
         }
     }

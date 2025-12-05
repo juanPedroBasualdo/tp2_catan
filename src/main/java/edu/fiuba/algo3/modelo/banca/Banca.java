@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.banca;
 
 import edu.fiuba.algo3.modelo.banca.mazo.Mazo;
+import edu.fiuba.algo3.modelo.cartasDesarrollo.CartaDesarrollo;
 import edu.fiuba.algo3.modelo.excepciones.RecursosInsuficientesException;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
@@ -51,7 +52,8 @@ public class Banca {
 
     public void venderCartaDesarrollo(Jugador jugador, int numeroTurno) {
         Banca.extraerRecursos(jugador, this.precioCartasDesarrollo);
-        this.mazoDeDesarrollo.robarCartaDesarrollo(jugador, numeroTurno);
+        CartaDesarrollo carta = this.mazoDeDesarrollo.robarCartaDesarrollo(jugador, numeroTurno);
+        jugador.agregarCarta(carta);
     }
 
 

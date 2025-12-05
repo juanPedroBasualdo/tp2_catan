@@ -1,4 +1,5 @@
 package edu.fiuba.algo3.modelo.tablero.terreno.pieza;
+
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
@@ -6,17 +7,33 @@ import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
 import java.util.Random;
 
 public class Ladron {
-    
+
+    /*-- Atributos e intancia unica --*/
+
+    private static final Ladron instancia = new Ladron();
+
     private Terreno posicionActual;
     private final Random random = new Random();
 
-    public Ladron() {
-        this.posicionActual = null; // TODO ver como poner como Desierto.class();
+    /*-- Constructor privado de singleton --*/
+
+    private Ladron() {
+        this.posicionActual = null;
     }
 
-    public Ladron(Terreno posicionActualInicial) {
-        this.posicionActual = posicionActualInicial;
+    /*-- Metodos de singleton --*/
+
+    public void inicializar(Terreno terrenoInicial) {
+        if (this.posicionActual == null) {
+            this.posicionActual = terrenoInicial;
+        }
     }
+
+    public static Ladron getInstance() {
+        return instancia;
+    }
+
+    /*-- Metodos de Comportamiento --*/
 
     public Terreno obtenerPosicionActual() {
         return posicionActual;
@@ -37,5 +54,9 @@ public class Ladron {
         jugadorRobador.agregarRecurso(recursoRobado);
 
         return recursoRobado;
+    }
+
+    public boolean estaEnTerreno(Terreno terreno) {
+        return (this.posicionActual.equals(terreno));
     }
 }

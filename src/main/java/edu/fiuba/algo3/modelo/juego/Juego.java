@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo.juego;
 
+import edu.fiuba.algo3.modelo.cartasDesarrollo.Jugable;
 import edu.fiuba.algo3.modelo.excepciones.RecursosInsuficientesException;
 import edu.fiuba.algo3.modelo.juego.turno.Turnos;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
@@ -59,6 +60,24 @@ public class Juego {
         tablero.intercambiarConPuertoGenerico(turnero.jugadorActual(), recursoACambiar, recursoARecibir);
     }
 
+    public void moverLadron(Coordenada coordenada) {
+        this.tablero.moverLadron(coordenada);
+    }
+
+    public void descartarRecursos() {
+        Jugador jugadorDeTurno = this.turnero.jugadorActual();
+        jugadorDeTurno.descartarPorLadron();
+        do {
+            this.turnero.siguienteJugador();
+            Jugador actual = this.turnero.jugadorActual();
+            actual.descartarPorLadron();
+        } while(jugadorDeTurno != this.turnero.jugadorActual());
+    }
+
+    public void robarCarta(Jugador jugadorVictima) {
+        this.tablero.robarCarta(this.turnero.jugadorActual(), jugadorVictima);
+    }
+
     public void intercambioTasaEstandar(Recurso recursoACambiar, Recurso recursoARecibir) {
         banca.intercambioDeTasaEstandar(turnero.jugadorActual(), recursoACambiar, recursoARecibir);
     }
@@ -67,12 +86,8 @@ public class Juego {
         banca.venderCartaDesarrollo(turnero.jugadorActual(), turnero.numeroDeTurno());
     }
 
-    public void jugarCartaCaballero(Coordenada coordenada) {
-        // TODO
-    }
-
-    public void jugarConstruccionDeCarreteras(Coordenada c1, Coordenada c2) {
-
+    public void jugarCarta(Jugable carta) {
+        this.turnero.jugadorActual().jugarCarta(carta, this.turnero.numeroDeTurno());
     }
 
     /**

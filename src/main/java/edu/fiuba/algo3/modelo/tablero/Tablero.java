@@ -3,6 +3,7 @@ package edu.fiuba.algo3.modelo.tablero;
 import java.util.*;
 
 import edu.fiuba.algo3.modelo.banca.Banca;
+import edu.fiuba.algo3.modelo.excepciones.LadronYaEstaEnTerrenoException;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 import edu.fiuba.algo3.modelo.tablero.puerto.PuertoEspecifico2_1;
@@ -11,14 +12,18 @@ import edu.fiuba.algo3.modelo.tablero.terreno.parte.Arista;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
 import edu.fiuba.algo3.modelo.tablero.terreno.TerrenoTipo;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Vertice;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Ladron;
 
 public class Tablero {
+
     private final Terreno[][] terrenos = new Terreno[5][];
     private final List<Vertice> vertices = new ArrayList<>();
     private final Map<String, Arista> aristas = new HashMap<>();
 
     private PuertoEspecifico2_1 puertos2_1;
     private PuertoGenerico3_1 puertos3_1;
+
+    private Ladron ladron;
 
     public Tablero() {
         this(new Random());
@@ -37,7 +42,7 @@ public class Tablero {
         this.generarPuertos();
     }
 
-    /* SECTION Creacion de Tablero */
+    /*-- Creacion de Tablero --*/
 
     private void generarTerrenos(Random random) {
         List<TerrenoTipo> terrenosTipos = new ArrayList<>(List.of(
@@ -59,6 +64,8 @@ public class Tablero {
             for(int j = 0 ; j < terrenos[i].length ; j++) {
                 if(terrenosTipos.get(0) == TerrenoTipo.DESIERTO) {
                     terrenos[i][j] = Terreno.crear(terrenosTipos.remove(0), 0);
+                    ladron = Ladron.getInstance();
+                    ladron.inicializar(terrenos[i][j]);
                 } else {
                     terrenos[i][j] = Terreno.crear(terrenosTipos.remove(0), fichas.remove(0));
                 }
@@ -255,10 +262,22 @@ public class Tablero {
 
     /* SECTION Comportamiento */
 
+    public void moverLadron(Coordenada coordenada) {
+        Terreno terreno = this.getTerreno(coordenada);
+        if(this.ladron.estaEnTerreno(terreno)) {
+            throw new LadronYaEstaEnTerrenoException("El ladron ya se encuentra en la coordenada " + coordenada + ".");
+        }
+        this.ladron.moverA(terreno);
+    }
+
+    public void robarCarta(Jugador jugadorDeTurno, Jugador jugadorVictima) {
+        this.ladron.robarCartaAleatoria(jugadorDeTurno, jugadorVictima);
+    }
+
     public void producirRecursos(int numeroFicha) {
         List<Terreno> terrenosProduccion = this.getTerrenos();
         for(Terreno t : terrenosProduccion) {
-            if(!t.tieneLadron() && t.tieneNumero(numeroFicha)) {
+            if(!this.ladron.estaEnTerreno(t) && t.tieneNumero(numeroFicha)) {
                 t.producir();
             }
         }
@@ -331,12 +350,6 @@ public class Tablero {
     }
 
     private Vertice getVertice(Coordenada coordenada) { return this.getTerreno(coordenada).verticeEn(coordenada.vertex()); };
-
-   /*
-    public boolean jugadorTienePiezaEn(Jugador jugador, Coordenada coordenada){
-        return this.getVertice(coordenada).tienePropietario(jugador);
-    }
-    */
 
     public void intercambiarConPuertoEspecifico(Jugador jugador, Recurso recursoACambiar, Recurso recursoARecibir) {
         puertos2_1.intercambiar(jugador,recursoACambiar,recursoARecibir);

@@ -61,4 +61,8 @@ public class Coordenada {
         return this.v;
     }
 
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + " (" + this.x + "," + this.y + "," + this.v + ")";
+    }
 }
