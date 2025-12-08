@@ -42,14 +42,14 @@ public class Arista {
         return propietario != null;
     }
 
-    public boolean estaConectada() {
+    public boolean estaConectadaPara(Jugador jugador) {
         for(Arista a : adyacentes) {
-            if(a.esDe(this.getPropietario())) {
+            if(a.esDe(jugador)) {
                 return true;
             }
         }
         for(Vertice v : getVertices()) {
-            if(v.esPropietario(this.getPropietario())) {
+            if(v.esPropietario(jugador)) {
                 return true;
             }
         }
@@ -60,19 +60,30 @@ public class Arista {
         return propietario != null && propietario.equals(jugador);
     }
 
-    /*-- Metodos de comportamiento --*/
-
-    public void colocarCamino(Jugador jugador) {
+    private void verificarDisponibilidad(Jugador jugador) {
         if (estaOcupada()) {
             throw new PosicionInvalidaException("La arista ya tiene un camino");
         }
-        if (!estaConectada()) {
+        if (!estaConectadaPara(jugador)) {
             throw new CaminoDesconectadoException("La arista no esta conectada con una pieza de este jugador");
         }
+    }
+
+    /*-- Metodos de comportamiento --*/
+
+    public void colocarCamino(Jugador jugador) {
+        this.verificarDisponibilidad(jugador);
 
         Construccion camino = new Carretera(jugador);
         camino.comprarPieza();
 
+        this.propietario = jugador;
+    }
+
+    public void posicionarCamino(Jugador jugador) {
+        this.verificarDisponibilidad(jugador);
+
+        jugador.agregarConstruccion(new Carretera(jugador));
         this.propietario = jugador;
     }
 

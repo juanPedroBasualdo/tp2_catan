@@ -49,22 +49,33 @@ public class Vertice {
         return construccion.tienePropietario(jugador);
     }
 
+    private void verificarDisponibilidad() {
+        if (this.estaOcupado()) {
+            throw new IllegalStateException("El vértice ya está ocupado");
+        }
+        if(!this.esValido()) {
+            throw new IllegalStateException("No se puede colocar en este Vertice");
+        }
+    }
+
     /*-- Metodos de comportamiento --*/
 
     public void colocarPoblado(Productor poblado) {
-        if (estaOcupado()) {
-            throw new IllegalStateException("El vértice ya está ocupado");
-        }
-        if(!esValido()) {
-            throw new IllegalStateException("No se puede colocar en este Vertice");
-        }
-
+        this.verificarDisponibilidad();
         // Esto verifica que el jugador contenga los recursos antes de agregar la Pieza al vertice y extrae los recursos
         poblado.comprarPieza();
 
         this.construccion = poblado;
         this.invalidarAdyacentes();
 
+    }
+
+    public void posicionarPoblado(Jugador jugador, Poblado poblado) {
+        this.verificarDisponibilidad();
+        this.construccion = poblado;
+        jugador.agregarConstruccion(poblado);
+
+        this.invalidarAdyacentes();
     }
 
     private void asignarPieza(Productor pieza) {
