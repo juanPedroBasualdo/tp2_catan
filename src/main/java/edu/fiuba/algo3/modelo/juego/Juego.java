@@ -115,8 +115,8 @@ public class Juego {
         turnero.pasarTurno();
     }
 
-    public void obtenerPuntaje() {
-        turnero.verificarPuntajeJugador();
+    public int obtenerPuntaje() {
+        return turnero.verificarPuntajeJugador();
     }
 
 }

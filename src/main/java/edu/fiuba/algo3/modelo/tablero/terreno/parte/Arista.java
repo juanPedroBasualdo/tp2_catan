@@ -102,4 +102,8 @@ public class Arista {
     public Vertice[] getVertices() {
         return new Vertice[]{vertice1, vertice2};
     }
+
+    public List<Arista> getAdyacentes() {
+        return this.adyacentes;
+    }
 }

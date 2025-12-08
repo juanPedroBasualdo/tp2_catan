@@ -5,13 +5,8 @@ import edu.fiuba.algo3.modelo.jugador.Jugador;
 import java.util.Collection;
 
 public class MayorEjercito {
-    private final Collection<Jugador> jugadores;
 
-    public MayorEjercito(Collection<Jugador> jugadores) {
-        this.jugadores = jugadores;
-    }
-
-    public Jugador determinar() {
+    public Jugador determinar(Collection<Jugador> jugadores) {
         Jugador candidato = null;
         int actualMayorCantidadCaballerosJugados = 0;
         for (Jugador jugador : jugadores) {
