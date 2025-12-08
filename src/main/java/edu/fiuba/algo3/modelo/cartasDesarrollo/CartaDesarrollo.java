@@ -18,7 +18,11 @@ public abstract class CartaDesarrollo {
 
     /*-- Metodo de comportamiento --*/
 
-    public boolean esJugable(int numeroTurno) {
+    public boolean puedeJugarse(int numeroTurno) {
         return !(numeroTurno == this.turnoObtenido);
     }
+
+    /*-- Verificaciones --*/
+
+    public abstract boolean esJugable();
 }
