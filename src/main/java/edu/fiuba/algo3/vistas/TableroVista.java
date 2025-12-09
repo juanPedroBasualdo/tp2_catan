@@ -1,4 +1,4 @@
-package org.example.catandemo;
+package edu.fiuba.algo3.vistas;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

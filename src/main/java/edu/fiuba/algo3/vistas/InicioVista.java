@@ -1,5 +1,6 @@
-package org.example.catandemo;
+package edu.fiuba.algo3.vistas;
 
+import edu.fiuba.algo3.controllers.CatanMenuBar;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;

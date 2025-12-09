@@ -27,7 +27,7 @@ public class TableroFX extends Application {
     private final double X_DISTANCIA = RADIO * Math.sqrt(3);
     private final double Y_DISTANCIA = RADIO * 1.5;
     
-    private final double X_INIT = 250;
+    private final double X_INIT = 350;
     private final double Y_INIT = 330;
 
 
@@ -65,36 +65,48 @@ public class TableroFX extends Application {
 
         List<Terreno> terrenos = tablero.getTerrenos();
 
+        final double X_STEP = X_DISTANCIA;
+
         double x_1 = X_INIT + X_DISTANCIA/2;
-        double x_2 = x_1 + X_DISTANCIA/2;
+        double x_2 = X_INIT + X_DISTANCIA;
 
         double y_1 = Y_INIT + Y_DISTANCIA;
-        double y_2 = y_1 + Y_DISTANCIA;
-
+        double y_2 = Y_INIT + Y_DISTANCIA * 2;
         double y_3 = Y_INIT - Y_DISTANCIA;
-        double y_4 = y_3 - Y_DISTANCIA;
+        double y_4 = Y_INIT - Y_DISTANCIA * 2;
 
 
-        for (int i = 0; i < 3 ; i++) {
-            crearHexagono(x_2,y_4, terrenos.get(i));
+        int index = 0; // Use a single index to track the current terrain tile
+
+        double row1_start_x = X_INIT - X_STEP;
+        for (int j = 0; j < 3 ; j++) {
+            double current_x = row1_start_x + j * X_STEP;
+            crearHexagono(current_x, y_4, terrenos.get(index++));
         }
 
-        for (int i = 3; i < 7 ; i++) {
-            crearHexagono(x_1,y_3, terrenos.get(i));
+        double row2_start_x = X_INIT - X_STEP * 1.5;
+        for (int j = 0; j < 4 ; j++) {
+            double current_x = row2_start_x + j * X_STEP;
+            crearHexagono(current_x, y_3, terrenos.get(index++));
         }
 
-        for (int i = 7; i < 12 ; i++) {
-            crearHexagono(X_INIT, Y_INIT, terrenos.get(i));
+        double row3_start_x = X_INIT - X_STEP * 2;
+        for (int j = 0; j < 5 ; j++) {
+            double current_x = row3_start_x + j * X_STEP;
+            crearHexagono(current_x, Y_INIT, terrenos.get(index++));
         }
 
-        for (int i = 12; i < 16 ; i++) {
-            crearHexagono(x_1, y_1, terrenos.get(i));
+        double row4_start_x = X_INIT - X_STEP * 1.5;
+        for (int j = 0; j < 4 ; j++) {
+            double current_x = row4_start_x + j * X_STEP;
+            crearHexagono(current_x, y_1, terrenos.get(index++));
         }
 
-        for (int i = 16; i < 19 ; i++) {
-            crearHexagono(x_2, y_2, terrenos.get(i));
+        double row5_start_x = X_INIT - X_STEP;
+        for (int j = 0; j < 3 ; j++) {
+            double current_x = row5_start_x + j * X_STEP;
+            crearHexagono(current_x, y_2, terrenos.get(index++));
         }
-
     }
 
 
@@ -118,7 +130,9 @@ public class TableroFX extends Application {
 
     private void crearHexagono(double x, double y, Terreno terreno) {
 
-        String tipoTerreno = String.valueOf(terreno.getClass());
+        String tipoTerreno = String.valueOf(terreno.getClass().getSimpleName());
+
+        System.out.println(tipoTerreno);
         String colorHex = TERRENOS_MAP.get(tipoTerreno).getKey();
         String iconoPath = TERRENOS_MAP.get(tipoTerreno).getValue();
         int numeroFicha = terreno.getFichaNumero();
@@ -171,4 +185,9 @@ public class TableroFX extends Application {
             nodosTablero.add(numero);
         }
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
 }

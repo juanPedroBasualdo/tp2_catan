@@ -1,5 +1,9 @@
-package org.example.catandemo;
+package edu.fiuba.algo3.controllers;
 
+import edu.fiuba.algo3.vistas.CreditosVista;
+import edu.fiuba.algo3.vistas.InicioVista;
+import edu.fiuba.algo3.vistas.SeleccionJugadoresVista;
+import edu.fiuba.algo3.vistas.TableroVista;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Modality;

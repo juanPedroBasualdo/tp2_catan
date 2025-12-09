@@ -1,4 +1,4 @@
-package org.example.catandemo;
+package edu.fiuba.algo3.controllers;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.net.URL;

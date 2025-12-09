@@ -1,5 +1,6 @@
-package org.example.catandemo;
+package edu.fiuba.algo3.controllers;
 
+import edu.fiuba.algo3.vistas.InicioVista;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;

@@ -1,5 +1,6 @@
-package org.example.catandemo; // Asegúrate de usar el paquete correcto
+package edu.fiuba.algo3.vistas; // Asegúrate de usar el paquete correcto
 
+import edu.fiuba.algo3.controllers.CatanMenuBar;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;

@@ -1,4 +1,4 @@
-package org.example.catandemo;
+package edu.fiuba.algo3.controllers;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
