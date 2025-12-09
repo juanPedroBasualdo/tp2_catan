@@ -5,6 +5,7 @@ import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,12 +34,12 @@ public class TableroFX extends Application {
 
     private List<Node> nodosTablero = new ArrayList<Node>();
     private final Map<String, Pair<String, String>> TERRENOS_MAP = new HashMap<>() {{
-        put("Bosque", new Pair<>("#1aff66", "file:./src/main/java/icons/madera.png"));
-        put("Desierto", new Pair<>("#ffffcc", "file:./src/main/java/icons/cactus.png"));
-        put("Montania", new Pair<>("#7A7A7A", "file:./src/main/java/icons/mineral.png"));
-        put("Campo", new Pair<>("#ffdb4d", "file:./src/main/java/icons/trigo.png"));
-        put("Pastizal", new Pair<>("#A0FF40", "file:./src/main/java/icons/lana.png"));
-        put("Cerro", new Pair<>("#CC5555", "file:./src/main/java/icons/ladrillo.png"));
+        put("Bosque", new Pair<>("#1aff66", "/Iconos/madera.png"));
+        put("Desierto", new Pair<>("#ffffcc", "/Iconos/cactus.png"));
+        put("Montania", new Pair<>("#7A7A7A", "/Iconos/mineral.png"));
+        put("Campo", new Pair<>("#ffdb4d", "/Iconos/trigo.png"));
+        put("Pastizal", new Pair<>("#A0FF40", "/Iconos/lana.png"));
+        put("Cerro", new Pair<>("#CC5555", "/Iconos/ladrillo.png"));
         put("Agua", new Pair<>("#7AA0C6", null));
     }};
 
@@ -113,7 +114,8 @@ public class TableroFX extends Application {
 
     private List<Double> calcularVerticesDeHexagonoPuntiagudo(double cx, double cy, double r) {
         List <Double> coordenadas = new ArrayList<>();
-        final  double angulo_rotacion = Math.toRadians(60);
+        final  double angulo_rotacion = Math.toRadians(-60);
+
         double angulo_inicial = Math.PI / 2;
 
         for (int i = 0; i < 6; i++) {
@@ -139,13 +141,84 @@ public class TableroFX extends Application {
         
         
         Polygon hex = new Polygon();
-        hex.getPoints().addAll(calcularVerticesDeHexagonoPuntiagudo(x,y,RADIO));
+        List<Double> coordenadas = calcularVerticesDeHexagonoPuntiagudo(x,y,RADIO);
+        hex.getPoints().addAll(coordenadas);
 
         hex.setFill(Color.web(colorHex));
         hex.setStroke(Color.web(BORDE_HEXAGONO_COLOR));
         hex.setStrokeWidth(5);
 
         nodosTablero.add(hex);
+
+        int numVertices = coordenadas.size();
+
+        double botonSize = RADIO / 5;
+
+        for (int i = 0; i < coordenadas.size(); i += 2) {
+            double verticeX = coordenadas.get(i);
+            double verticeY = coordenadas.get(i + 1);
+
+            Button botonVertice = new Button();
+
+            // Figura y Color
+            botonVertice.setShape(new Circle(botonSize / 2));
+            botonVertice.setMinSize(botonSize, botonSize);
+            botonVertice.setMaxSize(botonSize, botonSize);
+            botonVertice.setStyle("-fx-background-color: #A0A0A0; -fx-border-color: black; -fx-border-width: 1px;");
+
+            // Posicionamiento
+            botonVertice.setLayoutX(verticeX - botonSize / 2);
+            botonVertice.setLayoutY(verticeY - botonSize / 2);
+
+            // Opcional: Asignar un controlador de eventos (por ejemplo, para construir un asentamiento)
+            botonVertice.setOnAction(e -> {
+                System.out.println("Botón presionado en la coordenada: (" + verticeX + ", " + verticeY + ")");
+
+            });
+
+            nodosTablero.add(botonVertice);
+        }
+
+        final double BUTTON_WIDTH = 25;
+        final double BUTTON_HEIGHT = 8;
+
+        // El tamaño de la lista de coordenadas es 12 (6 vértices * 2 valores)
+
+
+        for (int i = 0; i < numVertices; i += 2) {
+
+            double ax = coordenadas.get(i);
+            double ay = coordenadas.get(i + 1);
+
+            double bx = coordenadas.get((i + 2) % numVertices);
+            double by = coordenadas.get((i + 3) % numVertices);
+
+            double medioX = (ax + bx) / 2;
+            double medioY = (ay + by) / 2;
+
+            double dx = bx - ax;
+            double dy = by - ay;
+            double anguloRad = Math.atan2(dy, dx);
+            double anguloDeg = Math.toDegrees(anguloRad);
+
+            Button botonArista = new Button();
+            botonArista.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+            botonArista.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+            botonArista.setStyle("-fx-background-color: #8B4513; -fx-background-radius: 0;"); // Marrón para simular un camino
+
+            botonArista.setLayoutX(medioX - BUTTON_WIDTH / 2);
+            botonArista.setLayoutY(medioY - BUTTON_HEIGHT / 2);
+
+            // Aplicamos la rotación
+            botonArista.setRotate(anguloDeg);
+
+            botonArista.setOnAction(e -> {
+                System.out.println("Camino presionado en la arista de: (" + medioX + ", " + medioY + ")");
+                // Aquí iría la lógica del juego (ej: construir camino)
+            });
+
+            nodosTablero.add(botonArista);
+        }
 
         if (iconoPath != null) {
             Image img = new Image(iconoPath);
