@@ -10,13 +10,12 @@ import java.util.List;
 public class MayorRutaComercial {
 
     private final AuxiliarMayorRutaComercial auxiliar;
-    private List<Arista> aristas;
 
     public MayorRutaComercial() {
         this.auxiliar = new AuxiliarMayorRutaComercial();
     }
 
-    public Jugador determinar(Collection<Jugador> jugadores, List<Arista> aristas) {
+    public Jugador determinar(Collection<Jugador> jugadores, Collection<Arista> aristas) {
         Jugador jugadorRutaMasLarga = null;
         int maximaLongitud = 0;
         for(Jugador j: jugadores) {
@@ -29,7 +28,7 @@ public class MayorRutaComercial {
         return maximaLongitud >= 5 ? jugadorRutaMasLarga : null;
     }
 
-    private int calcularCaminoMasLargo(Jugador jugador, List<Arista> todasLasAristas) {
+    private int calcularCaminoMasLargo(Jugador jugador, Collection<Arista> todasLasAristas) {
         List<Arista> aristasDeJugador = auxiliar.filtrarAristasPara(todasLasAristas, jugador);
         return auxiliar.mayorRutaComercial(aristasDeJugador, jugador);
     }

@@ -1,9 +1,9 @@
 package edu.fiuba.algo3.modelo.juego;
 
 import edu.fiuba.algo3.modelo.cartasDesarrollo.Jugable;
-import edu.fiuba.algo3.modelo.excepciones.RecursosInsuficientesException;
 import edu.fiuba.algo3.modelo.juego.turno.Turnos;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
+import edu.fiuba.algo3.modelo.puntajeYBonificaciones.Bonificaciones;
 import edu.fiuba.algo3.modelo.randomizados.Dados;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
@@ -20,6 +20,7 @@ public class Juego {
     private final Tablero tablero;
     private final Banca banca;
     private final Dados dados;
+    private final Bonificaciones bonificaciones;
 
     /*-- Constructores --*/
 
@@ -28,6 +29,7 @@ public class Juego {
         tablero = new Tablero();
         banca = new Banca();
         dados = new Dados();
+        bonificaciones = new Bonificaciones(listaJugadores);
     }
 
     /*-- Metodos de fachada --*/
@@ -86,29 +88,12 @@ public class Juego {
         banca.venderCartaDesarrollo(turnero.jugadorActual(), turnero.numeroDeTurno());
     }
 
-    public void jugarCarta(Jugable carta) {
-        this.turnero.jugadorActual().jugarCarta(carta, this.turnero.numeroDeTurno());
+    public void intercambioEntreJugadores(Jugador jugador1, Jugador jugador2, List<Recurso> listaRecursosJ1, List<Recurso> listaRecursosJ2) {
+        this.banca.intercambioEntreJugadores(jugador1, jugador2, listaRecursosJ1, listaRecursosJ2);
     }
 
-    /**
-     * Metodo para intercambio entre dos jugadores una vez aceptada la oferta y teniendo ambas listas de recursos
-     * @param jugador1 El jugador que ofrece listaRecursosJ1 a jugador2 por listaRecursosJ2
-     * @param jugador2 El jugador que acepta listaRecursosJ1 por listaRecursosJ2
-     * @param listaRecursosJ1 Lista de recursos oferta
-     * @param listaRecursosJ2 Lista de recursos demanda
-     */
-    public void intercambioEntreJugadores(Jugador jugador1, Jugador jugador2, List<Recurso> listaRecursosJ1, List<Recurso> listaRecursosJ2) {
-
-        if(!(jugador1.tieneRecursos(listaRecursosJ1) && jugador2.tieneRecursos(listaRecursosJ2))){
-            throw new RecursosInsuficientesException("El jugador no tiene recursos necesarios.");
-        }
-
-        jugador1.eliminarRecursos(listaRecursosJ1);
-        jugador1.agregarRecursos(listaRecursosJ2);
-
-        jugador2.eliminarRecursos(listaRecursosJ2);
-        jugador2.agregarRecursos(listaRecursosJ1);
-
+    public void jugarCarta(Jugable carta) {
+        this.turnero.jugadorActual().jugarCarta(carta, this.turnero.numeroDeTurno());
     }
 
     public void pasarTurno() {
@@ -116,7 +101,11 @@ public class Juego {
     }
 
     public int obtenerPuntaje() {
-        return turnero.verificarPuntajeJugador();
+        return turnero.verificarPuntajeJugador(this.bonificaciones.puntajeDe(this.turnero.jugadorActual()));
+    }
+
+    public void actualizarBonificaciones() {
+        this.bonificaciones.actualizarBonificaciones(this.tablero.getAristas());
     }
 
 }

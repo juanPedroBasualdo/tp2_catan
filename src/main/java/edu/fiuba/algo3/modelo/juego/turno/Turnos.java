@@ -51,8 +51,8 @@ public class Turnos {
         return this.numeroDeTurno;
     }
 
-    public int verificarPuntajeJugador() {
-        return jugadorActual.calcularPuntajeVictoria();
+    public int verificarPuntajeJugador(int puntajeBonificacion) {
+        return jugadorActual.calcularPuntajeVictoria(puntajeBonificacion);
     }
 
 }

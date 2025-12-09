@@ -149,6 +149,10 @@ public class Jugador {
         return Puntaje.calcularPuntajeJugador(this);
     }
 
+    public int calcularPuntajeVictoria(int puntajeBonificacion) {
+        return Puntaje.calcularPuntajeJugador(this, puntajeBonificacion);
+    }
+
     public int puntajeCartasPV() {
         List<PuntoDeVictoria> cartasPV = this.filtrarCartasDePuntos();
         int puntosCartasPV = 0;

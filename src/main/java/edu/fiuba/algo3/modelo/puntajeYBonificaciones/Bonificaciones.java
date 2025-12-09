@@ -27,8 +27,8 @@ public class Bonificaciones {
 
     /*-- Metodos de comportamiento --*/
 
-    public void actualizarBonificaciones(List<Arista> aristas) {
-        jugadorConMayorRutaComercial = determinadorMayorRutaComercial.determinar(jugadoresEnPartida, aristas);
+    public void actualizarBonificaciones(Collection<Arista> aristas) {
+        jugadorConMayorRutaComercial = determinadorMayorRutaComercial.determinar(this.jugadoresEnPartida, aristas);
         jugadorConMayorEjercito = determinadorMayorEjercito.determinar(this.jugadoresEnPartida);
     }
 
