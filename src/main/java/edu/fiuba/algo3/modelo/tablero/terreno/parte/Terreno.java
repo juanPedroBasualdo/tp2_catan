@@ -98,12 +98,20 @@ public abstract class Terreno {
         return (vertices.get(vertice).validarDatosMejoraCiudad(jugador1));
     }
 
-    public void colocarPoblado(Jugador jugador, int indiceVertice) {
-        this.vertices.get(indiceVertice).colocarPoblado(new Poblado(jugador));
+    public void colocarPoblado(Jugador jugador, int vertice) {
+        this.vertices.get(vertice).colocarPoblado(new Poblado(jugador));
     }
 
-    public void colocarCarretera(Jugador jugador, int indiceArista) {
-        this.aristas.get(indiceArista).colocarCamino(jugador);
+    public void posicionarPoblado(Jugador jugador, int vertice) {
+        this.vertices.get(vertice).posicionarPoblado(jugador ,new Poblado(jugador));
+    }
+
+    public void colocarCarretera(Jugador jugador, int arista) {
+        this.aristas.get(arista).colocarCamino(jugador);
+    }
+
+    public void posicionarCamino(Jugador jugador, int arista) {
+        this.aristas.get(arista).posicionarCamino(jugador);
     }
 
     public void producir() {

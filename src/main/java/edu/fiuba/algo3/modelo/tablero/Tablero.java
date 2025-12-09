@@ -345,6 +345,10 @@ public class Tablero {
         }
     }
 
+    public void posicionarCamino(Jugador jugador, Coordenada coordenada) {
+        this.terrenos[coordenada.x()][coordenada.y()].posicionarCamino(jugador, coordenada.vertex());
+    }
+
     public List<Vertice> getVertices() {
         return Collections.unmodifiableList(vertices);
     }

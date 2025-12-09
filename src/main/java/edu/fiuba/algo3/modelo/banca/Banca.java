@@ -48,6 +48,25 @@ public class Banca {
         jugador.agregarRecurso(recursoSaliente);
     }
 
+    /**
+     * Metodo para intercambio entre dos jugadores una vez aceptada la oferta y teniendo ambas listas de recursos
+     * @param jugador1 El jugador que ofrece listaRecursosJ1 a jugador2 por listaRecursosJ2
+     * @param jugador2 El jugador que acepta listaRecursosJ1 por listaRecursosJ2
+     * @param listaRecursosJ1 Lista de recursos oferta
+     * @param listaRecursosJ2 Lista de recursos demanda
+     */
+    public void intercambioEntreJugadores(Jugador jugador1, Jugador jugador2, List<Recurso> listaRecursosJ1, List<Recurso> listaRecursosJ2) {
+        if(!(jugador1.tieneRecursos(listaRecursosJ1)) || !(jugador2.tieneRecursos(listaRecursosJ2))) {
+            throw new RecursosInsuficientesException("No se tienen recursos necesarios para el intercambio.");
+        }
+
+        jugador1.eliminarRecursos(listaRecursosJ1);
+        jugador1.agregarRecursos(listaRecursosJ2);
+
+        jugador2.eliminarRecursos(listaRecursosJ2);
+        jugador2.agregarRecursos(listaRecursosJ1);
+    }
+
     /*-- Metodo de mazo --*/
 
     public void venderCartaDesarrollo(Jugador jugador, int numeroTurno) {

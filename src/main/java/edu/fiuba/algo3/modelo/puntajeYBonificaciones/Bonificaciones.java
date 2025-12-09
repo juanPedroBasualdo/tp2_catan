@@ -2,13 +2,16 @@ package edu.fiuba.algo3.modelo.puntajeYBonificaciones;
 
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
+import edu.fiuba.algo3.modelo.tablero.terreno.parte.Arista;
 
 import java.util.Collection;
+import java.util.List;
 
 public class Bonificaciones {
 
     /*-- Atributos --*/
 
+    private final Collection<Jugador> jugadoresEnPartida;
     private final MayorRutaComercial determinadorMayorRutaComercial;
     private final MayorEjercito determinadorMayorEjercito;
     private Jugador jugadorConMayorRutaComercial = null;
@@ -16,16 +19,17 @@ public class Bonificaciones {
 
     /*-- Constructores --*/
 
-    public Bonificaciones(Collection<Jugador> jugadores, Tablero tablero) {
-        this.determinadorMayorRutaComercial = new MayorRutaComercial(tablero, jugadores);
-        this.determinadorMayorEjercito = new MayorEjercito(jugadores);
+    public Bonificaciones(Collection<Jugador> jugadores) {
+        this.jugadoresEnPartida = jugadores;
+        this.determinadorMayorRutaComercial = new MayorRutaComercial();
+        this.determinadorMayorEjercito = new MayorEjercito();
     }
 
     /*-- Metodos de comportamiento --*/
 
-    public void actualizarBonificaciones() {
-        jugadorConMayorRutaComercial = determinadorMayorRutaComercial.determinar();
-        jugadorConMayorEjercito = determinadorMayorEjercito.determinar();
+    public void actualizarBonificaciones(Collection<Arista> aristas) {
+        jugadorConMayorRutaComercial = determinadorMayorRutaComercial.determinar(this.jugadoresEnPartida, aristas);
+        jugadorConMayorEjercito = determinadorMayorEjercito.determinar(this.jugadoresEnPartida);
     }
 
     public int puntajeDe(Jugador jugador) {

@@ -2,33 +2,34 @@ package edu.fiuba.algo3.modelo.puntajeYBonificaciones;
 
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
+import edu.fiuba.algo3.modelo.tablero.terreno.parte.Arista;
 
 import java.util.Collection;
+import java.util.List;
 
 public class MayorRutaComercial {
-    private final Tablero tablero;
-    private final Collection<Jugador> jugadores;
 
-    public MayorRutaComercial(Tablero tablero, Collection<Jugador> jugadores) {
-        this.tablero = tablero;
-        this.jugadores = jugadores;
+    private final AuxiliarMayorRutaComercial auxiliar;
+
+    public MayorRutaComercial() {
+        this.auxiliar = new AuxiliarMayorRutaComercial();
     }
 
-    public Jugador determinar() {
-        Jugador jugadorConRutaComercialMasLarga = null;
-        int maxLargo = 4;   // mínimo para ganar tarjeta (Camino más largo = 5)
-
-        for (Jugador jugador : jugadores) {
-            int largo = calcularCaminoMasLargo(jugador);
-            if (largo > maxLargo) {
-                maxLargo = largo;
-                jugadorConRutaComercialMasLarga = jugador;
+    public Jugador determinar(Collection<Jugador> jugadores, Collection<Arista> aristas) {
+        Jugador jugadorRutaMasLarga = null;
+        int maximaLongitud = 0;
+        for(Jugador j: jugadores) {
+            int longitudDeJugador = this.calcularCaminoMasLargo(j, aristas);
+            if(longitudDeJugador > maximaLongitud) {
+                jugadorRutaMasLarga = j;
+                maximaLongitud = longitudDeJugador;
             }
         }
-        return jugadorConRutaComercialMasLarga;
+        return maximaLongitud >= 5 ? jugadorRutaMasLarga : null;
     }
 
-    private int calcularCaminoMasLargo(Jugador jugador) {
-        return new DFSRutaMasLarga(tablero).calcularPara(jugador);
+    private int calcularCaminoMasLargo(Jugador jugador, Collection<Arista> todasLasAristas) {
+        List<Arista> aristasDeJugador = auxiliar.filtrarAristasPara(todasLasAristas, jugador);
+        return auxiliar.mayorRutaComercial(aristasDeJugador, jugador);
     }
 }

@@ -180,7 +180,7 @@ public class EntregaTest {
     @Test
     void test08MoverLadronYRobarCartaAleatoria() throws Exception {
         // --- Arrange ---
-        Ladron ladron = new Ladron();
+        Ladron ladron = Ladron.getInstance();
 
         
         Jugador jugadorRobador = new Jugador("Jugador 1");   // jugador activo

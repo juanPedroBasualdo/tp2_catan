@@ -10,6 +10,11 @@ public class PuntoDeVictoria extends CartaDesarrollo implements OtorgaPuntajes {
     }
 
     @Override
+    public boolean esJugable() {
+        return false;
+    }
+
+    @Override
     public int puntajeCarta() {
         return 1;
     }

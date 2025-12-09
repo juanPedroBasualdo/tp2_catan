@@ -13,9 +13,14 @@ public abstract class Jugable extends CartaDesarrollo {
     /*-- Metodo de comportamiento --*/
 
     public void jugar(int numeroTurno) {
-        if(esJugable(numeroTurno)) {
+        if(puedeJugarse(numeroTurno)) {
             this.efecto();
         }
+    }
+
+    @Override
+    public boolean esJugable() {
+        return true;
     }
 
     protected abstract void efecto();

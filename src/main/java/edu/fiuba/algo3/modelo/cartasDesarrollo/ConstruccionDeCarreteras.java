@@ -1,21 +1,23 @@
 package edu.fiuba.algo3.modelo.cartasDesarrollo;
 
 import edu.fiuba.algo3.modelo.jugador.Jugador;
+import edu.fiuba.algo3.modelo.tablero.Tablero;
 import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 
 public class ConstruccionDeCarreteras extends Jugable {
 
     /*-- Atributos --*/
-
+    private Tablero tablero;
     private Coordenada coordenada1;
     private Coordenada coordenada2;
 
     /*-- Constructores--*/
 
-    public ConstruccionDeCarreteras(Jugador propietario, int turnoObtenido, Coordenada c1, Coordenada c2) {
-        this(propietario, turnoObtenido);
+    public ConstruccionDeCarreteras(Jugador propietario, Coordenada c1, Coordenada c2, Tablero tablero) {
+        this(propietario, 1);
         this.coordenada1 = c1;
         this.coordenada2 = c2;
+        this.tablero = tablero;
     }
 
     public ConstruccionDeCarreteras(Jugador propietario, int turnoObtenido) {
@@ -30,7 +32,9 @@ public class ConstruccionDeCarreteras extends Jugable {
     }
 
     @Override
-    protected void efecto() { // TODO
+    protected void efecto() {
+        this.tablero.posicionarCamino(this.propietario, coordenada1);
+        this.tablero.posicionarCamino(this.propietario, coordenada2);
     }
 
     /*-- Setter --*/

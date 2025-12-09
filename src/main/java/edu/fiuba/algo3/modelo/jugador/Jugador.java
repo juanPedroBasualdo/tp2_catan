@@ -128,7 +128,7 @@ public class Jugador {
     }
 
     protected Jugable tieneCartasJugablesDeTipo(CartaDesarrollo carta, int numeroTurno) {
-        if(carta.getClass().equals(PuntoDeVictoria.class)) {
+        if(!carta.esJugable()) {
             return null;
         }
         List<Jugable> listaDeCartasDeTipo = this.filtrarCartasJugablesDeTipo((Jugable) carta);
@@ -136,7 +136,7 @@ public class Jugador {
             return null;
         }
         for(Jugable c : listaDeCartasDeTipo) {
-            if(c.esJugable(numeroTurno)) {
+            if(c.puedeJugarse(numeroTurno)) {
                 return c;
             }
         }
@@ -147,6 +147,10 @@ public class Jugador {
 
     public int calcularPuntajeVictoria() {
         return Puntaje.calcularPuntajeJugador(this);
+    }
+
+    public int calcularPuntajeVictoria(int puntajeBonificacion) {
+        return Puntaje.calcularPuntajeJugador(this, puntajeBonificacion);
     }
 
     public int puntajeCartasPV() {

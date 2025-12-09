@@ -11,4 +11,12 @@ public class Puntaje {
         return resultado;
     }
 
+    public static int calcularPuntajeJugador(Jugador jugador, int puntajeBonificacion) {
+        int resultado = 0;
+        resultado += jugador.puntajeCartasPV();
+        resultado += jugador.puntajeConstrucciones();
+        resultado += puntajeBonificacion;
+        return resultado;
+    }
+
 }
