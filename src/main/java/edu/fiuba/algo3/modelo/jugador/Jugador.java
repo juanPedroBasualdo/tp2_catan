@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo.jugador;
 
+import edu.fiuba.algo3.modelo.Observer.Observable;
 import edu.fiuba.algo3.modelo.banca.Banca;
 import edu.fiuba.algo3.modelo.cartasDesarrollo.CartaDesarrollo;
 import edu.fiuba.algo3.modelo.cartasDesarrollo.Jugable;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Jugador {
+public class Jugador extends Observable {
 
     /*-- Atributos --*/
 
@@ -28,6 +29,7 @@ public class Jugador {
     /*-- Constructores --*/
 
     public Jugador(String nombre) {
+        super(); // Inicializa la lista de observadores
         this.nombre = nombre;
         this.recursos = new ArrayList<>();
         this.construcciones = new ArrayList<>();
@@ -39,29 +41,37 @@ public class Jugador {
 
     public void agregarConstruccion(Construccion construccion) {
         construcciones.add(construccion);
+        this.notificarObservadores();
     }
 
     public void removerConstruccion(Productor construccion) {
         this.construcciones.remove(construccion);
+        this.notificarObservadores();
     }
 
     /*-- Metodos de recurso --*/
 
     public void agregarRecurso(Recurso recurso) {
         this.recursos.add(recurso);
+        this.notificarObservadores();
     }
 
     public void agregarRecursos(List<Recurso> nuevos) {
         this.recursos.addAll(nuevos);
+        this.notificarObservadores();
     }
 
     public Recurso eliminarRecurso(int index) {
-        return recursos.remove(index);
+        Recurso eliminado = recursos.remove(index);
+        this.notificarObservadores();
+        return eliminado;
     }
 
     public Recurso eliminarRecurso(Recurso recurso) {
         int index = recursos.indexOf(recurso);
-        return recursos.remove(index);
+        Recurso eliminado = recursos.remove(index);
+        this.notificarObservadores();
+        return eliminado;
     }
 
     public void eliminarRecursos(List<Recurso> listaDeRecursos) {
@@ -70,6 +80,7 @@ public class Jugador {
                 throw new IllegalStateException("Recurso a eliminar de Jugador no existe.");
             }
         }
+        this.notificarObservadores();
     }
 
     public boolean tieneRecurso(Recurso recursoBuscado) {
@@ -97,6 +108,7 @@ public class Jugador {
         if(cartaAJugar != null) {
             carta.jugar(numeroTurno);
             this.cartasDesarrollo.remove(cartaAJugar);
+            this.notificarObservadores();
         } else {
             throw new CartaNoEsJugableException("No se puede jugar esta carta " + carta.getClass() + ". [Turno: " + numeroTurno + "]");
         }
@@ -104,6 +116,7 @@ public class Jugador {
 
     public void agregarCarta(CartaDesarrollo carta) {
         this.cartasDesarrollo.add(carta);
+        this.notificarObservadores();
     }
 
     /*-- Auxiliares de Carta --*/
@@ -186,6 +199,7 @@ public class Jugador {
 
     public void intercambiarConTasaEstandar(Recurso recursoEntrante, Recurso recursoSaliente) {
         Banca.intercambioDeTasaEstandarEstatico(this, recursoEntrante, recursoSaliente);
+        this.notificarObservadores(); // TODO yo creo que si amerita actualizar luego de intercambiar
     }
 
     /*-- Auxiliares de Ladron --*/
@@ -203,6 +217,7 @@ public class Jugador {
                     recursos.remove(idx);
                 }
             }
+            this.notificarObservadores();
         }
     }
 
@@ -211,6 +226,7 @@ public class Jugador {
         int idx = random.nextInt(objetivo.recursos.size());
         Recurso robado = objetivo.eliminarRecurso(idx);
         this.recursos.add(robado);
+        this.notificarObservadores();
         return robado;
     }
 
