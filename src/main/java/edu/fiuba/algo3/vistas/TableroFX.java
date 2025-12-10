@@ -28,9 +28,8 @@ public class TableroFX extends Application {
     private final double X_DISTANCIA = RADIO * Math.sqrt(3);
     private final double Y_DISTANCIA = RADIO * 1.5;
     
-    private final double X_INIT = 350;
-    private final double Y_INIT = 330;
-
+    private final double X_INIT = 400;
+    private final double Y_INIT = 100;
 
     private List<Node> nodosTablero = new ArrayList<Node>();
     private final Map<String, Pair<String, String>> TERRENOS_MAP = new HashMap<>() {{
@@ -45,13 +44,11 @@ public class TableroFX extends Application {
 
     private final String BORDE_HEXAGONO_COLOR = "#EDC9AF";
 
-
-    private final Random random = new Random();
-
     @Override
     public void start(Stage stage) throws IOException {
 
         generarTablero(new Tablero());
+
         Pane root = new Pane();
         root.getChildren().addAll(nodosTablero);
 
@@ -66,51 +63,44 @@ public class TableroFX extends Application {
 
         List<Terreno> terrenos = tablero.getTerrenos();
 
-        final double X_STEP = X_DISTANCIA;
+        Double[] filas = new Double[] {
+                Y_INIT,
+                Y_INIT + Y_DISTANCIA * 1,
+                Y_INIT + Y_DISTANCIA * 2,
+                Y_INIT + Y_DISTANCIA * 3,
+                Y_INIT + Y_DISTANCIA * 4
+        };
 
-        double x_1 = X_INIT + X_DISTANCIA/2;
-        double x_2 = X_INIT + X_DISTANCIA;
+        Double[] columnas = new Double[] {
+                X_INIT,
+                X_INIT - X_DISTANCIA/2,
+                X_INIT - X_DISTANCIA/2 * 2,
+                X_INIT - X_DISTANCIA/2,
+                X_INIT
+        };
 
-        double y_1 = Y_INIT + Y_DISTANCIA;
-        double y_2 = Y_INIT + Y_DISTANCIA * 2;
-        double y_3 = Y_INIT - Y_DISTANCIA;
-        double y_4 = Y_INIT - Y_DISTANCIA * 2;
+        Integer[] cantHexagonosFila = new Integer[]{3, 4, 5, 4, 3};
 
+        int index_terreno = 0;
 
-        int index = 0; // Use a single index to track the current terrain tile
+        for (int i = 0; i < 5; i++) {   // Valor Y del Terreno
+            for (int j = 0; j < cantHexagonosFila[i]; j++) {    // Valor X del Terreno
+                double x_actual = columnas[i] + X_DISTANCIA * j;
 
-        double row1_start_x = X_INIT - X_STEP;
-        for (int j = 0; j < 3 ; j++) {
-            double current_x = row1_start_x + j * X_STEP;
-            crearHexagono(current_x, y_4, terrenos.get(index++));
+                Terreno terreno = terrenos.get(index_terreno++);
+
+                Polygon hex = crearHexagono(x_actual,filas[i], terreno);
+
+                List<Double> coordenadas = hex.getPoints();
+
+                System.out.println("Vertex: "+ j + "," + i);
+
+                aniadirBtnVertices(coordenadas,i,j, terreno);
+                aniadirBtnAristas( coordenadas,i,j, terreno);
+            }
         }
 
-        double row2_start_x = X_INIT - X_STEP * 1.5;
-        for (int j = 0; j < 4 ; j++) {
-            double current_x = row2_start_x + j * X_STEP;
-            crearHexagono(current_x, y_3, terrenos.get(index++));
-        }
-
-        double row3_start_x = X_INIT - X_STEP * 2;
-        for (int j = 0; j < 5 ; j++) {
-            double current_x = row3_start_x + j * X_STEP;
-            crearHexagono(current_x, Y_INIT, terrenos.get(index++));
-        }
-
-        double row4_start_x = X_INIT - X_STEP * 1.5;
-        for (int j = 0; j < 4 ; j++) {
-            double current_x = row4_start_x + j * X_STEP;
-            crearHexagono(current_x, y_1, terrenos.get(index++));
-        }
-
-        double row5_start_x = X_INIT - X_STEP;
-        for (int j = 0; j < 3 ; j++) {
-            double current_x = row5_start_x + j * X_STEP;
-            crearHexagono(current_x, y_2, terrenos.get(index++));
-        }
     }
-
-
 
     private List<Double> calcularVerticesDeHexagonoPuntiagudo(double cx, double cy, double r) {
         List <Double> coordenadas = new ArrayList<>();
@@ -130,11 +120,84 @@ public class TableroFX extends Application {
     }
 
 
-    private void crearHexagono(double x, double y, Terreno terreno) {
+    private void aniadirBtnVertices(List<Double> listaVertices, int y, int x, Terreno terreno) {
 
-        String tipoTerreno = String.valueOf(terreno.getClass().getSimpleName());
+        double botonSize = RADIO / 5;
 
-        System.out.println(tipoTerreno);
+        for (int i = 0; i < 12; i += 2) {
+            double verticeX = listaVertices.get(i);
+            double verticeY = listaVertices.get(i + 1);
+
+            Button botonVertice = new Button();
+
+            // Figura y Color TODO aplicar icono de terreno si existe con color de jugador
+            botonVertice.setShape(new Circle(botonSize / 2));
+            botonVertice.setMinSize(botonSize, botonSize);
+            botonVertice.setMaxSize(botonSize, botonSize);
+            botonVertice.setStyle("-fx-background-color: #A0A0A0; -fx-border-color: black; -fx-border-width: 1px;");
+
+            // Posicionamiento
+            botonVertice.setLayoutX(verticeX - botonSize / 2);
+            botonVertice.setLayoutY(verticeY - botonSize / 2);
+
+            // Opcional: Asignar un controlador de eventos (por ejemplo, para construir un asentamiento)
+            int finalI = i/2;
+            botonVertice.setOnAction(e -> {
+                System.out.println("Botón presionado en la coordenada: (" + y + ", " + x + ") en pos: " + finalI);
+
+            });
+
+            nodosTablero.add(botonVertice);
+        }
+    }
+
+    private void aniadirBtnAristas(List<Double> listaVertices, int y, int x, Terreno terreno) {
+        final double BUTTON_WIDTH = 25;
+        final double BUTTON_HEIGHT = 8;
+
+        for (int i = 0; i < 12; i += 2) {
+
+            double ax = listaVertices.get(i);
+            double ay = listaVertices.get(i + 1);
+
+            double bx = listaVertices.get((i + 2) % 12);
+            double by = listaVertices.get((i + 3) % 12);
+
+            double medioX = (ax + bx) / 2;
+            double medioY = (ay + by) / 2;
+
+            double dx = bx - ax;
+            double dy = by - ay;
+            double anguloRad = Math.atan2(dy, dx);
+            double anguloDeg = Math.toDegrees(anguloRad);
+
+            Button botonArista = new Button();
+            botonArista.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+            botonArista.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+
+            // TODO cambiar con color de cada jugador!!
+            botonArista.setStyle("-fx-background-color: #8B4513; -fx-background-radius: 0;"); // Marrón para simular un camino
+
+            botonArista.setLayoutX(medioX - BUTTON_WIDTH / 2);
+            botonArista.setLayoutY(medioY - BUTTON_HEIGHT / 2);
+
+            // Aplicamos la rotación
+            botonArista.setRotate(anguloDeg);
+
+            int finalI = i/2;
+            botonArista.setOnAction(e -> {
+                System.out.println("Camino presionado en la arista de: (" + x + ", " + y + ") en pos:" + finalI);
+            });
+
+            nodosTablero.add(botonArista);
+        }
+    }
+
+
+    private Polygon crearHexagono(double x, double y, Terreno terreno) {
+
+        String tipoTerreno = terreno.getClass().getSimpleName();
+
         String colorHex = TERRENOS_MAP.get(tipoTerreno).getKey();
         String iconoPath = TERRENOS_MAP.get(tipoTerreno).getValue();
         int numeroFicha = terreno.getFichaNumero();
@@ -149,76 +212,6 @@ public class TableroFX extends Application {
         hex.setStrokeWidth(5);
 
         nodosTablero.add(hex);
-
-        int numVertices = coordenadas.size();
-
-        double botonSize = RADIO / 5;
-
-        for (int i = 0; i < coordenadas.size(); i += 2) {
-            double verticeX = coordenadas.get(i);
-            double verticeY = coordenadas.get(i + 1);
-
-            Button botonVertice = new Button();
-
-            // Figura y Color
-            botonVertice.setShape(new Circle(botonSize / 2));
-            botonVertice.setMinSize(botonSize, botonSize);
-            botonVertice.setMaxSize(botonSize, botonSize);
-            botonVertice.setStyle("-fx-background-color: #A0A0A0; -fx-border-color: black; -fx-border-width: 1px;");
-
-            // Posicionamiento
-            botonVertice.setLayoutX(verticeX - botonSize / 2);
-            botonVertice.setLayoutY(verticeY - botonSize / 2);
-
-            // Opcional: Asignar un controlador de eventos (por ejemplo, para construir un asentamiento)
-            botonVertice.setOnAction(e -> {
-                System.out.println("Botón presionado en la coordenada: (" + verticeX + ", " + verticeY + ")");
-
-            });
-
-            nodosTablero.add(botonVertice);
-        }
-
-        final double BUTTON_WIDTH = 25;
-        final double BUTTON_HEIGHT = 8;
-
-        // El tamaño de la lista de coordenadas es 12 (6 vértices * 2 valores)
-
-
-        for (int i = 0; i < numVertices; i += 2) {
-
-            double ax = coordenadas.get(i);
-            double ay = coordenadas.get(i + 1);
-
-            double bx = coordenadas.get((i + 2) % numVertices);
-            double by = coordenadas.get((i + 3) % numVertices);
-
-            double medioX = (ax + bx) / 2;
-            double medioY = (ay + by) / 2;
-
-            double dx = bx - ax;
-            double dy = by - ay;
-            double anguloRad = Math.atan2(dy, dx);
-            double anguloDeg = Math.toDegrees(anguloRad);
-
-            Button botonArista = new Button();
-            botonArista.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-            botonArista.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-            botonArista.setStyle("-fx-background-color: #8B4513; -fx-background-radius: 0;"); // Marrón para simular un camino
-
-            botonArista.setLayoutX(medioX - BUTTON_WIDTH / 2);
-            botonArista.setLayoutY(medioY - BUTTON_HEIGHT / 2);
-
-            // Aplicamos la rotación
-            botonArista.setRotate(anguloDeg);
-
-            botonArista.setOnAction(e -> {
-                System.out.println("Camino presionado en la arista de: (" + medioX + ", " + medioY + ")");
-                // Aquí iría la lógica del juego (ej: construir camino)
-            });
-
-            nodosTablero.add(botonArista);
-        }
 
         if (iconoPath != null) {
             Image img = new Image(iconoPath);
@@ -257,6 +250,8 @@ public class TableroFX extends Application {
             nodosTablero.add(ficha);
             nodosTablero.add(numero);
         }
+
+        return hex;
     }
 
     public static void main(String[] args) {
