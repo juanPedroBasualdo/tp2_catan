@@ -15,9 +15,10 @@ public class Caballero extends Jugable {
         super(propietario, turnoObtenido);
     }
 
-    public Caballero(Jugador propietario, Tablero tablero) {
+    public Caballero(Jugador propietario, Tablero tablero, Coordenada coordenada) {
         this(propietario, 1);
         this.tablero = tablero;
+        this.coordenada = coordenada;
     }
 
     /*-- Metodo de  comportamiento --*/
