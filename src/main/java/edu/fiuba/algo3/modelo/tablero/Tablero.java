@@ -2,6 +2,7 @@ package edu.fiuba.algo3.modelo.tablero;
 
 import java.util.*;
 
+import edu.fiuba.algo3.modelo.Observer.Observable;
 import edu.fiuba.algo3.modelo.banca.Banca;
 import edu.fiuba.algo3.modelo.excepciones.LadronYaEstaEnTerrenoException;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
@@ -14,7 +15,7 @@ import edu.fiuba.algo3.modelo.tablero.terreno.TerrenoTipo;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Vertice;
 import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Ladron;
 
-public class Tablero {
+public class Tablero extends Observable {
 
     private final Terreno[][] terrenos = new Terreno[5][];
     private final List<Vertice> vertices = new ArrayList<>();
@@ -34,6 +35,7 @@ public class Tablero {
     }
 
     public Tablero(Random random) {
+        super();
         this.armarFormaDeTablero();
         this.generarTerrenos(random);
         this.asignarVertices();
@@ -268,6 +270,7 @@ public class Tablero {
             throw new LadronYaEstaEnTerrenoException("El ladron ya se encuentra en la coordenada " + coordenada + ".");
         }
         this.ladron.moverA(terreno);
+        this.notificarObservadores();
     }
 
     public void robarCarta(Jugador jugadorDeTurno, Jugador jugadorVictima) {
@@ -281,6 +284,7 @@ public class Tablero {
                 t.producir();
             }
         }
+        this.notificarObservadores();
     }
 
     public static Map<Recurso, Long> producirRecursos(int numero, List<Terreno> terreno) {
@@ -297,18 +301,21 @@ public class Tablero {
     public void mejorarPoblado(Jugador jugador, Coordenada coordenadaPoblado) {
         if (this.puedeMejorarPoblado(jugador,coordenadaPoblado)) {
             terrenos[coordenadaPoblado.x()][coordenadaPoblado.y()].construirCiudad(jugador, coordenadaPoblado.vertex());
+            this.notificarObservadores();
         }
     }
 
     public void colocarPoblado(Jugador jugador, Coordenada coordenada) {
         if(this.puedeColocarPoblado(jugador, coordenada)) {
             terrenos[coordenada.x()][coordenada.y()].colocarPoblado(jugador, coordenada.vertex());
+            this.notificarObservadores();
         }
 
     }
 
     public void colocarCarretera(Jugador jugador, Coordenada coordenada) {
         terrenos[coordenada.x()][coordenada.y()].colocarCarretera(jugador, coordenada.vertex());
+        this.notificarObservadores();
     }
 
     // Esto solo verifica que el vertica donde existe la coordenada no es INVALIDO, no prueba regla distancia
@@ -347,6 +354,7 @@ public class Tablero {
 
     public void posicionarCamino(Jugador jugador, Coordenada coordenada) {
         this.terrenos[coordenada.x()][coordenada.y()].posicionarCamino(jugador, coordenada.vertex());
+        this.notificarObservadores();
     }
 
     public List<Vertice> getVertices() {
