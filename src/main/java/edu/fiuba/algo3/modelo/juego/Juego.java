@@ -32,6 +32,12 @@ public class Juego {
         bonificaciones = new Bonificaciones(listaJugadores);
     }
 
+    /*-- Getter --*/
+
+    public Collection<Jugador> listaDeJugadores() {
+        return this.turnero.jugadores();
+    }
+
     /*-- Metodos de fachada --*/
 
     public int tirarDados() {
