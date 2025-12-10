@@ -96,7 +96,8 @@ public class TableroFX extends Application {
                 System.out.println("Vertex: "+ j + "," + i);
 
                 aniadirBtnVertices(coordenadas,i,j, terreno);
-                aniadirBtnAristas( coordenadas,i,j, terreno);
+                aniadirBtnAristas(coordenadas,i,j, terreno);
+                aniadirBtnHexagono(x_actual,filas[i],i,j);
             }
         }
 
@@ -117,6 +118,28 @@ public class TableroFX extends Application {
             coordenadas.add(y);
         }
         return coordenadas;
+    }
+
+    private void aniadirBtnHexagono(double pos_x, double pos_y, double x, double y) {
+
+        double botonSize = RADIO;
+
+        Button botonHexagono = new Button();
+
+        botonHexagono.setShape(new Circle(botonSize));
+        botonHexagono.setMinSize(botonSize, botonSize);
+        botonHexagono.setMaxSize(botonSize, botonSize);
+
+        botonHexagono.setLayoutX(pos_x - botonSize / 2);
+        botonHexagono.setLayoutY(pos_y - botonSize / 2);
+
+        botonHexagono.setStyle("-fx-background-color: transparent;");
+
+        botonHexagono.setOnAction(e -> {
+            System.out.println("Botón presionado en la hexagono: (" + y + ", " + x);
+        });
+
+        nodosTablero.add(botonHexagono);
     }
 
 
@@ -144,7 +167,6 @@ public class TableroFX extends Application {
             int finalI = i/2;
             botonVertice.setOnAction(e -> {
                 System.out.println("Botón presionado en la coordenada: (" + y + ", " + x + ") en pos: " + finalI);
-
             });
 
             nodosTablero.add(botonVertice);
