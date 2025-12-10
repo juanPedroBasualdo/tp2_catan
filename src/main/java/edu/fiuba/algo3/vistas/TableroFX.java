@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.vistas;
 
+import edu.fiuba.algo3.controllers.TableroControlador;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
 import javafx.application.Application;
@@ -23,6 +24,8 @@ import java.util.*;
 
 public class TableroFX extends Application {
 
+    private TableroControlador controladorTemporal;
+
     private final double RADIO = 60;
 
     private final double X_DISTANCIA = RADIO * Math.sqrt(3);
@@ -32,6 +35,11 @@ public class TableroFX extends Application {
     private final double Y_INIT = 100;
 
     private List<Node> nodosTablero = new ArrayList<Node>();
+
+    private final String[] coloresJugadores = new String[] {
+
+    };
+
     private final Map<String, Pair<String, String>> TERRENOS_MAP = new HashMap<>() {{
         put("Bosque", new Pair<>("#1aff66", "/Iconos/madera.png"));
         put("Desierto", new Pair<>("#ffffcc", "/Iconos/cactus.png"));
@@ -43,6 +51,10 @@ public class TableroFX extends Application {
     }};
 
     private final String BORDE_HEXAGONO_COLOR = "#EDC9AF";
+
+    public TableroFX(TableroControlador controlador) {
+        this.controladorTemporal = controlador;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -96,8 +108,8 @@ public class TableroFX extends Application {
                 System.out.println("Vertex: "+ j + "," + i);
 
                 aniadirBtnVertices(coordenadas,i,j, terreno);
-                aniadirBtnAristas(coordenadas,i,j, terreno);
-                aniadirBtnHexagono(x_actual,filas[i],i,j);
+                aniadirBtnAristas(coordenadas,i,j, terreno); // agrega iconos de ciudad/poblado
+                aniadirBtnHexagono(x_actual,filas[i],i,j);   // agrega color de jugador
             }
         }
 
