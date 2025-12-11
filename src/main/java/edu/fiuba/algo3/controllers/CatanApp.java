@@ -78,12 +78,11 @@ public class CatanApp extends Application {
     }
 
     public void mostrarReglas() {
-            try {
-                Desktop.getDesktop().browse(new URI(URL_REGLAS_CATAN));
-            } catch (Exception e) {
-
-            }
+        try {
+            Desktop.getDesktop().browse(new URI(URL_REGLAS_CATAN));
+        } catch (Exception e) {
         }
+    }
 
     public static void main(String[] args) {
         launch(args);

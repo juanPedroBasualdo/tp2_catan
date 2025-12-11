@@ -12,13 +12,11 @@ public class ControladorMusica {
 
     private ControladorMusica() {
         URL resource = getClass().getResource("/Musicas/01 Age of Empires II Main Theme.mp3");
-        if (resource != null) {
-            Media media = new Media(resource.toExternalForm());
-            mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            mediaPlayer.setVolume(VOLUMEN_INICIAL);
-            mediaPlayer.play();
-        }
+        Media media = new Media(resource.toExternalForm());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.setVolume(VOLUMEN_INICIAL);
+        mediaPlayer.play();
     }
 
     public static ControladorMusica getInstance() {
@@ -28,7 +26,7 @@ public class ControladorMusica {
         return instance;
     }
 
-    public void setVolume(double volume) {
+    public void setvolumen(double volume) {
         if (mediaPlayer != null) {
             mediaPlayer.setVolume(Math.max(0, Math.min(1, volume)));
         }

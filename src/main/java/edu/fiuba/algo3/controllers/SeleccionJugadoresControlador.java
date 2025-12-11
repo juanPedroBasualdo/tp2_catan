@@ -57,7 +57,7 @@ public class SeleccionJugadoresControlador {
         barraVolumen.setValue(musica.getVolumen());
 
         barraVolumen.valueProperty().addListener((obs, oldValue, newValue) -> {
-            musica.setVolume(newValue.doubleValue());
+            musica.setvolumen(newValue.doubleValue());
         });
     }
 }

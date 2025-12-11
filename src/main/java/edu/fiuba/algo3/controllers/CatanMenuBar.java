@@ -11,6 +11,7 @@ public class CatanMenuBar extends MenuBar {
     private final MenuItem barraMenuReglas;
     private final MenuItem barraMenuSalir;
     private final Slider barraVolumen;
+    private final MenuItem itemElegirMusica;
 
     public CatanMenuBar() {
         Menu menuJuego = new Menu("Juego");
@@ -33,7 +34,7 @@ public class CatanMenuBar extends MenuBar {
         CustomMenuItem itemVolumen = new CustomMenuItem(contenedorBarraVolumen);
         itemVolumen.setHideOnClick(false);
 
-        MenuItem itemElegirMusica = new MenuItem("Elegir Música");
+        itemElegirMusica = new MenuItem("Elegir Música");
         menuSonido.getItems().addAll(itemVolumen, itemElegirMusica);
 
         this.getMenus().addAll(menuAcercaDe, menuSonido, menuJuego);
@@ -53,5 +54,9 @@ public class CatanMenuBar extends MenuBar {
 
     public Slider getBarraVolumen() {
         return barraVolumen;
+    }
+
+    public MenuItem getItemElegirMusica() {
+        return itemElegirMusica;
     }
 }
