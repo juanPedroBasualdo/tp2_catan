@@ -27,7 +27,7 @@ public class CatanApp extends Application {
     @Override
     public void start(Stage stage) {
         this.escena = stage;
-        ControladorMusica.getInstance();
+        // ControladorMusica.getInstance();
         mostrarPantallaInicio();
         escena.setTitle("Catan");
         escena.setResizable(false);
@@ -68,7 +68,11 @@ public class CatanApp extends Application {
         JuegoVista vistaPrincipal = new JuegoVista();
 
         TableroControlador tableroControlador = new TableroControlador(vistaPrincipal, this, juego);
-        TableroVista tableroVista = new TableroVista(this, juego, tableroControlador);
+
+        TableroVista tableroVista = new TableroVista(this, juego, tableroControlador, listaJugadores);
+
+        juego.agregarObserversDeJugador(tableroVista);
+        juego.agregarObserversDeTablero(tableroVista);
 
         vistaPrincipal.setTablero(tableroVista);
 

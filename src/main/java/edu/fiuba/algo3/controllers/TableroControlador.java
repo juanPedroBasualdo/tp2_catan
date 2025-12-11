@@ -37,7 +37,7 @@ public class TableroControlador {
 
         setupEventHandlers();
         setupMenuHandlers();
-        setupVolumeControl();
+        // wsetupVolumeControl();
     }
 
     private void setupEventHandlers() {
@@ -54,6 +54,8 @@ public class TableroControlador {
 
     private void handleTirarDadosClick() {
         System.out.println("Tiro dados");
+        int fichaActual = juego.tirarDados();
+        juego.otorgarRecursos(fichaActual);
     }
 
     private void handleConstruirClick() {
@@ -64,7 +66,7 @@ public class TableroControlador {
     public void handleBtnVertice(int y, int x, int z) {
 
         try{
-            Coordenada coordVert = new Coordenada(x,y,z);
+            Coordenada coordVert = new Coordenada(y,x,z);
             Tablero tablero = juego.obtenerTablero();
             String construccion = tablero.getTerreno(coordVert).verticeEn(z).obtenerPieza().getClass().getSimpleName();
             switch(accion){
@@ -84,13 +86,38 @@ public class TableroControlador {
                             break;
                         }
                     }
+                    juego.notificarObservadores();
                     accion = AccionesJuego.ESPERARACCION;
+                    break;
+                default:
                     break;
             }
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    public void handlerBtnArista(int y, int x, int z) {
+        try{
+            Coordenada coordArista = new Coordenada(y,x,z);
+
+            switch(accion){
+                case CONSTRUIR:
+                    juego.posicionarCamino(coordArista);
+                    juego.notificarObservadores();
+
+                    accion = AccionesJuego.ESPERARACCION;
+                    break;
+                default:
+                    break;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void handleComerciarJugadorClick() {
@@ -112,6 +139,7 @@ public class TableroControlador {
     private void handlePasarClick() {
         System.out.println("Paso el turno");
         juego.pasarTurno();
+        juego.notificarObservadores();
     }
 
     private void handleComprarCartaDesarrolloClick() { System.out.println("Compro carta de desarrollo");}

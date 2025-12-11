@@ -13,7 +13,9 @@ import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Productor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Jugador extends Observable {
 
@@ -238,6 +240,10 @@ public class Jugador extends Observable {
 
     public List<Recurso> obtenerRecursos() {
         return recursos;
+    }
+
+    public Map<Recurso, Long> contarRecursos() {
+        return recursos.stream().collect(Collectors.groupingBy(recurso -> recurso, Collectors.counting()));
     }
 
     public int getCaballerosJugados() {
