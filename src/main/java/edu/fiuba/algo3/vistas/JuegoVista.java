@@ -89,4 +89,6 @@ public class JuegoVista {
     public Button getBotonComprarCartaDesarrollo() { return botoneraVista.getBotonComprarCartaDesarrollo();}
 
     public ManoVista getManoVista() { return manoVista;}
+
+    public BarraDerechaVista getBarraDerecha() { return barraDerecha;}
 }

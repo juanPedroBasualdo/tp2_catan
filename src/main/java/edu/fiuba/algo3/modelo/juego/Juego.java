@@ -123,6 +123,8 @@ public class Juego {
         turnero.pasarTurno();
     }
 
+    public Jugador jugadorActual() { return this.turnero.jugadorActual(); }
+
     public int obtenerPuntaje() {
         return turnero.verificarPuntajeJugador(this.bonificaciones.puntajeDe(this.turnero.jugadorActual()));
     }

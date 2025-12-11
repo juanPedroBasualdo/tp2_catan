@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.controllers;
 
-import edu.fiuba.algo3.modelo.juego.turno.FaseTurno;
 import edu.fiuba.algo3.vistas.JuegoVista;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
@@ -38,7 +37,8 @@ public class TableroControlador {
 
         setupEventHandlers();
         setupMenuHandlers();
-        // wsetupVolumeControl();
+        // setupVolumeControl();
+        actualizarJugadorQueLeToca();
     }
 
     private void setupEventHandlers() {
@@ -57,6 +57,7 @@ public class TableroControlador {
         System.out.println("Tiro dados");
         int fichaActual = juego.tirarDados();
         juego.otorgarRecursos(fichaActual);
+        vista.getBarraDerecha().getLabelResultadoDados().setText(String.valueOf(fichaActual));
     }
 
     private void handleConstruirClick() {
@@ -73,6 +74,7 @@ public class TableroControlador {
             Tablero tablero = juego.obtenerTablero();
             String construccion = tablero.getTerreno(coordVert).verticeEn(z).obtenerPieza().getClass().getSimpleName();
             switch(accion){
+
                 case CONSTRUIR:
                     switch(construccion){
                         case ("Vacio"): {
@@ -105,7 +107,6 @@ public class TableroControlador {
                             System.out.println("No se puede mejorar una CIUDAD");
                             break;
                         }
-
                     }
                     juego.notificarObservadores();
                     accion = AccionesJuego.ESPERARACCION;
@@ -131,6 +132,7 @@ public class TableroControlador {
                         juego.posicionarCamino(coordArista);
                         this.juego.cambiarFase(0);
                         this.juego.pasarTurno();
+                        actualizarJugadorQueLeToca();
                     }
 
                     if (juego.obtenerFase() == FaseTurno.TURNOJUGADOR){
@@ -139,6 +141,7 @@ public class TableroControlador {
 
 
                     juego.notificarObservadores();
+
                     accion = AccionesJuego.ESPERARACCION;
                     break;
                 default:
@@ -148,6 +151,14 @@ public class TableroControlador {
         } catch (Exception e) {
             System.out.println(e);
         }
+
+    }
+
+    private void actualizarJugadorQueLeToca(){
+
+    String nombreJugador = juego.jugadorActual().obtenerNombre();
+    String jugadorNombre = "Juega:" + nombreJugador;
+    vista.getBarraDerecha().getLabelJugadorActual().setText(jugadorNombre);
 
     }
 
@@ -173,10 +184,13 @@ public class TableroControlador {
             juego.pasarTurno();
             juego.cambiarFase(0);
             juego.notificarObservadores();
+            actualizarJugadorQueLeToca();
         }else {
             System.out.println("Estas en la fase inicial");
         }
+
     }
+
 
     private void handleComprarCartaDesarrolloClick() { System.out.println("Compro carta de desarrollo");}
 
