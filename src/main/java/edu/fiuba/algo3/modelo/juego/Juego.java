@@ -1,8 +1,9 @@
 package edu.fiuba.algo3.modelo.juego;
 
-import edu.fiuba.algo3.modelo.Observer.Observable;
 import edu.fiuba.algo3.modelo.Observer.Observador;
 import edu.fiuba.algo3.modelo.cartasDesarrollo.Jugable;
+import edu.fiuba.algo3.modelo.juego.turno.FaseTurno;
+import edu.fiuba.algo3.modelo.juego.turno.FasesTurno;
 import edu.fiuba.algo3.modelo.juego.turno.Turnos;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.puntajeYBonificaciones.Bonificaciones;
@@ -23,6 +24,7 @@ public class Juego {
     private final Banca banca;
     private final Dados dados;
     private final Bonificaciones bonificaciones;
+    private final FasesTurno flujo;
 
     /*-- Constructores --*/
 
@@ -32,6 +34,7 @@ public class Juego {
         banca = new Banca();
         dados = new Dados();
         bonificaciones = new Bonificaciones(listaJugadores);
+        flujo = new FasesTurno(listaJugadores.size());
     }
 
     /*-- Getter --*/
@@ -124,6 +127,18 @@ public class Juego {
 
     public void actualizarBonificaciones() {
         this.bonificaciones.actualizarBonificaciones(this.tablero.getAristas());
+    }
+
+    public void cambiarFase(int numeroDado) {
+        this.flujo.cambiarFase(numeroDado);
+    }
+
+    public void cambiarFase(FaseTurno fase) {
+        this.flujo.cambiarFase(fase);
+    }
+
+    public FaseTurno obtenerFase() {
+        return this.flujo.obtenerFase();
     }
 
     // Metodos observer:
