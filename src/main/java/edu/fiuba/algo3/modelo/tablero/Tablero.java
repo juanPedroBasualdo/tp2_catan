@@ -18,7 +18,7 @@ import edu.fiuba.algo3.modelo.tablero.terreno.pieza.Ladron;
 public class Tablero extends Observable {
 
     private final Terreno[][] terrenos = new Terreno[5][];
-    private final List<Vertice> vertices = new ArrayList<>();
+    private final Map<String,Vertice> vertices = new HashMap<>();
     private final Map<String, Arista> aristas = new HashMap<>();
 
     private PuertoEspecifico2_1 puertos2_1;
@@ -111,9 +111,13 @@ public class Tablero extends Observable {
     public List<Vertice> generarListadoVertices(int indiceTablero) {
         List<Vertice> verticesTerreno = new ArrayList<>();
         for(int i = 0 ; i < indiceVerticesDeCadaTerreno[indiceTablero].length ; i++) {
-            Vertice nuevoVertice = new Vertice(indiceVerticesDeCadaTerreno[indiceTablero][i]);
-            verticesTerreno.add(nuevoVertice);
-            this.vertices.add(nuevoVertice);
+            String key = String.valueOf(indiceVerticesDeCadaTerreno[indiceTablero][i]);
+            Vertice v = vertices.get(key);
+            if (v == null) {
+                v = new Vertice(indiceVerticesDeCadaTerreno[indiceTablero][i]);
+                vertices.put(key,v);
+            }
+            verticesTerreno.add(v);
         }
         return verticesTerreno;
     }
@@ -172,8 +176,8 @@ public class Tablero extends Observable {
             String key = v1 + "-" + v2;             // clave única ej: {1,2} → "1-2"
             Arista arista = aristas.get(key);
             if (arista == null) {
-                Vertice vertice1 = vertices.get(v1);
-                Vertice vertice2 = vertices.get(v2);
+                Vertice vertice1 = vertices.get(String.valueOf(v1));
+                Vertice vertice2 = vertices.get(String.valueOf(v2));
                 arista = new Arista(key, vertice1, vertice2);
                 vertice1.asignarAdyacente(vertice2);
                 vertice2.asignarAdyacente(vertice1);
@@ -357,8 +361,13 @@ public class Tablero extends Observable {
         this.notificarObservadores();
     }
 
-    public List<Vertice> getVertices() {
-        return Collections.unmodifiableList(vertices);
+    public void posicionarPoblado(Jugador jugador, Coordenada coordenada) {
+        this.terrenos[coordenada.x()][coordenada.y()].posicionarPoblado(jugador, coordenada.vertex());
+    }
+
+
+    public Collection<Vertice> getVertices() {
+        return Collections.unmodifiableCollection(vertices.values());
     }
 
     private Vertice getVertice(Coordenada coordenada) { return this.getTerreno(coordenada).verticeEn(coordenada.vertex()); };

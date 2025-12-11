@@ -30,7 +30,7 @@ public abstract class Construccion {
     public Jugador getPropietario() { return propietario; }
 
     public boolean tienePropietario(Jugador jugador) {
-        return jugador == propietario;
+        return jugador.equals(propietario);
     }
 
     public boolean esNoVacio() {

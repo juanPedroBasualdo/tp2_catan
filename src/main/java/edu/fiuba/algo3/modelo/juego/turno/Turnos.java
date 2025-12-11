@@ -55,4 +55,8 @@ public class Turnos {
         return jugadorActual.calcularPuntajeVictoria(puntajeBonificacion);
     }
 
+    public Collection<Jugador> jugadores() {
+        return this.turnero;
+    }
+
 }
