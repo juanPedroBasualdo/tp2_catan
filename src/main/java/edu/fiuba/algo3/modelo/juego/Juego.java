@@ -64,6 +64,8 @@ public class Juego {
 
     public void posicionarPoblado(Coordenada coordenada) { tablero.posicionarPoblado(turnero.jugadorActual(), coordenada);}
 
+    public void posicionarCamino(Coordenada coordenada) { tablero.posicionarCamino(turnero.jugadorActual(), coordenada);}
+
     public void otorgarRecursos(int fichaNumero) {
         tablero.producirRecursos(fichaNumero);
     }
