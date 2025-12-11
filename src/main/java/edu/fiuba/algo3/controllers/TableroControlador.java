@@ -38,7 +38,8 @@ public class TableroControlador {
 
         setupEventHandlers();
         setupMenuHandlers();
-        // wsetupVolumeControl();
+        // setupVolumeControl();
+        actualizarJugadorQueLeToca();
     }
 
     private void setupEventHandlers() {
@@ -58,6 +59,7 @@ public class TableroControlador {
         int fichaActual = juego.tirarDados();
         juego.otorgarRecursos(fichaActual);
         juego.cambiarFase(fichaActual);
+        vista.getBarraDerecha().getLabelResultadoDados().setText(String.valueOf(fichaActual));
     }
 
     private void handleConstruirClick() {
@@ -150,6 +152,14 @@ public class TableroControlador {
         } catch (Exception e) {
             System.out.println(e);
         }
+
+    }
+
+    private void actualizarJugadorQueLeToca(){
+
+    String nombreJugador = juego.jugadorActual().obtenerNombre();
+    String jugadorNombre = "Juega:" + nombreJugador;
+    vista.getBarraDerecha().getLabelJugadorActual().setText(jugadorNombre);
 
     }
 
