@@ -370,7 +370,7 @@ public class TableroFX extends Application {
 
             int finalI = i/2;
             botonArista.setOnAction(e -> {
-                System.out.println(y + "," + x + "," + finalI);
+                System.out.println("Camino presionado en la arista de: (" + y + ", " + x + ") en pos:" + finalI);
             });
 
             nodosTablero.add(botonArista);
