@@ -7,7 +7,7 @@ public class FasesTurno {
     private final int cantidadJugadores;
 
     public FasesTurno(int cantidadJugadores) {
-        cantidadTurnosIniciales = 1;
+        cantidadTurnosIniciales = 0;
         this.cantidadJugadores = cantidadJugadores;
         fase = FaseTurno.INICIANDO;
     }

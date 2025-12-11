@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.controllers;
 
+import edu.fiuba.algo3.modelo.juego.turno.FaseTurno;
 import edu.fiuba.algo3.vistas.JuegoVista;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
@@ -60,6 +61,8 @@ public class TableroControlador {
 
     private void handleConstruirClick() {
         System.out.println("Construyo");
+
+        System.out.println("FASE: "+ juego.obtenerFase());
         accion = AccionesJuego.CONSTRUIR;
     }
 
@@ -70,21 +73,39 @@ public class TableroControlador {
             Tablero tablero = juego.obtenerTablero();
             String construccion = tablero.getTerreno(coordVert).verticeEn(z).obtenerPieza().getClass().getSimpleName();
             switch(accion){
-
                 case CONSTRUIR:
                     switch(construccion){
                         case ("Vacio"): {
-                            juego.posicionarPoblado(coordVert);
+                            switch (juego.obtenerFase()){
+                                case INICIANDO:{
+                                    juego.posicionarPoblado(coordVert);
+                                    break;
+                                }
+                                case TURNOJUGADOR: {
+                                    juego.construirPoblado(coordVert);
+                                    break;
+                                }
+                                default:{
+                                    System.out.println(juego.obtenerFase() + "NO SE PUEDE CONSTRUIR");
+                                }
+                            }
                             break;
                         }
                         case ("Poblado"): {
-                            juego.mejorarACiudad(coordVert);
+
+                            if (juego.obtenerFase() == FaseTurno.TURNOJUGADOR){
+                                juego.mejorarACiudad(coordVert);
+                            }else {
+                                System.out.println("NO SE PUEDE MEJORAR DURANTE" + juego.obtenerFase());
+                            }
+
                             break;
                         }
                         case ("Ciudad"): {
                             System.out.println("No se puede mejorar una CIUDAD");
                             break;
                         }
+
                     }
                     juego.notificarObservadores();
                     accion = AccionesJuego.ESPERARACCION;
@@ -105,9 +126,19 @@ public class TableroControlador {
 
             switch(accion){
                 case CONSTRUIR:
-                    juego.posicionarCamino(coordArista);
-                    juego.notificarObservadores();
 
+                    if (juego.obtenerFase() == FaseTurno.INICIANDO) {
+                        juego.posicionarCamino(coordArista);
+                        this.juego.cambiarFase(0);
+                        this.juego.pasarTurno();
+                    }
+
+                    if (juego.obtenerFase() == FaseTurno.TURNOJUGADOR){
+                        juego.construirCamino(coordArista);
+                    }
+
+
+                    juego.notificarObservadores();
                     accion = AccionesJuego.ESPERARACCION;
                     break;
                 default:
@@ -115,7 +146,7 @@ public class TableroControlador {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
 
     }
@@ -137,9 +168,14 @@ public class TableroControlador {
     }
 
     private void handlePasarClick() {
-        System.out.println("Paso el turno");
-        juego.pasarTurno();
-        juego.notificarObservadores();
+        if (juego.obtenerFase() == FaseTurno.TURNOJUGADOR){
+            System.out.println("Paso el turno");
+            juego.pasarTurno();
+            juego.cambiarFase(0);
+            juego.notificarObservadores();
+        }else {
+            System.out.println("Estas en la fase inicial");
+        }
     }
 
     private void handleComprarCartaDesarrolloClick() { System.out.println("Compro carta de desarrollo");}
