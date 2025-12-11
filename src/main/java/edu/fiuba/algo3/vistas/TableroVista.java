@@ -2,9 +2,11 @@ package edu.fiuba.algo3.vistas;
 
 import edu.fiuba.algo3.controllers.TableroControlador;
 import edu.fiuba.algo3.controllers.CatanApp; // [CAMBIO 1] Importar CatanApp
+import edu.fiuba.algo3.modelo.Observer.Observador;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
+import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
 import javafx.scene.Node;
 // import javafx.scene.Scene; // [ELIMINADO] Ya no necesita Scene
@@ -24,7 +26,7 @@ import javafx.util.Pair;
 // import java.io.IOException; // [ELIMINADO] Ya no necesita IOException en el constructor
 import java.util.*;
 
-public class TableroVista extends Pane {
+public class TableroVista extends Pane implements Observador {
 
     private TableroControlador controlador;
     private final Juego juego;
@@ -40,14 +42,14 @@ public class TableroVista extends Pane {
 
     private List<Node> nodosTablero = new ArrayList<Node>();
 
-
-    // TODO asignas valores de los colores a los jugadores
     private List<String[]> iconosConstrucciones = List.of(
             new String[]{"4800FFFF","Iconos/ciudadAzul.png", "Iconos/pobladoAzul.png"},
             new String[]{"FF0000FF","Iconos/ciudadRojo.png", "Iconos/pobladoRojo.png"},
-            new String[]{"FFD800FF","Iconos/ciudadAmarillo.png", "Iconos/pobladoAmarillo.png"},
+                new String[]{"FFD800FF","Iconos/ciudadAmarillo.png", "Iconos/pobladoAmarillo.png"},
             new String[]{"00FF21FF","Iconos/ciudadVerde.png", "Iconos/pobladoVerde.png"}
     );
+
+    private HashMap<Jugador, String[]> asignacionJugadores;
 
     private final Map<String, Pair<String, String>> TERRENOS_MAP = new HashMap<>() {{
         put("Bosque", new Pair<>("#1aff66", "/Iconos/madera.png"));
@@ -61,26 +63,30 @@ public class TableroVista extends Pane {
 
     private final String BORDE_HEXAGONO_COLOR = "#EDC9AF";
 
-    public TableroVista(CatanApp app, Juego juego, TableroControlador controlador) {
+    public TableroVista(CatanApp app, Juego juego, TableroControlador controlador, List<Jugador> listaJugadores) {
         this.app = app;
         this.juego = juego;
         this.controlador = controlador; // Inyección de dependencia
 
+        this.asignacionJugadores = new HashMap<>();
+
         this.setWidth(1366);
         this.setHeight(768);
 
-        // La lógica de inicialización del tablero (que estaba en start) se mueve aquí.
-        generarTablero(juego.obtenerTablero(), juego.listaDeJugadores());
+        int i = 0;
+        for ( Jugador j : listaJugadores) {
+            asignacionJugadores.put(j,iconosConstrucciones.get(i));
+            i++;
+        }
 
-        // Añadir todos los nodos al Pane (la vista)
+        generarTablero(juego.obtenerTablero());
+
         this.getChildren().addAll(nodosTablero);
-
-        // Opcional: Si tienes elementos de control de la UI (botones de tirar dados, etc.)
-        // es aquí donde se añadirían al Pane.
-        // setupUIControles();
     }
 
-    public void generarTablero(Tablero tablero, Collection<Jugador> jugadors) {
+    public void generarTablero(Tablero tablero) {
+
+        nodosTablero.clear();
 
         List<Terreno> terrenos = tablero.getTerrenos();
 
@@ -113,9 +119,13 @@ public class TableroVista extends Pane {
 
                 List<Double> coordenadas = hex.getPoints();
 
-                agregarBtnHexagono(x_actual,filas[i],i,j);
+                añadirBtnHexagono(x_actual,filas[i],i,j);
                 añadirBtnVertices(coordenadas,i,j, terreno);
-                agregarBtnAristas(coordenadas,i,j, terreno);
+                añadirBtnAristas(coordenadas,i,j, terreno);
+
+                if (tablero.estaLadronEn(new Coordenada(i,j))) {
+                   crearImagen("Iconos/ladron.png",x_actual + 30, filas[i] - 10, RADIO/1.6);
+                }
             }
         }
 
@@ -125,7 +135,7 @@ public class TableroVista extends Pane {
                 double x_actual = columnas[i] + X_DISTANCIA * j;
                 Terreno terreno = terrenos.get(index_terreno++);
 
-                List<Double> coordenadas = calcularVerticesDeHexagonoPuntiagudo(x_actual, filas[i]);
+                List<Double> coordenadas = calcularVerticesDeHexagonoPuntiagudo(x_actual, filas[i], RADIO);
                 renderizarConstrucciones(coordenadas, terreno);
                 renderizarCaminos(coordenadas,terreno);
             }
@@ -165,7 +175,7 @@ public class TableroVista extends Pane {
 
     private void renderizarConstrucciones(List<Double> coordenadas, Terreno terreno) {
 
-        final double radioConstruccion = RADIO * 0.5; // Definir el radio para el icono de la construcción
+        final double radioConstruccion = RADIO * 0.7; // Definir el radio para el icono de la construcción
 
         for (int i = 0; i < 12; i += 2) {
             double verticeX = coordenadas.get(i);
@@ -174,16 +184,18 @@ public class TableroVista extends Pane {
             int indiceVertice = i/2;
 
             String construccion = terreno.verticeEn(indiceVertice).obtenerPieza().getClass().getSimpleName();
+            Jugador propietario = terreno.verticeEn(indiceVertice).obtenerPieza().getPropietario();
+
             String iconoPath = null;
 
             switch(construccion){
                 case("Ciudad"):{
-                    iconoPath = iconosConstrucciones.get(1)[1]; // [1] es la ruta a la imagen de Ciudad
+                    iconoPath = asignacionJugadores.get(propietario)[1]; // [1] es la ruta a la imagen de Ciudad
                     break;
                 }
 
                 case("Poblado"):{
-                    iconoPath = iconosConstrucciones.get(1)[2]; // [2] es la ruta a la imagen de Poblado
+                    iconoPath = asignacionJugadores.get(propietario)[2]; // [2] es la ruta a la imagen de Poblado
                     break;
                 }
             }
@@ -200,13 +212,13 @@ public class TableroVista extends Pane {
 
         for (int i = 0; i < 12; i += 2) {
 
-            // 1. Verificar si hay un propietario
+
             Jugador propietario = terreno.aristaEn(i/2).getPropietario();
 
             if (propietario != null) {
 
-                // colorHex = diccionario[jugadorActual][0]
-                String colorHex = iconosConstrucciones.get(1)[0]; // [0] es el código de color HEX/RGBA
+
+                String colorHex = asignacionJugadores.get(propietario)[0]; // [0] es el código de color HEX/RGBA
 
                 double ax = coordenadas.get(i);
                 double ay = coordenadas.get(i + 1);
@@ -227,7 +239,7 @@ public class TableroVista extends Pane {
                 caminoVisual.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
                 if (terreno.aristaEn(i/2).getPropietario() != null) {
-                    caminoVisual.setStyle("-fx-background-color: #" + iconosConstrucciones.get(1)[0].substring(0, 6) + "; -fx-background-radius: 0;");
+                    caminoVisual.setStyle("-fx-background-color: #" + colorHex.substring(0, 6) + "; -fx-background-radius: 0;");
                 }else {
                     caminoVisual.setStyle("-fx-background-color: #8B4513; -fx-background-radius: 0;");
                 }
@@ -244,7 +256,7 @@ public class TableroVista extends Pane {
     }
 
 
-    private List<Double> calcularVerticesDeHexagonoPuntiagudo(double cx, double cy) {
+    private List<Double> calcularVerticesDeHexagonoPuntiagudo(double cx, double cy, double r) {
         List <Double> coordenadas = new ArrayList<>();
         final  double angulo_rotacion = Math.toRadians(-60);
 
@@ -252,8 +264,8 @@ public class TableroVista extends Pane {
 
         for (int i = 0; i < 6; i++) {
             double angulo = angulo_inicial + i * angulo_rotacion;
-            double x = cx + 60.0 * Math.cos(angulo);
-            double y = cy - 60.0 * Math.sin(angulo);
+            double x = cx + r * Math.cos(angulo);
+            double y = cy - r * Math.sin(angulo);
 
             coordenadas.add(x);
             coordenadas.add(y);
@@ -261,7 +273,7 @@ public class TableroVista extends Pane {
         return coordenadas;
     }
 
-    private void agregarBtnHexagono(double pos_x, double pos_y, double x, double y) {
+    private void añadirBtnHexagono(double pos_x, double pos_y, double x, double y) {
 
         double botonSize = RADIO;
         Button botonHexagono = new Button();
@@ -277,8 +289,6 @@ public class TableroVista extends Pane {
 
         botonHexagono.setOnAction(e -> {
             System.out.println("Botón presionado en la hexagono: (" + y + ", " + x);
-            // [OPCIONAL] Si el hexágono necesita un manejador del controlador:
-            // if (this.controlador != null) { this.controlador.handleHexagonoClick(y, x); }
         });
 
         nodosTablero.add(botonHexagono);
@@ -306,7 +316,6 @@ public class TableroVista extends Pane {
             int finalI = i/2;
             botonVertice.setOnAction(e -> {
                 System.out.println(y + "," + x + "," + finalI);
-                // [CAMBIO 4] Llamar al controlador
                 if (this.controlador != null) {
                     this.controlador.handleBtnVertice(y, x, finalI);
                 }
@@ -316,7 +325,7 @@ public class TableroVista extends Pane {
         }
     }
 
-    private void agregarBtnAristas(List<Double> listaCoordVertices, int y, int x, Terreno terreno) {
+    private void añadirBtnAristas(List<Double> listaCoordVertices, int y, int x, Terreno terreno) {
         final double BUTTON_WIDTH = 25;
         final double BUTTON_HEIGHT = 8;
 
@@ -350,6 +359,8 @@ public class TableroVista extends Pane {
             int finalI = i/2;
             botonArista.setOnAction(e -> {
                 System.out.println(y + "," + x + "," + finalI);
+
+                controlador.handlerBtnArista(y,x,finalI);
             });
 
             nodosTablero.add(botonArista);
@@ -367,7 +378,7 @@ public class TableroVista extends Pane {
 
 
         Polygon hex = new Polygon();
-        List<Double> coordenadas = calcularVerticesDeHexagonoPuntiagudo(x,y);
+        List<Double> coordenadas = calcularVerticesDeHexagonoPuntiagudo(x,y,RADIO);
         hex.getPoints().addAll(coordenadas);
 
         hex.setFill(Color.web(colorHex));
@@ -408,4 +419,12 @@ public class TableroVista extends Pane {
         return hex;
     }
 
+    @Override
+    public void actualizar() {
+
+        this.generarTablero(juego.obtenerTablero());
+        this.getChildren().clear();
+        this.getChildren().addAll(nodosTablero);
+
+    }
 }
