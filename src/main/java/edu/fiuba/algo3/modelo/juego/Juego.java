@@ -60,6 +60,8 @@ public class Juego {
         tablero.mejorarPoblado(turnero.jugadorActual(), coordenada);
     }
 
+    public void posicionarPoblado(Coordenada coordenada) { tablero.posicionarPoblado(turnero.jugadorActual(), coordenada);}
+
     public void otorgarRecursos(int fichaNumero) {
         tablero.producirRecursos(fichaNumero);
     }

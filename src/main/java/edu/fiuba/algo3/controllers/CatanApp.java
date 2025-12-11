@@ -1,9 +1,8 @@
 package edu.fiuba.algo3.controllers;
 
-import edu.fiuba.algo3.vistas.CreditosVista;
-import edu.fiuba.algo3.vistas.InicioVista;
-import edu.fiuba.algo3.vistas.SeleccionJugadoresVista;
-import edu.fiuba.algo3.vistas.TableroVista;
+import edu.fiuba.algo3.modelo.juego.Juego;
+import edu.fiuba.algo3.modelo.jugador.Jugador;
+import edu.fiuba.algo3.vistas.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -11,6 +10,8 @@ import javafx.stage.Stage;
 
 import java.awt.Desktop;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CatanApp extends Application {
 
@@ -51,16 +52,29 @@ public class CatanApp extends Application {
         escena.setTitle("Catan");
     }
 
+
+
     public void mostrarPantallaJuego(int numJugadores) {
 
-        TableroVista vista = new TableroVista();
+        List<Jugador> listaJugadores = new ArrayList<Jugador>();
 
-        TableroControlador controlador = new TableroControlador(vista, this);
+        for(int i = 1; i <= numJugadores; i++) {
+            listaJugadores.add(new Jugador("Jugador " + i));
+        }
 
-        Scene scene = new Scene(vista.getRoot(), RESOLUCION_ANCHO, RESOLUCION_ALTO);
+        Juego juego = new Juego(listaJugadores);
+        JuegoVista vistaPrincipal = new JuegoVista();
+
+        TableroControlador tableroControlador = new TableroControlador(vistaPrincipal, this, juego);
+        TableroVista tableroVista = new TableroVista(this, juego, tableroControlador);
+
+        vistaPrincipal.setTablero(tableroVista);
+
+        Scene scene = new Scene(vistaPrincipal.getRoot(), RESOLUCION_ANCHO, RESOLUCION_ALTO);
         escena.setScene(scene);
         escena.setTitle("Catan");
     }
+
 
     public void mostrarCreditos() {
 
