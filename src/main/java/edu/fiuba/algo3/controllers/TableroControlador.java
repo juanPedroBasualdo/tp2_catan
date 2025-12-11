@@ -37,7 +37,8 @@ public class TableroControlador {
 
         setupEventHandlers();
         setupMenuHandlers();
-        // wsetupVolumeControl();
+        // setupVolumeControl();
+        actualizarJugadorQueLeToca();
     }
 
     private void setupEventHandlers() {
@@ -56,6 +57,7 @@ public class TableroControlador {
         System.out.println("Tiro dados");
         int fichaActual = juego.tirarDados();
         juego.otorgarRecursos(fichaActual);
+        vista.getBarraDerecha().getLabelResultadoDados().setText(String.valueOf(fichaActual));
     }
 
     private void handleConstruirClick() {
@@ -120,6 +122,14 @@ public class TableroControlador {
 
     }
 
+    private void actualizarJugadorQueLeToca(){
+
+    String nombreJugador = juego.jugadorActual().obtenerNombre();
+    String jugadorNombre = "Juega:" + nombreJugador;
+    vista.getBarraDerecha().getLabelJugadorActual().setText(jugadorNombre);
+
+    }
+
     private void handleComerciarJugadorClick() {
         System.out.println("Comercio con otro jugador");
     }
@@ -140,7 +150,9 @@ public class TableroControlador {
         System.out.println("Paso el turno");
         juego.pasarTurno();
         juego.notificarObservadores();
+        actualizarJugadorQueLeToca();
     }
+
 
     private void handleComprarCartaDesarrolloClick() { System.out.println("Compro carta de desarrollo");}
 

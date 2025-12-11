@@ -14,6 +14,8 @@ import java.util.Objects;
 public class BarraDerechaVista extends VBox {
 
     private final Button botonTirarDados;
+    private final Label labelResultadoDados;
+    private final Label labelJugadorActual;
 
     private static final String PATH_ICONO_DADO = "/Imagenes/Dados.png";
     private static final double TAMANIO_DADO = 70;
@@ -38,19 +40,25 @@ public class BarraDerechaVista extends VBox {
                 new Label("Jugador 4: PV")
         );
 
-        botonTirarDados = crearBotonDado(PATH_ICONO_DADO, "Tirar Dados");
+        botonTirarDados = crearBotonDado(PATH_ICONO_DADO, "Tirar dados");
+        labelResultadoDados = new Label("-");
+        labelResultadoDados.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
-        VBox contenedorDados = new VBox(10, new Label("Dados") {{setStyle("-fx-font-weight: bold;");}}, botonTirarDados);
+        VBox contenedorDados = new VBox(10, new Label("Dados") {{setStyle("-fx-font-weight: bold;");}}, botonTirarDados, labelResultadoDados);
         contenedorDados.setAlignment(Pos.TOP_CENTER);
         contenedorDados.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;");
 
-        VBox contenedorBanca = new VBox(10, new Label("BANCA") {{setStyle("-fx-font-weight: bold;");}});
-        contenedorBanca.setAlignment(Pos.TOP_CENTER);
-        contenedorBanca.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;");
-        HBox.setHgrow(contenedorBanca, Priority.ALWAYS);
-        contenedorBanca.setPrefHeight(150);
+        labelJugadorActual = new Label("Turno del jugador: Jugador 1");
+        labelJugadorActual.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
-        HBox contenedorBancaDados = new HBox(10, contenedorBanca, contenedorDados);
+
+        VBox contenedorJugadorActual = new VBox(10, labelJugadorActual);
+        contenedorJugadorActual.setAlignment(Pos.TOP_CENTER);
+        contenedorJugadorActual.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;");
+        HBox.setHgrow(contenedorJugadorActual, Priority.ALWAYS);
+        contenedorJugadorActual.setPrefHeight(150);
+
+        HBox contenedorBancaDados = new HBox(10, contenedorJugadorActual, contenedorDados);
         contenedorBancaDados.setPrefWidth(330);
 
         this.getChildren().addAll(pvBox, contenedorBancaDados);
@@ -83,4 +91,8 @@ public class BarraDerechaVista extends VBox {
     public Button getBotonTirarDados() {
         return botonTirarDados;
     }
+
+    public Label getLabelResultadoDados() {return  labelResultadoDados;}
+
+    public Label getLabelJugadorActual() {return  labelJugadorActual;}
 }
