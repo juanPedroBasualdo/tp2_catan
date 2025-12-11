@@ -8,6 +8,8 @@ import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 import javafx.application.Platform;
 import javafx.scene.control.Slider;
 
+import java.util.stream.Collectors;
+
 public class TableroControlador {
 
     private final JuegoVista vista;
@@ -38,7 +40,7 @@ public class TableroControlador {
 
         setupEventHandlers();
         setupMenuHandlers();
-        // setupVolumeControl();
+        setupVolumeControl();
         actualizarJugadorQueLeToca();
     }
 
@@ -54,12 +56,19 @@ public class TableroControlador {
         setupMenuElegirMusicaHandler();
     }
 
+    private void actualizarUI() {
+        this.actualizarJugadorQueLeToca();
+        juego.notificarObservadores();
+    }
+
     private void handleTirarDadosClick() {
         System.out.println("Tiro dados");
         int fichaActual = juego.tirarDados();
         juego.otorgarRecursos(fichaActual);
         juego.cambiarFase(fichaActual);
         vista.getBarraDerecha().getLabelResultadoDados().setText(String.valueOf(fichaActual));
+
+        actualizarUI();
     }
 
     private void handleConstruirClick() {
@@ -116,6 +125,7 @@ public class TableroControlador {
 
                     }
                     juego.notificarObservadores();
+                    actualizarUI();
                     accion = AccionesJuego.ESPERARACCION;
                     break;
                 default:
@@ -157,9 +167,9 @@ public class TableroControlador {
 
     private void actualizarJugadorQueLeToca(){
 
-    String nombreJugador = juego.jugadorActual().obtenerNombre();
-    String jugadorNombre = "Juega:" + nombreJugador;
-    vista.getBarraDerecha().getLabelJugadorActual().setText(jugadorNombre);
+        String nombreJugador = juego.jugadorActual().obtenerNombre();
+        String jugadorNombre = "Juega:" + nombreJugador;
+        vista.getBarraDerecha().getLabelJugadorActual().setText(jugadorNombre);
 
     }
 
@@ -184,7 +194,7 @@ public class TableroControlador {
             System.out.println("Paso el turno");
             juego.pasarTurno();
             juego.cambiarFase(0);
-            juego.notificarObservadores();
+            actualizarUI();
         }else {
             System.out.println("Estas en la fase inicial");
         }

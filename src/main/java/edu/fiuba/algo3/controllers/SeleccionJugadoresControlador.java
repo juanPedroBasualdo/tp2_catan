@@ -18,8 +18,8 @@ public class SeleccionJugadoresControlador {
         this.app = app;
         setupEventHandlers();
         setupMenuHandlers();
-        // setupVolumeControl();
-        // setupMenuElegirMusicaHandler();
+        setupVolumeControl();
+        setupMenuElegirMusicaHandler();
     }
 
     private void setupEventHandlers() {
@@ -54,15 +54,15 @@ public class SeleccionJugadoresControlador {
     }
 
     private void setupVolumeControl() {
-        // ControladorMusica musica = ControladorMusica.getInstance();
+        ControladorMusica musica = ControladorMusica.getInstance();
 
-        // Slider barraVolumen = vista.getMenuBar().getBarraVolumen();
+        Slider barraVolumen = vista.getMenuBar().getBarraVolumen();
 
-        // barraVolumen.setValue(musica.getVolumen());
+        barraVolumen.setValue(musica.getVolumen());
 
-        // barraVolumen.valueProperty().addListener((obs, oldValue, newValue) -> {
-            // musica.setvolumen(newValue.doubleValue());
-        // });
+        barraVolumen.valueProperty().addListener((obs, oldValue, newValue) -> {
+            musica.setvolumen(newValue.doubleValue());
+        });
     }
 
     private void setupMenuElegirMusicaHandler() {
