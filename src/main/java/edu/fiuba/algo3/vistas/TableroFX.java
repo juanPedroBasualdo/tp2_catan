@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.vistas;
 
-import edu.fiuba.algo3.modelo.banca.Banca;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 import edu.fiuba.algo3.modelo.puntajeYBonificaciones.Bonificaciones;
@@ -29,16 +28,18 @@ import java.util.*;
 
 public class TableroFX extends Application {
 
-    private final double RADIO = 60;
+    private final double RADIO = 45;
 
     private final double X_DISTANCIA = RADIO * Math.sqrt(3);
     private final double Y_DISTANCIA = RADIO * 1.5;
 
     private final double X_INIT = 400;
-    private final double Y_INIT = 100;
+    private final double Y_INIT = 150;
 
     private List<Node> nodosTablero = new ArrayList<Node>();
 
+
+    // TODO asignas valores de los colores a los jugadores
     private List<String[]> iconosConstrucciones = List.of(
             new String[]{"4800FFFF","Iconos/ciudadAzul.png", "Iconos/pobladoAzul.png"},
             new String[]{"FF0000FF","Iconos/ciudadRojo.png", "Iconos/pobladoRojo.png"},
@@ -136,6 +137,7 @@ public class TableroFX extends Application {
                 Terreno terreno = terrenos.get(index_terreno++);
 
                 Polygon hex = crearHexagono(x_actual,filas[i], terreno);
+
                 List<Double> coordenadas = hex.getPoints();
 
                 añadirBtnHexagono(x_actual,filas[i],i,j);
@@ -156,53 +158,68 @@ public class TableroFX extends Application {
             }
         }
 
+        double radioPuertos = RADIO;
+
+        crearImagen("Iconos/Puerto2_1_Cereal.png",   columnas[1] + X_DISTANCIA * 0 , filas[0] - Y_DISTANCIA, radioPuertos);
+        crearImagen("Iconos/Puerto2_1_Mineral.png",  columnas[1] + X_DISTANCIA * 2 , filas[0] - Y_DISTANCIA, radioPuertos);
+        crearImagen("Iconos/Puerto2_1_Madera.png",   columnas[2] + X_DISTANCIA * 4 , filas[0], radioPuertos);
+        crearImagen("Iconos/Puerto2_1_Lana.png",     columnas[2] + X_DISTANCIA * 5 , filas[2], radioPuertos);
+        crearImagen("Iconos/Puerto3_1.png",          columnas[4] + X_DISTANCIA * 3 , filas[4], radioPuertos);
+        crearImagen("Iconos/Puerto3_1.png",          columnas[1] + X_DISTANCIA * 2, filas[4] + Y_DISTANCIA, radioPuertos);
+        crearImagen("Iconos/Puerto3_1.png",          columnas[1] + X_DISTANCIA * 0 , filas[4] + Y_DISTANCIA, radioPuertos);
+        crearImagen("Iconos/Puerto3_1.png",          columnas[2] - X_DISTANCIA * 0.5 , filas[3], radioPuertos);
+        crearImagen("Iconos/Puerto2_1_Ladrillo.png", columnas[2] - X_DISTANCIA * 0.5 , filas[1], radioPuertos);
+
+    }
+
+    private void crearImagen(String ruta ,double x, double y, double radio) {
+
+        double imgSize = radio * 0.8;
+        Image img = new Image(ruta);
+        ImageView imgView = new ImageView(img);
+
+        imgView.setFitWidth(imgSize);
+        imgView.setFitHeight(imgSize);
+
+        imgView.setX( x - imgSize / 2);
+        imgView.setY( y - imgSize / 2);
+
+
+        imgView.setMouseTransparent(true);
+
+        nodosTablero.add(imgView);
     }
 
     private void renderizarConstrucciones(List<Double> coordenadas, Terreno terreno) {
 
-        double imgSize = RADIO * 0.5;
+        final double radioConstruccion = RADIO * 0.5; // Definir el radio para el icono de la construcción
 
         for (int i = 0; i < 12; i += 2) {
             double verticeX = coordenadas.get(i);
             double verticeY = coordenadas.get(i + 1);
 
-            int finalI = i/2;
+            int indiceVertice = i/2;
 
-            String construccion = terreno.verticeEn(finalI).obtenerPieza().getClass().getSimpleName();
+            String construccion = terreno.verticeEn(indiceVertice).obtenerPieza().getClass().getSimpleName();
+            String iconoPath = null;
+
             switch(construccion){
                 case("Ciudad"):{
-                    String iconoCiudad = iconosConstrucciones.get(1)[1];
-                    Image ciudad = new Image(iconoCiudad);
-                    ImageView ciudadImagen = new ImageView(ciudad);
-
-                    ciudadImagen.setFitWidth(imgSize);
-                    ciudadImagen.setFitHeight(imgSize);
-
-                    ciudadImagen.setX(verticeX - imgSize / 2);
-                    ciudadImagen.setY(verticeY - imgSize / 2);
-
-                    nodosTablero.add(ciudadImagen);
+                    iconoPath = iconosConstrucciones.get(1)[1]; // [1] es la ruta a la imagen de Ciudad
                     break;
                 }
 
                 case("Poblado"):{
-                    String iconoPoblado = iconosConstrucciones.get(1)[2];
-                    Image poblado = new Image(iconoPoblado);
-                    ImageView pobladoImagen = new ImageView(poblado);
-
-                    pobladoImagen.setFitWidth(imgSize);
-                    pobladoImagen.setFitHeight(imgSize);
-
-                    pobladoImagen.setX(verticeX - imgSize / 2);
-                    pobladoImagen.setY(verticeY - imgSize / 2);
-
-                    nodosTablero.add(pobladoImagen);
+                    iconoPath = iconosConstrucciones.get(1)[2]; // [2] es la ruta a la imagen de Poblado
                     break;
                 }
             }
+
+            if (iconoPath != null) {
+                crearImagen(iconoPath, verticeX, verticeY, radioConstruccion);
+            }
         }
     }
-
     private void renderizarCaminos(List<Double> coordenadas, Terreno terreno) {
 
         final double BUTTON_WIDTH = 25;
@@ -218,7 +235,6 @@ public class TableroFX extends Application {
                 // colorHex = diccionario[jugadorActual][0]
                 String colorHex = iconosConstrucciones.get(1)[0]; // [0] es el código de color HEX/RGBA
 
-                // Cálculo de posición y rotación (copiado de añadirBtnAristas)
                 double ax = coordenadas.get(i);
                 double ay = coordenadas.get(i + 1);
 
@@ -233,7 +249,6 @@ public class TableroFX extends Application {
                 double anguloRad = Math.atan2(dy, dx);
                 double anguloDeg = Math.toDegrees(anguloRad);
 
-                // 3. Crear el elemento visual del camino
                 Button caminoVisual = new Button();
                 caminoVisual.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
                 caminoVisual.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -276,7 +291,6 @@ public class TableroFX extends Application {
     private void añadirBtnHexagono(double pos_x, double pos_y, double x, double y) {
 
         double botonSize = RADIO;
-
         Button botonHexagono = new Button();
 
         botonHexagono.setShape(new Circle(botonSize));
@@ -384,17 +398,13 @@ public class TableroFX extends Application {
         nodosTablero.add(hex);
 
         if (iconoPath != null) {
-            Image img = new Image(iconoPath);
-            ImageView imagen = new ImageView(img);
+            final double imgSize = RADIO * 0.6;
+            final double radioRecurso = imgSize / 0.8; // Para que crearImagen use el imgSize de 0.6*RADIO
 
-            double imgSize = RADIO * 0.6;
-            imagen.setFitWidth(imgSize);
-            imagen.setFitHeight(imgSize);
+            double offsetX = x - 20;
+            double offsetY = y - RADIO / 2 + 10;
 
-            imagen.setX(x - imgSize / 2 - 20);
-            imagen.setY(y - RADIO / 2 - imgSize / 2 + 10);
-
-            nodosTablero.add(imagen);
+            crearImagen(iconoPath, offsetX, offsetY, radioRecurso);
         }
 
         if (numeroFicha > 0) {
