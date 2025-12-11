@@ -40,8 +40,8 @@ public class TableroControlador {
 
        setupEventHandlers();
         setupMenuHandlers();
-        setupVolumeControl();
-        actualizarJugadorQueLeToca();
+        //setupVolumeControl();
+        //actualizarJugadorQueLeToca();
     }
 
     private void setupEventHandlers() {
@@ -200,11 +200,9 @@ public class TableroControlador {
     }
 
     private void actualizarJugadorQueLeToca(){
-
         String nombreJugador = juego.jugadorActual().obtenerNombre();
         String jugadorNombre = "Juega:" + nombreJugador;
         vista.getBarraDerecha().getLabelJugadorActual().setText(jugadorNombre);
-
     }
 
     private void handleComerciarJugadorClick() {
