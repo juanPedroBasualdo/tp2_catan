@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.controllers;
 
 import edu.fiuba.algo3.modelo.juego.turno.FaseTurno;
+import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Construccion;
 import edu.fiuba.algo3.vistas.JuegoVista;
 import edu.fiuba.algo3.modelo.juego.Juego;
@@ -197,6 +198,12 @@ public class TableroControlador {
             vista.getBarraDerecha().getLabelJugadorActual().setText("No se puede colocar porque" + e);
         }
 
+    }
+
+    public void handleBtnPuerto3_1() {
+    }
+
+    public void handleBtnPuerto2_1(Recurso recurso) {
     }
 
     private void actualizarJugadorQueLeToca(){
