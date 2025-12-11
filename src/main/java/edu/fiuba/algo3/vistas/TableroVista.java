@@ -5,6 +5,7 @@ import edu.fiuba.algo3.controllers.CatanApp;
 import edu.fiuba.algo3.modelo.Observer.Observador;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
+import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
 import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
@@ -140,16 +141,85 @@ public class TableroVista extends Pane implements Observador {
 
         double radioPuertos = RADIO;
 
-        crearImagen("Iconos/Puerto2_1_Cereal.png",   columnas[1] + X_DISTANCIA * 0 , filas[0] - Y_DISTANCIA, radioPuertos);
-        crearImagen("Iconos/Puerto2_1_Mineral.png",  columnas[1] + X_DISTANCIA * 2 , filas[0] - Y_DISTANCIA, radioPuertos);
-        crearImagen("Iconos/Puerto2_1_Madera.png",   columnas[2] + X_DISTANCIA * 4 , filas[0], radioPuertos);
-        crearImagen("Iconos/Puerto2_1_Lana.png",     columnas[2] + X_DISTANCIA * 5 , filas[2], radioPuertos);
-        crearImagen("Iconos/Puerto3_1.png",          columnas[4] + X_DISTANCIA * 3 , filas[4], radioPuertos);
-        crearImagen("Iconos/Puerto3_1.png",          columnas[1] + X_DISTANCIA * 2, filas[4] + Y_DISTANCIA, radioPuertos);
-        crearImagen("Iconos/Puerto3_1.png",          columnas[1] + X_DISTANCIA * 0 , filas[4] + Y_DISTANCIA, radioPuertos);
-        crearImagen("Iconos/Puerto3_1.png",          columnas[2] - X_DISTANCIA * 0.5 , filas[3], radioPuertos);
-        crearImagen("Iconos/Puerto2_1_Ladrillo.png", columnas[2] - X_DISTANCIA * 0.5 , filas[1], radioPuertos);
 
+        crearPuerto2_1(Recurso.CEREAL, "Iconos/Puerto2_1_Cereal.png",   columnas[1] + X_DISTANCIA * 0 , filas[0] - Y_DISTANCIA, radioPuertos);
+        crearPuerto2_1(Recurso.MINERAL, "Iconos/Puerto2_1_Mineral.png",  columnas[1] + X_DISTANCIA * 2 , filas[0] - Y_DISTANCIA, radioPuertos);
+        crearPuerto2_1(Recurso.MADERA, "Iconos/Puerto2_1_Madera.png",   columnas[2] + X_DISTANCIA * 4 , filas[0], radioPuertos);
+        crearPuerto2_1(Recurso.LANA, "Iconos/Puerto2_1_Lana.png",     columnas[2] + X_DISTANCIA * 5 , filas[2], radioPuertos);
+        crearPuerto2_1(Recurso.ARCILLA, "Iconos/Puerto2_1_Ladrillo.png", columnas[2] - X_DISTANCIA * 0.5 , filas[1], radioPuertos);
+
+        crearPuerto3_1(columnas[4] + X_DISTANCIA * 3 , filas[4], radioPuertos);
+        crearPuerto3_1(columnas[1] + X_DISTANCIA * 2, filas[4] + Y_DISTANCIA, radioPuertos);
+        crearPuerto3_1(columnas[1] + X_DISTANCIA * 0 , filas[4] + Y_DISTANCIA, radioPuertos);
+        crearPuerto3_1(columnas[2] - X_DISTANCIA * 0.5 , filas[3], radioPuertos);
+    }
+
+    private void crearPuerto2_1(Recurso recurso, String ruta, double x, double y, double radio) {
+
+        crearImagen(ruta, x, y, radio);
+
+        Button botonPuerto = new Button();
+        botonPuerto.setShape(new Circle(radio));
+        botonPuerto.setMinSize(radio, radio);
+        botonPuerto.setMaxSize(radio, radio);
+
+        botonPuerto.setLayoutX(x - radio / 2);
+        botonPuerto.setLayoutY(y - radio / 2);
+
+        botonPuerto.setStyle("-fx-background-color: transparent;");
+
+        botonPuerto.setOnAction(e -> {
+            switch (recurso) {
+                case MADERA: {
+                    System.out.println("Clic en Puerto 2:1 de Madera.");
+                    controlador.handleBtnPuerto2_1(Recurso.MADERA);
+                    break;
+                }
+                case CEREAL: {
+                    System.out.println("Clic en Puerto 2:1 de Cereal.");
+                    controlador.handleBtnPuerto2_1(Recurso.CEREAL);
+                    break;
+                }
+                case MINERAL: {
+                    System.out.println("Clic en Puerto 2:1 de Mineral.");
+                    controlador.handleBtnPuerto2_1(Recurso.MINERAL);
+                    break;
+                }
+                case LANA: {
+                    System.out.println("Clic en Puerto 2:1 de Lana.");
+                    controlador.handleBtnPuerto2_1(Recurso.LANA);
+                    break;
+                }
+                case ARCILLA: {
+                    System.out.println("Clic en Puerto 2:1 de Ladrillo.");
+                    // Aquí iría la llamada al controlador para la función de Intercambio 2:1 de ARCILLA (Ladrillo)
+                    controlador.handleBtnPuerto2_1(Recurso.ARCILLA);
+                    break;
+                }
+            }
+        });
+
+        nodosTablero.add(botonPuerto);
+    }
+
+    private void crearPuerto3_1(double x, double y, double radio) {
+        crearImagen("Iconos/Puerto3_1.png", x, y, radio);
+
+        Button botonPuerto = new Button();
+        botonPuerto.setShape(new Circle(radio));
+        botonPuerto.setMinSize(radio, radio);
+        botonPuerto.setMaxSize(radio, radio);
+
+        botonPuerto.setLayoutX(x - radio / 2);
+        botonPuerto.setLayoutY(y - radio / 2);
+        botonPuerto.setStyle("-fx-background-color: transparent;");
+
+        botonPuerto.setOnAction(e -> {
+            System.out.println("Clic en Puerto 3:1");
+            controlador.handleBtnPuerto3_1();
+        });
+
+        nodosTablero.add(botonPuerto);
     }
 
     private void crearImagen(String ruta ,double x, double y, double radio) {
