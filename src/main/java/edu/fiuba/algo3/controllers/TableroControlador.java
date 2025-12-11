@@ -38,7 +38,7 @@ public class TableroControlador {
 
         setupEventHandlers();
         setupMenuHandlers();
-        setupVolumeControl();
+        // wsetupVolumeControl();
     }
 
     private void setupEventHandlers() {
@@ -63,7 +63,6 @@ public class TableroControlador {
     }
 
     public void handleBtnVertice(int y, int x, int z) {
-
         try{
             Coordenada coordVert = new Coordenada(x,y,z);
             Tablero tablero = juego.obtenerTablero();
@@ -85,7 +84,10 @@ public class TableroControlador {
                             break;
                         }
                     }
+                    juego.notificarObservadores();
                     accion = AccionesJuego.ESPERARACCION;
+                    break;
+                default:
                     break;
             }
 
@@ -114,6 +116,8 @@ public class TableroControlador {
 
     private void handlePasarClick() {
         System.out.println("Paso el turno");
+        juego.pasarTurno();
+        juego.notificarObservadores();
     }
 
     private void handleComprarCartaDesarrolloClick() { System.out.println("Compro carta de desarrollo");}

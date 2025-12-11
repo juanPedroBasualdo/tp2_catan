@@ -1,5 +1,7 @@
 package edu.fiuba.algo3.modelo.juego;
 
+import edu.fiuba.algo3.modelo.Observer.Observable;
+import edu.fiuba.algo3.modelo.Observer.Observador;
 import edu.fiuba.algo3.modelo.cartasDesarrollo.Jugable;
 import edu.fiuba.algo3.modelo.juego.turno.Turnos;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
@@ -130,6 +132,18 @@ public class Juego {
         this.turnero.notificarObservadores();
         this.tablero.notificarObservadores();
         this.bonificaciones.notificarObservadores();
+    }
+
+    public void agregarObserversDeJugador(Observador observador) {
+        this.turnero.agregarObservador(observador);
+    }
+
+    public void agregarObserversDeTablero(Observador observador) {
+        this.tablero.agregarObservador(observador);
+    }
+
+    public void agregarObserverDeBonificaciones(Observador observador) {
+        this.bonificaciones.agregarObservador(observador);
     }
 
 }

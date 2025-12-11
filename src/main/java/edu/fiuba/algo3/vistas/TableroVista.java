@@ -80,59 +80,6 @@ public class TableroVista extends Pane {
         // setupUIControles();
     }
 
-    // [CAMBIO 3] Eliminar el método start, ya no somos la clase Application.
-    /*
-    @Override
-    public void start(Stage stage) throws IOException {
-
-        Jugador j1 = new Jugador("j1");
-
-        List<Jugador> listaJugadores = new ArrayList<>();
-        listaJugadores.add(j1);
-
-        Juego prueba = new Juego(listaJugadores);
-
-        Collection<Jugador> jugadores = prueba.listaDeJugadores();
-
-        Tablero tablero = new Tablero();
-        Coordenada c1 = new Coordenada(2,3,5);
-
-
-        j1.agregarRecursos(List.of(Recurso.CEREAL,Recurso.CEREAL,Recurso.MINERAL,Recurso.MINERAL,Recurso.MINERAL));
-
-
-        tablero.posicionarPoblado(j1,new Coordenada(2,3,5));
-        tablero.mejorarPoblado(j1,new Coordenada(2,3,5));
-
-
-        tablero.posicionarCamino(j1,new Coordenada(2,3,4));
-
-        tablero.posicionarCamino(j1,new Coordenada(3,2,0));
-        tablero.posicionarCamino(j1,new Coordenada(3,3,4));
-
-        tablero.posicionarPoblado(j1,new Coordenada(4,2,0));
-
-        tablero.posicionarCamino(j1,new Coordenada(4,2,5));
-        tablero.posicionarCamino(j1,new Coordenada(4,2,4));
-
-        Bonificaciones bonificacion = new Bonificaciones(List.of(j1));
-        bonificacion.actualizarBonificaciones(tablero.getAristas());
-
-        generarTablero(tablero, jugadores);
-
-        Pane root = new Pane();
-        root.getChildren().addAll(nodosTablero);
-
-        Scene escena = new Scene(root, 1366,768);
-
-        stage.setTitle("TestHexagono");
-        stage.setScene(escena);
-        stage.show();
-    }
-    */
-
-    // [ELIMINADO] Se elimina el método start.
-
     public void generarTablero(Tablero tablero, Collection<Jugador> jugadors) {
 
         List<Terreno> terrenos = tablero.getTerrenos();
@@ -166,9 +113,9 @@ public class TableroVista extends Pane {
 
                 List<Double> coordenadas = hex.getPoints();
 
-                añadirBtnHexagono(x_actual,filas[i],i,j);
+                agregarBtnHexagono(x_actual,filas[i],i,j);
                 añadirBtnVertices(coordenadas,i,j, terreno);
-                añadirBtnAristas(coordenadas,i,j, terreno);
+                agregarBtnAristas(coordenadas,i,j, terreno);
             }
         }
 
@@ -178,7 +125,7 @@ public class TableroVista extends Pane {
                 double x_actual = columnas[i] + X_DISTANCIA * j;
                 Terreno terreno = terrenos.get(index_terreno++);
 
-                List<Double> coordenadas = calcularVerticesDeHexagonoPuntiagudo(x_actual, filas[i], RADIO);
+                List<Double> coordenadas = calcularVerticesDeHexagonoPuntiagudo(x_actual, filas[i]);
                 renderizarConstrucciones(coordenadas, terreno);
                 renderizarCaminos(coordenadas,terreno);
             }
@@ -297,7 +244,7 @@ public class TableroVista extends Pane {
     }
 
 
-    private List<Double> calcularVerticesDeHexagonoPuntiagudo(double cx, double cy, double r) {
+    private List<Double> calcularVerticesDeHexagonoPuntiagudo(double cx, double cy) {
         List <Double> coordenadas = new ArrayList<>();
         final  double angulo_rotacion = Math.toRadians(-60);
 
@@ -305,8 +252,8 @@ public class TableroVista extends Pane {
 
         for (int i = 0; i < 6; i++) {
             double angulo = angulo_inicial + i * angulo_rotacion;
-            double x = cx + r * Math.cos(angulo);
-            double y = cy - r * Math.sin(angulo);
+            double x = cx + 60.0 * Math.cos(angulo);
+            double y = cy - 60.0 * Math.sin(angulo);
 
             coordenadas.add(x);
             coordenadas.add(y);
@@ -314,7 +261,7 @@ public class TableroVista extends Pane {
         return coordenadas;
     }
 
-    private void añadirBtnHexagono(double pos_x, double pos_y, double x, double y) {
+    private void agregarBtnHexagono(double pos_x, double pos_y, double x, double y) {
 
         double botonSize = RADIO;
         Button botonHexagono = new Button();
@@ -369,7 +316,7 @@ public class TableroVista extends Pane {
         }
     }
 
-    private void añadirBtnAristas(List<Double> listaCoordVertices, int y, int x, Terreno terreno) {
+    private void agregarBtnAristas(List<Double> listaCoordVertices, int y, int x, Terreno terreno) {
         final double BUTTON_WIDTH = 25;
         final double BUTTON_HEIGHT = 8;
 
@@ -403,8 +350,6 @@ public class TableroVista extends Pane {
             int finalI = i/2;
             botonArista.setOnAction(e -> {
                 System.out.println(y + "," + x + "," + finalI);
-                // [CAMBIO 5] Llamar al controlador (si tienes un método handle para aristas)
-                // if (this.controlador != null) { this.controlador.handleBtnArista(y, x, finalI); }
             });
 
             nodosTablero.add(botonArista);
@@ -422,7 +367,7 @@ public class TableroVista extends Pane {
 
 
         Polygon hex = new Polygon();
-        List<Double> coordenadas = calcularVerticesDeHexagonoPuntiagudo(x,y,RADIO);
+        List<Double> coordenadas = calcularVerticesDeHexagonoPuntiagudo(x,y);
         hex.getPoints().addAll(coordenadas);
 
         hex.setFill(Color.web(colorHex));

@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo.juego.turno;
 
+import edu.fiuba.algo3.modelo.Observer.Observador;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
 
 import java.util.Collection;
@@ -38,8 +39,14 @@ public class Turnos {
     }
 
     public void notificarObservadores() {
-        for(Jugador j : turnero) {
+        for (Jugador j : turnero) {
             j.notificarObservadores();
+        }
+    }
+
+    public void agregarObservador(Observador observador) {
+        for (Jugador j : turnero) {
+            j.agregarObservador(observador);
         }
     }
 

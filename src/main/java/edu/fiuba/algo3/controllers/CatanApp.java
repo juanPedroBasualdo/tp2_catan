@@ -27,7 +27,7 @@ public class CatanApp extends Application {
     @Override
     public void start(Stage stage) {
         this.escena = stage;
-        ControladorMusica.getInstance();
+        // ControladorMusica.getInstance();
         mostrarPantallaInicio();
         escena.setTitle("Catan");
         escena.setResizable(false);
