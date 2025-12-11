@@ -16,6 +16,7 @@ public class BarraDerechaVista extends VBox {
     private final Button botonTirarDados;
     private final Label labelResultadoDados;
     private final Label labelJugadorActual;
+    private final Label labelInfo;
 
     private static final String PATH_ICONO_DADO = "/Imagenes/Dados.png";
     private static final double TAMANIO_DADO = 70;
@@ -51,6 +52,8 @@ public class BarraDerechaVista extends VBox {
         labelJugadorActual = new Label("Turno del jugador: Jugador 1");
         labelJugadorActual.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
+        labelInfo = new Label("");
+        labelInfo.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
         VBox contenedorJugadorActual = new VBox(10, labelJugadorActual);
         contenedorJugadorActual.setAlignment(Pos.TOP_CENTER);

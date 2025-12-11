@@ -335,8 +335,7 @@ public class Tablero extends Observable {
         List<Coordenada> direcciones = coordenada.obtenerDireccionesAdyacentes(this.terrenos[coordenada.x()].length);
         List<Terreno> adyacentes = new ArrayList<>();
         Vertice vertice = this.getTerreno(coordenada).verticeEn(coordenada.vertex());
-        for(Coordenada c : direcciones) {
-            Terreno t = this.getTerreno(coordenada.aplicarDireccion(c));
+        for(Terreno t : this.getTerrenos()) {
             if(t.contieneVertice(vertice)) {
                 adyacentes.add(t);
             }

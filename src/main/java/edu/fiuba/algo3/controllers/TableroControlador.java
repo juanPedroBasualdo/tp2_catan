@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.controllers;
 
 import edu.fiuba.algo3.modelo.juego.turno.FaseTurno;
+import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Construccion;
 import edu.fiuba.algo3.vistas.JuegoVista;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
@@ -22,6 +23,7 @@ public class TableroControlador {
     private enum AccionesJuego {
         INICIARJUEGO,
         CONSTRUIR,
+        ROBAR,
         COMERCIAR21,
         COMERCIAR31,
         COMERCIARJUGADOR,
@@ -55,11 +57,22 @@ public class TableroControlador {
     }
 
     private void handleTirarDadosClick() {
-        System.out.println("Tiro dados");
-        int fichaActual = juego.tirarDados();
-        juego.otorgarRecursos(fichaActual);
-        juego.cambiarFase(fichaActual);
-        vista.getBarraDerecha().getLabelResultadoDados().setText(String.valueOf(fichaActual));
+        if(juego.obtenerFase() == FaseTurno.TIRARDADOS) {
+            System.out.println("Tiro dados");
+            int fichaActual = juego.tirarDados();
+            if(fichaActual == 7) {
+                vista.getBarraDerecha().getLabelResultadoDados().setText(String.valueOf(fichaActual));
+                accion = AccionesJuego.ROBAR;
+            } else {
+                juego.otorgarRecursos(fichaActual);
+                juego.cambiarFase(fichaActual);
+                vista.getBarraDerecha().getLabelResultadoDados().setText(String.valueOf(fichaActual));
+            }
+
+        } else {
+            System.out.println("No se puede tirar dados en la fase " + juego.obtenerFase());
+        }
+
     }
 
     private void handleConstruirClick() {
@@ -74,7 +87,8 @@ public class TableroControlador {
         try{
             Coordenada coordVert = new Coordenada(y,x,z);
             Tablero tablero = juego.obtenerTablero();
-            String construccion = tablero.getTerreno(coordVert).verticeEn(z).obtenerPieza().getClass().getSimpleName();
+            Construccion pieza = tablero.getTerreno(coordVert).verticeEn(z).obtenerPieza();
+            String construccion = pieza.getClass().getSimpleName();
             switch(accion){
                 case CONSTRUIR:
                     switch(construccion){
@@ -118,12 +132,33 @@ public class TableroControlador {
                     juego.notificarObservadores();
                     accion = AccionesJuego.ESPERARACCION;
                     break;
+                case ROBAR:
+                    switch (construccion) {
+                        case("Vacio"):
+                            System.out.println(juego.obtenerFase() + "NO SE PUEDE ROBAR UN ESPACIO VACIO");
+                            juego.moverLadron(coordVert);
+                            break;
+                        case("Poblado"):
+                            System.out.println("Robando poblado de " + pieza.getPropietario());
+                            juego.moverLadron(coordVert);
+                            juego.robarCarta(pieza.getPropietario());
+                            break;
+                        case("Ciudad"):
+                            System.out.println("Robando ciudad de " + pieza.getPropietario());
+                            juego.moverLadron(coordVert);
+                            juego.robarCarta(pieza.getPropietario());
+                            break;
+                    }
+                    juego.cambiarFase(FaseTurno.TURNOJUGADOR);
+                    juego.notificarObservadores();
+                    accion = AccionesJuego.ESPERARACCION;
+                    break;
                 default:
                     break;
             }
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            vista.getBarraDerecha().getLabelJugadorActual().setText("No se puede colocar porque" + e);
         }
 
     }
@@ -138,6 +173,7 @@ public class TableroControlador {
                         juego.posicionarCamino(coordArista);
                         this.juego.cambiarFase(0);
                         this.juego.pasarTurno();
+                        actualizarJugadorQueLeToca();
                     }
                     if (juego.obtenerFase() == FaseTurno.TURNOJUGADOR){
                         juego.construirCamino(coordArista);
@@ -150,16 +186,16 @@ public class TableroControlador {
             }
 
         } catch (Exception e) {
-            System.out.println(e);
+            vista.getBarraDerecha().getLabelJugadorActual().setText("No se puede colocar porque" + e);
         }
 
     }
 
     private void actualizarJugadorQueLeToca(){
 
-    String nombreJugador = juego.jugadorActual().obtenerNombre();
-    String jugadorNombre = "Juega:" + nombreJugador;
-    vista.getBarraDerecha().getLabelJugadorActual().setText(jugadorNombre);
+        String nombreJugador = juego.jugadorActual().obtenerNombre();
+        String jugadorNombre = "Juega:" + nombreJugador;
+        vista.getBarraDerecha().getLabelJugadorActual().setText(jugadorNombre);
 
     }
 
@@ -168,30 +204,43 @@ public class TableroControlador {
     }
 
     private void handleComerciarBancaClick() {
-        System.out.println("Comercio con la banca");
+        if(juego.obtenerFase() == FaseTurno.TURNOJUGADOR) {
+            System.out.println("Comercio con la banca");
+        }
     }
 
     private void handleComerciarPuerto2a1Click() {
-        System.out.println("Comercio con puerto 2:1");
+        if(juego.obtenerFase() == FaseTurno.TURNOJUGADOR) {
+            System.out.println("Comercio con puerto 2:1");
+        }
     }
 
     private void handleComerciarPuerto3a1Click() {
-        System.out.println("Comercio con puerto 3:1");
+        if (juego.obtenerFase() == FaseTurno.TURNOJUGADOR) {
+            System.out.println("Comercio con puerto 3:1");
+        }
     }
 
     private void handlePasarClick() {
         if (juego.obtenerFase() == FaseTurno.TURNOJUGADOR){
             System.out.println("Paso el turno");
             juego.pasarTurno();
-            juego.cambiarFase(0);
+            juego.cambiarFase(FaseTurno.TIRARDADOS);
+            actualizarJugadorQueLeToca();
             juego.notificarObservadores();
         }else {
             System.out.println("Estas en la fase inicial");
         }
     }
 
-    private void handleComprarCartaDesarrolloClick() { System.out.println("Compro carta de desarrollo");}
+    private void handleComprarCartaDesarrolloClick() {
+        if(juego.obtenerFase() == FaseTurno.TURNOJUGADOR) {
+            System.out.println("Compro carta de desarrollo");
+            juego.comprarCartaDesarrollo();
+            juego.notificarObservadores();
+        }
 
+    }
 
     private void setupMenuHandlers() {
         vista.getItemCreditos().setOnAction(e -> app.mostrarCreditos());
