@@ -8,7 +8,7 @@ public class ControladorMusica {
 
     private static ControladorMusica instance;
     private MediaPlayer mediaPlayer;
-    public static final double VOLUMEN_INICIAL = 0.4;
+    public static final double VOLUMEN_INICIAL = 0.1;
     private String cancionActual = "/Musicas/age_of_empires_main_theme.mp3";
 
     private ControladorMusica() {
