@@ -38,6 +38,10 @@ public class Juego {
         return this.turnero.jugadores();
     }
 
+    public Tablero obtenerTablero() {
+        return this.tablero;
+    }
+
     /*-- Metodos de fachada --*/
 
     public int tirarDados() {

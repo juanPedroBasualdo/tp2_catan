@@ -43,12 +43,12 @@ public class Arista {
     }
 
     public boolean estaConectadaPara(Jugador jugador) {
-        for(Arista a : adyacentes) {
+        for(Arista a : this.adyacentes) {
             if(a.esDe(jugador)) {
                 return true;
             }
         }
-        for(Vertice v : getVertices()) {
+        for(Vertice v : this.getVertices()) {
             if(v.esPropietario(jugador)) {
                 return true;
             }

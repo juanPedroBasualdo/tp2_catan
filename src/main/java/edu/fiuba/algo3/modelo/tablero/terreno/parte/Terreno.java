@@ -134,6 +134,8 @@ public abstract class Terreno {
         return this.vertices.get(vertex);
     }
 
+    public Arista aristaEn(int arista) { return aristas.get(arista); }
+
     /*-- Overrides --*/
 
     @Override
