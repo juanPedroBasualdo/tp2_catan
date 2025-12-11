@@ -9,6 +9,8 @@ import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 import javafx.application.Platform;
 import javafx.scene.control.Slider;
 
+import java.util.stream.Collectors;
+
 public class TableroControlador {
 
     private final JuegoVista vista;
@@ -40,7 +42,7 @@ public class TableroControlador {
 
         setupEventHandlers();
         setupMenuHandlers();
-        // setupVolumeControl();
+        setupVolumeControl();
         actualizarJugadorQueLeToca();
     }
 
@@ -56,6 +58,11 @@ public class TableroControlador {
         setupMenuElegirMusicaHandler();
     }
 
+    private void actualizarUI() {
+        this.actualizarJugadorQueLeToca();
+        juego.notificarObservadores();
+    }
+
     private void handleTirarDadosClick() {
         if(juego.obtenerFase() == FaseTurno.TIRARDADOS) {
             System.out.println("Tiro dados");
@@ -68,6 +75,14 @@ public class TableroControlador {
                 juego.cambiarFase(fichaActual);
                 vista.getBarraDerecha().getLabelResultadoDados().setText(String.valueOf(fichaActual));
             }
+        System.out.println("Tiro dados");
+        int fichaActual = juego.tirarDados();
+        juego.otorgarRecursos(fichaActual);
+        juego.cambiarFase(fichaActual);
+        vista.getBarraDerecha().getLabelResultadoDados().setText(String.valueOf(fichaActual));
+
+        actualizarUI();
+    }
 
         } else {
             System.out.println("No se puede tirar dados en la fase " + juego.obtenerFase());
@@ -151,6 +166,7 @@ public class TableroControlador {
                     }
                     juego.cambiarFase(FaseTurno.TURNOJUGADOR);
                     juego.notificarObservadores();
+                    actualizarUI();
                     accion = AccionesJuego.ESPERARACCION;
                     break;
                 default:
@@ -228,6 +244,8 @@ public class TableroControlador {
             juego.cambiarFase(FaseTurno.TIRARDADOS);
             actualizarJugadorQueLeToca();
             juego.notificarObservadores();
+            juego.cambiarFase(0);
+            actualizarUI();
         }else {
             System.out.println("Estas en la fase inicial");
         }

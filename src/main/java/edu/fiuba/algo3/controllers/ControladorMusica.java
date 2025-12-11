@@ -8,11 +8,11 @@ public class ControladorMusica {
 
     private static ControladorMusica instance;
     private MediaPlayer mediaPlayer;
-    public static final double VOLUMEN_INICIAL = 0.4;
+    public static final double VOLUMEN_INICIAL = 0.1;
     private String cancionActual = "/Musicas/age_of_empires_main_theme.mp3";
 
     private ControladorMusica() {
-        // setMusica(cancionActual);
+        setMusica(cancionActual);
     }
 
     public void setMusica(String musicaActual){
@@ -24,16 +24,16 @@ public class ControladorMusica {
 
         URL musicasPath = getClass().getResource(musicaActual);
         Media media = new Media(Objects.requireNonNull(musicasPath, "No se encontro el archivo").toExternalForm());
-        //mediaPlayer = new MediaPlayer(media);
-        // mediaPlayer.setVolume(VOLUMEN_INICIAL);
-        // mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        // mediaPlayer.play();
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setVolume(VOLUMEN_INICIAL);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
         this.cancionActual = musicaActual;
     }
 
     public static ControladorMusica getInstance() {
         if (instance == null) {
-            // instance = new ControladorMusica();
+            instance = new ControladorMusica();
         }
         return instance;
     }

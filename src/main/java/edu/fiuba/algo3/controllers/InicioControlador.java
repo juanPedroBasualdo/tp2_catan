@@ -19,8 +19,8 @@ public class InicioControlador {
         this.app = app;
         setupEventHandlers();
         setupMenuHandlers();
-        // setupVolumeControl();
-        // setupMenuElegirMusicaHandler();
+        setupVolumeControl();
+        setupMenuElegirMusicaHandler();
     }
 
     private void setupEventHandlers() {
@@ -50,18 +50,17 @@ public class InicioControlador {
     }
 
     private void setupVolumeControl() {
-        // ControladorMusica musica = ControladorMusica.getInstance();
+        ControladorMusica musica = ControladorMusica.getInstance();
 
         Slider barraVolumen = vista.getMenuBar().getBarraVolumen();
 
-        // barraVolumen.setValue(musica.getVolumen());
+        barraVolumen.setValue(musica.getVolumen());
 
         barraVolumen.valueProperty().addListener((obs, oldValue, newValue) -> {
-            // musica.setvolumen(newValue.doubleValue());
+            musica.setvolumen(newValue.doubleValue());
         });
     }
 
-    /*
     private void setupMenuElegirMusicaHandler() {
         vista.getItemMusica1().setOnAction(e ->
                 ControladorMusica.getInstance().setMusica(PATH_MUSICA_1));
@@ -70,5 +69,5 @@ public class InicioControlador {
         vista.getItemMusica3().setOnAction(e ->
                 ControladorMusica.getInstance().setMusica(PATH_MUSICA_3));
     }
-     */
+
 }
