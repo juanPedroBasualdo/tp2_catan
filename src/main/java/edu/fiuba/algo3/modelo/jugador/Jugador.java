@@ -242,6 +242,8 @@ public class Jugador extends Observable {
         return recursos;
     }
 
+    public List<CartaDesarrollo> cartasDesarrollo() { return this.cartasDesarrollo; }
+
     public Map<Recurso, Long> contarRecursos() {
         return recursos.stream().collect(Collectors.groupingBy(recurso -> recurso, Collectors.counting()));
     }
