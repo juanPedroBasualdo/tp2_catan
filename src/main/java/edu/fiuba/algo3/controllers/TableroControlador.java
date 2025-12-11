@@ -4,7 +4,6 @@ import edu.fiuba.algo3.vistas.JuegoVista;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
 import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
-import edu.fiuba.algo3.vistas.JuegoVista;
 import javafx.application.Platform;
 import javafx.scene.control.Slider;
 
@@ -92,8 +91,6 @@ public class TableroControlador {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     private void handleComerciarJugadorClick() {
@@ -114,6 +111,7 @@ public class TableroControlador {
 
     private void handlePasarClick() {
         System.out.println("Paso el turno");
+        juego.pasarTurno();
     }
 
     private void handleComprarCartaDesarrolloClick() { System.out.println("Compro carta de desarrollo");}

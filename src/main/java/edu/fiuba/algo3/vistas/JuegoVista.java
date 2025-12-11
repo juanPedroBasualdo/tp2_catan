@@ -67,30 +67,26 @@ public class JuegoVista {
     public MenuItem getItemMusica3() { return menuBar.getItemMusica3(); }
 
     public Button getBotonTirarDados() {
-        return barraDerecha.getBotonTirarDados();
-    }
+        return barraDerecha.getBotonTirarDados();}
 
     public Button getBotonConstruir() {
-        return botoneraVista.getBotonConstruir();
-    }
+        return botoneraVista.getBotonConstruir();}
 
     public Button getBotonComerciarJugador() {
-        return botoneraVista.getBotonComerciarJugador();
-    }
+        return botoneraVista.getBotonComerciarJugador();}
 
     public Button getBotonComerciarBanca() {
-        return botoneraVista.getBotonComerciarBanca();
-    }
+        return botoneraVista.getBotonComerciarBanca();}
 
     public Button getBotonComerciarPuerto2a1() {
-        return botoneraVista.getBotonComerciarPuerto2a1();
-    }
+        return botoneraVista.getBotonComerciarPuerto2a1();}
 
     public Button getBotonComerciarPuerto3a1() {
-        return botoneraVista.getBotonComerciarPuerto3a1();
-    }
+        return botoneraVista.getBotonComerciarPuerto3a1();}
 
     public Button getBotonPasar() {return botoneraVista.getBotonPasar();}
 
     public Button getBotonComprarCartaDesarrollo() { return botoneraVista.getBotonComprarCartaDesarrollo();}
+
+    public ManoVista getManoVista() { return manoVista;}
 }

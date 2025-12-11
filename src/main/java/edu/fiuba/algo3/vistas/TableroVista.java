@@ -69,15 +69,11 @@ public class TableroVista extends Pane {
         this.setWidth(1366);
         this.setHeight(768);
 
-        // La lógica de inicialización del tablero (que estaba en start) se mueve aquí.
+
         generarTablero(juego.obtenerTablero(), juego.listaDeJugadores());
 
-        // Añadir todos los nodos al Pane (la vista)
         this.getChildren().addAll(nodosTablero);
 
-        // Opcional: Si tienes elementos de control de la UI (botones de tirar dados, etc.)
-        // es aquí donde se añadirían al Pane.
-        // setupUIControles();
     }
 
     // [CAMBIO 3] Eliminar el método start, ya no somos la clase Application.
@@ -285,7 +281,6 @@ public class TableroVista extends Pane {
                     caminoVisual.setStyle("-fx-background-color: #8B4513; -fx-background-radius: 0;");
                 }
 
-
                 caminoVisual.setLayoutX(medioX - BUTTON_WIDTH / 2);
                 caminoVisual.setLayoutY(medioY - BUTTON_HEIGHT / 2);
                 caminoVisual.setRotate(anguloDeg);
@@ -462,5 +457,4 @@ public class TableroVista extends Pane {
 
         return hex;
     }
-
 }
