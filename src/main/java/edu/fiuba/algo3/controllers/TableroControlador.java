@@ -57,6 +57,7 @@ public class TableroControlador {
         System.out.println("Tiro dados");
         int fichaActual = juego.tirarDados();
         juego.otorgarRecursos(fichaActual);
+        juego.cambiarFase(fichaActual);
     }
 
     private void handleConstruirClick() {
@@ -77,10 +78,15 @@ public class TableroControlador {
                     switch(construccion){
                         case ("Vacio"): {
                             switch (juego.obtenerFase()){
-                                case INICIANDO:{
+                                case INICIANDO1:{
                                     juego.posicionarPoblado(coordVert);
                                     break;
                                 }
+                                case INICIANDO2:
+                                    juego.posicionarPoblado(coordVert);
+                                    juego.otorgarRecursosIniciales(coordVert);
+                                    System.out.println(juego.jugadorActual().obtenerRecursos());
+                                    break;
                                 case TURNOJUGADOR: {
                                     juego.construirPoblado(coordVert);
                                     break;
@@ -126,18 +132,14 @@ public class TableroControlador {
 
             switch(accion){
                 case CONSTRUIR:
-
-                    if (juego.obtenerFase() == FaseTurno.INICIANDO) {
+                    if (juego.obtenerFase() == FaseTurno.INICIANDO1 || juego.obtenerFase() == FaseTurno.INICIANDO2) {
                         juego.posicionarCamino(coordArista);
                         this.juego.cambiarFase(0);
                         this.juego.pasarTurno();
                     }
-
                     if (juego.obtenerFase() == FaseTurno.TURNOJUGADOR){
                         juego.construirCamino(coordArista);
                     }
-
-
                     juego.notificarObservadores();
                     accion = AccionesJuego.ESPERARACCION;
                     break;

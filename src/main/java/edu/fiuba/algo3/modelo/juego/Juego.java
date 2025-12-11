@@ -73,6 +73,10 @@ public class Juego {
         tablero.producirRecursos(fichaNumero);
     }
 
+    public void otorgarRecursosIniciales(Coordenada coordenada) {
+        tablero.otorgarRecursosIniciales(this.turnero.jugadorActual(), coordenada);
+    }
+
     public void intercambioTasaEspecifica(Recurso recursoACambiar, Recurso recursoARecibir) {
         tablero.intercambiarConPuertoEspecifico(turnero.jugadorActual(), recursoACambiar, recursoARecibir);
     }
@@ -121,6 +125,10 @@ public class Juego {
 
     public void pasarTurno() {
         turnero.pasarTurno();
+    }
+
+    public Jugador jugadorActual() {
+        return this.turnero.jugadorActual();
     }
 
     public int obtenerPuntaje() {
