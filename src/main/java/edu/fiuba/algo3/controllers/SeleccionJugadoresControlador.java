@@ -9,7 +9,7 @@ public class SeleccionJugadoresControlador {
     private final SeleccionJugadoresVista vista;
     private final CatanApp app;
 
-    private static final String PATH_MUSICA_1 = "/Musicas/01 Age of Empires II Main Theme.mp3";
+    private static final String PATH_MUSICA_1 = "/Musicas/age_of_empires_main_theme.mp3";
     private static  final String PATH_MUSICA_2 = "/Musicas/02 Maps of the World.mp3";
     private static  final String PATH_MUSICA_3 = "/Musicas/13 Tazer.mp3";
 
@@ -19,6 +19,7 @@ public class SeleccionJugadoresControlador {
         setupEventHandlers();
         setupMenuHandlers();
         setupVolumeControl();
+        setupMenuElegirMusicaHandler();
     }
 
     private void setupEventHandlers() {

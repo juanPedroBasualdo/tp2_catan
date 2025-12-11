@@ -9,7 +9,7 @@ public class ControladorMusica {
     private static ControladorMusica instance;
     private MediaPlayer mediaPlayer;
     public static final double VOLUMEN_INICIAL = 0.4;
-    private String cancionActual = "/Musicas/01 Age of Empires II Main Theme.mp3";
+    private String cancionActual = "/Musicas/age_of_empires_main_theme.mp3";
 
     private ControladorMusica() {
         setMusica(cancionActual);

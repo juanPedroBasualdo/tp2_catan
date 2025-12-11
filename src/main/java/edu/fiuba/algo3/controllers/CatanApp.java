@@ -20,7 +20,6 @@ import java.util.List;
 public class CatanApp extends Application {
 
     private Stage escena;
-
     private final double RESOLUCION_ANCHO = 1366;
     private final double RESOLUCION_ALTO = 768;
     private static final String URL_REGLAS_CATAN = "https://deviramericas.com/wp-content/uploads/2016/12/Catan-Plus-reglas.pdf";
@@ -55,8 +54,6 @@ public class CatanApp extends Application {
         escena.setScene(scene);
         escena.setTitle("Catan");
     }
-
-
 
     public void mostrarPantallaJuego(int numJugadores) {
 
