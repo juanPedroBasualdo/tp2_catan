@@ -20,7 +20,6 @@ public class SeleccionJugadoresVista {
 
     private final Button botonJugadores3;
     private final Button botonJugadores4;
-    private final Button botonJugadores5;
     private final Button botonAtras;
 
     public SeleccionJugadoresVista() {
@@ -41,17 +40,13 @@ public class SeleccionJugadoresVista {
         botonJugadores4 = new Button("4 Jugadores");
         botonJugadores4.setStyle(buttonStyle);
 
-        botonJugadores5 = new Button("5 Jugadores");
-        botonJugadores5.setStyle(buttonStyle);
-
         addButtonHoverEffect(botonJugadores3);
         addButtonHoverEffect(botonJugadores4);
-        addButtonHoverEffect(botonJugadores5);
 
         Label labelTitulo = new Label("Catan");
         labelTitulo.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: black;");
 
-        VBox contenedorBotones = new VBox(10, botonJugadores3, botonJugadores4, botonJugadores5);
+        VBox contenedorBotones = new VBox(10, botonJugadores3, botonJugadores4);
         contenedorBotones.setAlignment(Pos.CENTER);
 
         VBox contenedorCentral = new VBox(15, labelTitulo, contenedorBotones);
@@ -100,16 +95,23 @@ public class SeleccionJugadoresVista {
         return botonJugadores4;
     }
 
-    public Button getBotonJugadores5() {
-        return botonJugadores5;
-    }
-
     public Button getBotonAtras() {
         return botonAtras;
     }
 
     public CatanMenuBar getMenuBar() {
         return menuBar;
+    }
+
+    public MenuItem getItemMusica1() {
+        return menuBar.getItemMusica1();
+    }
+
+    public MenuItem getItemMusica2() {
+        return menuBar.getItemMusica2();
+    }
+    public MenuItem getItemMusica3() {
+        return menuBar.getItemMusica3();
     }
 
 }

@@ -53,7 +53,11 @@ public class TableroVista {
 
     public Slider getBarraVolumen() { return menuBar.getBarraVolumen(); }
 
-    public MenuItem getItemElegirMusica() { return menuBar.getItemElegirMusica(); }
+    public MenuItem getItemMusica1() { return menuBar.getItemMusica1(); }
+
+    public MenuItem getItemMusica2() { return menuBar.getItemMusica2(); }
+
+    public MenuItem getItemMusica3() { return menuBar.getItemMusica3(); }
 
     public Button getBotonTirarDados() {
         return barraDerecha.getBotonTirarDados();
@@ -79,7 +83,7 @@ public class TableroVista {
         return botoneraVista.getBotonComerciarPuerto3a1();
     }
 
-    public Button getBotonPasar() {
-        return botoneraVista.getBotonPasar();
-    }
+    public Button getBotonPasar() {return botoneraVista.getBotonPasar();}
+
+    public Button getBotonComprarCartaDesarrollo() { return botoneraVista.getBotonComprarCartaDesarrollo();}
 }

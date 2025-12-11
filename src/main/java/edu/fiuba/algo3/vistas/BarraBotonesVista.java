@@ -18,6 +18,7 @@ public class BarraBotonesVista extends VBox {
     private final Button botonComerciarPuerto2a1;
     private final Button botonComerciarPuerto3a1;
     private final Button botonPasar;
+    private final Button botonComprarCartaDesarrollo;
 
     private static final String PATH_BOTON_CONSTRUIR = "/Imagenes/Construir.png";
     private static final String PATH_BOTON_PASAR = "/Imagenes/PasarTurno.png";
@@ -25,6 +26,8 @@ public class BarraBotonesVista extends VBox {
     private static final String PATH_BOTON_COMERCIAR_BANCA = "/Imagenes/Banco.jpg";
     private static final String PATH_BOTON_COMERCIAR_PUERTO_2 = "/Imagenes/Puerto2_1.jpg";
     private static final String PATH_BOTON_COMERCIAR_PUERTO_3 = "/Imagenes/Puerto3.1.jpg";
+    private static final String PATH_BOTON_CARTA_DESARROLLO = "/Imagenes/Carta_desarrollo.jpg";
+
 
     private static final double TAMANIO_BOTON = 65;
 
@@ -35,9 +38,10 @@ public class BarraBotonesVista extends VBox {
         botonComerciarBanca = crearBoton(PATH_BOTON_COMERCIAR_BANCA, "Comerciar con Banca");
         botonComerciarPuerto2a1 = crearBoton(PATH_BOTON_COMERCIAR_PUERTO_2, "Comerciar con puerto 2:1");
         botonComerciarPuerto3a1 = crearBoton(PATH_BOTON_COMERCIAR_PUERTO_3, "Comerciar con puerto 3:1");
+        botonComprarCartaDesarrollo = crearBoton(PATH_BOTON_CARTA_DESARROLLO, "Comprar carta de desarrollo");
 
         HBox botones = new HBox(7);
-        botones.getChildren().addAll(botonConstruir, botonComerciarJugador, botonComerciarBanca,
+        botones.getChildren().addAll(botonConstruir,botonComprarCartaDesarrollo, botonComerciarJugador, botonComerciarBanca,
                 botonComerciarPuerto2a1, botonComerciarPuerto3a1, botonPasar);
         botones.setAlignment(Pos.CENTER_RIGHT);
 
@@ -88,4 +92,6 @@ public class BarraBotonesVista extends VBox {
     public Button getBotonPasar() {
         return botonPasar;
     }
+
+    public Button getBotonComprarCartaDesarrollo() {  return  botonComprarCartaDesarrollo;}
 }

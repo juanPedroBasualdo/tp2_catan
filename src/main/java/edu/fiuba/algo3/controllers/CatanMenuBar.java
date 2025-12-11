@@ -11,7 +11,10 @@ public class CatanMenuBar extends MenuBar {
     private final MenuItem barraMenuReglas;
     private final MenuItem barraMenuSalir;
     private final Slider barraVolumen;
-    private final MenuItem itemElegirMusica;
+    private final Menu menuElegirMusica;
+    private final MenuItem itemMusica1;
+    private final MenuItem itemMusica2;
+    private final MenuItem itemMusica3;
 
     public CatanMenuBar() {
         Menu menuJuego = new Menu("Juego");
@@ -34,8 +37,15 @@ public class CatanMenuBar extends MenuBar {
         CustomMenuItem itemVolumen = new CustomMenuItem(contenedorBarraVolumen);
         itemVolumen.setHideOnClick(false);
 
-        itemElegirMusica = new MenuItem("Elegir Música");
-        menuSonido.getItems().addAll(itemVolumen, itemElegirMusica);
+        itemMusica1 = new MenuItem("Aoe2 Menu");
+        itemMusica2 = new MenuItem("Aoe2 Map of the world");
+        itemMusica3 = new MenuItem("Aoe2 Tazer");
+
+        menuElegirMusica = new Menu("Elegir musica");
+
+        menuElegirMusica.getItems().addAll(itemMusica1, itemMusica2, itemMusica3);
+
+        menuSonido.getItems().addAll(itemVolumen, menuElegirMusica);
 
         this.getMenus().addAll(menuAcercaDe, menuSonido, menuJuego);
     }
@@ -57,6 +67,16 @@ public class CatanMenuBar extends MenuBar {
     }
 
     public MenuItem getItemElegirMusica() {
-        return itemElegirMusica;
+        return menuElegirMusica;
+    }
+
+    public MenuItem getItemMusica1() {
+        return itemMusica1;
+    }
+    public MenuItem getItemMusica2() {
+        return itemMusica2;
+    }
+    public MenuItem getItemMusica3() {
+        return itemMusica3;
     }
 }

@@ -9,6 +9,10 @@ public class TableroControlador {
     private final TableroVista vista;
     private final CatanApp app;
 
+    private static final String PATH_MUSICA_1 = "/Musicas/01 Age of Empires II Main Theme.mp3";
+    private static  final String PATH_MUSICA_2 = "/Musicas/02 Maps of the World.mp3";
+    private static  final String PATH_MUSICA_3 = "/Musicas/13 Tazer.mp3";
+
     public TableroControlador(TableroVista vista, CatanApp app) {
         this.vista = vista;
         this.app = app;
@@ -25,7 +29,8 @@ public class TableroControlador {
         vista.getBotonComerciarPuerto2a1().setOnAction(e -> handleComerciarPuerto2a1Click());
         vista.getBotonComerciarPuerto3a1().setOnAction(e -> handleComerciarPuerto3a1Click());
         vista.getBotonPasar().setOnAction(e -> handlePasarClick());
-        vista.getItemElegirMusica().setOnAction(e -> handleElegirMusicaClick());
+        vista.getBotonComprarCartaDesarrollo().setOnAction(e -> handleComprarCartaDesarrolloClick());
+        setupMenuElegirMusicaHandler();
     }
 
     private void handleTirarDadosClick() {
@@ -56,9 +61,7 @@ public class TableroControlador {
         System.out.println("Paso el turno");
     }
 
-    private void handleElegirMusicaClick() {
-        System.out.println("Abrir ventana de selección de música.");
-    }
+    private void handleComprarCartaDesarrolloClick() { System.out.println("Compro carta de desarrollo");}
 
 
     private void setupMenuHandlers() {
@@ -77,4 +80,14 @@ public class TableroControlador {
             musica.setvolumen(newValue.doubleValue());
         });
     }
+
+    private void setupMenuElegirMusicaHandler() {
+        vista.getItemMusica1().setOnAction(e ->
+                ControladorMusica.getInstance().setMusica(PATH_MUSICA_1));
+        vista.getItemMusica2().setOnAction(e ->
+                ControladorMusica.getInstance().setMusica(PATH_MUSICA_2));
+        vista.getItemMusica3().setOnAction(e ->
+                ControladorMusica.getInstance().setMusica(PATH_MUSICA_3));
+    }
+
 }
