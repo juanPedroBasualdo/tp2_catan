@@ -11,7 +11,7 @@ public class ControladorMusica {
     public static final double VOLUMEN_INICIAL = 0.1;
 
     private ControladorMusica() {
-        URL resource = getClass().getResource("/Musicas/01 Age of Empires II Main Theme.mp3");
+        URL resource = getClass().getResource("/Musicas/age_of_empires_main_theme.mp3");
         Media media = new Media(resource.toExternalForm());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);

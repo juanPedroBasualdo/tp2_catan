@@ -357,6 +357,10 @@ public class Tablero {
         this.terrenos[coordenada.x()][coordenada.y()].posicionarPoblado(jugador, coordenada.vertex());
     }
 
+    public boolean estaLadronEn(Coordenada coordenada) {
+        return this.terrenos[coordenada.x()][coordenada.y()].tieneLadron(this.ladron.obtenerPosicionActual());
+    }
+
 
     public Collection<Vertice> getVertices() {
         return Collections.unmodifiableCollection(vertices.values());

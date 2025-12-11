@@ -90,6 +90,10 @@ public class Juego {
         this.tablero.robarCarta(this.turnero.jugadorActual(), jugadorVictima);
     }
 
+    public boolean estaLadron(Coordenada coordenada) {
+        return this.tablero.estaLadronEn(coordenada);
+    }
+
     public void intercambioTasaEstandar(Recurso recursoACambiar, Recurso recursoARecibir) {
         banca.intercambioDeTasaEstandar(turnero.jugadorActual(), recursoACambiar, recursoARecibir);
     }
