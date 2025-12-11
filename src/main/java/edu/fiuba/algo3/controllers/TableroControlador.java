@@ -9,8 +9,6 @@ import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 import javafx.application.Platform;
 import javafx.scene.control.Slider;
 
-import java.util.stream.Collectors;
-
 public class TableroControlador {
 
     private final JuegoVista vista;
@@ -40,7 +38,7 @@ public class TableroControlador {
         this.app = app;
         this.juego = juego;
 
-        setupEventHandlers();
+       setupEventHandlers();
         setupMenuHandlers();
         setupVolumeControl();
         actualizarJugadorQueLeToca();
@@ -75,16 +73,10 @@ public class TableroControlador {
                 juego.cambiarFase(fichaActual);
                 vista.getBarraDerecha().getLabelResultadoDados().setText(String.valueOf(fichaActual));
             }
-        System.out.println("Tiro dados");
-        int fichaActual = juego.tirarDados();
-        juego.otorgarRecursos(fichaActual);
-        juego.cambiarFase(fichaActual);
-        vista.getBarraDerecha().getLabelResultadoDados().setText(String.valueOf(fichaActual));
-
         actualizarUI();
     }
 
-        } else {
+        else {
             System.out.println("No se puede tirar dados en la fase " + juego.obtenerFase());
         }
 
@@ -98,7 +90,6 @@ public class TableroControlador {
     }
 
     public void handleBtnVertice(int y, int x, int z) {
-
         try{
             Coordenada coordVert = new Coordenada(y,x,z);
             Tablero tablero = juego.obtenerTablero();
@@ -178,6 +169,7 @@ public class TableroControlador {
         }
 
     }
+
 
     public void handlerBtnArista(int y, int x, int z) {
         try{
