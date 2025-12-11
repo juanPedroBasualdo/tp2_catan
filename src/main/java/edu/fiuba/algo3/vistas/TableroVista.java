@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.vistas;
 
 import edu.fiuba.algo3.controllers.TableroControlador;
-import edu.fiuba.algo3.controllers.CatanApp; // [CAMBIO 1] Importar CatanApp
+import edu.fiuba.algo3.controllers.CatanApp;
 import edu.fiuba.algo3.modelo.Observer.Observador;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
@@ -9,7 +9,6 @@ import edu.fiuba.algo3.modelo.tablero.Tablero;
 import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
 import javafx.scene.Node;
-// import javafx.scene.Scene; // [ELIMINADO] Ya no necesita Scene
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -20,10 +19,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-// import javafx.stage.Stage; // [ELIMINADO] Ya no necesita Stage
 import javafx.util.Pair;
 
-// import java.io.IOException; // [ELIMINADO] Ya no necesita IOException en el constructor
 import java.util.*;
 
 public class TableroVista extends Pane implements Observador {
@@ -66,7 +63,7 @@ public class TableroVista extends Pane implements Observador {
     public TableroVista(CatanApp app, Juego juego, TableroControlador controlador, List<Jugador> listaJugadores) {
         this.app = app;
         this.juego = juego;
-        this.controlador = controlador; // Inyección de dependencia
+        this.controlador = controlador;
 
         this.asignacionJugadores = new HashMap<>();
 
@@ -175,7 +172,7 @@ public class TableroVista extends Pane implements Observador {
 
     private void renderizarConstrucciones(List<Double> coordenadas, Terreno terreno) {
 
-        final double radioConstruccion = RADIO * 0.7; // Definir el radio para el icono de la construcción
+        final double radioConstruccion = RADIO * 0.7;
 
         for (int i = 0; i < 12; i += 2) {
             double verticeX = coordenadas.get(i);
@@ -389,7 +386,7 @@ public class TableroVista extends Pane implements Observador {
 
         if (iconoPath != null) {
             final double imgSize = RADIO * 0.6;
-            final double radioRecurso = imgSize / 0.8; // Para que crearImagen use el imgSize de 0.6*RADIO
+            final double radioRecurso = imgSize / 0.8;
 
             double offsetX = x - 20;
             double offsetY = y - RADIO / 2 + 10;

@@ -17,7 +17,7 @@ public class Coordenada {
         this(offsetX, offsetY, 0);
     }
 
-    public List<Coordenada> obtenerDireccionesAdyacentes() {
+    public List<Coordenada> obtenerDireccionesAdyacentes(int maxY) {
                 Coordenada[] direccionesCoordenadas = {
                 new Coordenada(-1,0),
                 new Coordenada(0,1),
@@ -27,7 +27,7 @@ public class Coordenada {
                 new Coordenada(-1,-1),
         };
         List<Coordenada> direcciones = new ArrayList<>(List.of(direccionesCoordenadas));
-        direcciones.removeIf(c -> !this.verificarDentroDeRango(c));
+        direcciones.removeIf(c -> !this.verificarDentroDeRango(c, maxY));
         return direcciones;
     }
 
@@ -36,7 +36,7 @@ public class Coordenada {
     }
 
 
-    public boolean verificarDentroDeRango(Coordenada direccion) {
+    public boolean verificarDentroDeRango(Coordenada direccion, int maxY) {
         if(this.x + direccion.x() == 5) {
             return false;
         }
@@ -46,7 +46,7 @@ public class Coordenada {
         if(this.y + direccion.y() == -1) {
             return false;
         }
-        return (((this.y + direccion.y()) - this.x) != 3);
+        return (((this.y + direccion.y())) != maxY);
     }
 
     public int x() {
