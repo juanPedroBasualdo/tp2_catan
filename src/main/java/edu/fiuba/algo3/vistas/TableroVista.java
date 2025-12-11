@@ -1,15 +1,13 @@
 package edu.fiuba.algo3.vistas;
 
+import edu.fiuba.algo3.controllers.TableroControlador;
+import edu.fiuba.algo3.controllers.CatanApp; // [CAMBIO 1] Importar CatanApp
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
-import edu.fiuba.algo3.modelo.puntajeYBonificaciones.Bonificaciones;
-import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
-import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 import edu.fiuba.algo3.modelo.tablero.terreno.parte.Terreno;
-import javafx.application.Application;
 import javafx.scene.Node;
-import javafx.scene.Scene;
+// import javafx.scene.Scene; // [ELIMINADO] Ya no necesita Scene
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -20,15 +18,19 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
+// import javafx.stage.Stage; // [ELIMINADO] Ya no necesita Stage
 import javafx.util.Pair;
 
-import java.io.IOException;
+// import java.io.IOException; // [ELIMINADO] Ya no necesita IOException en el constructor
 import java.util.*;
 
-public class TableroVista extends Application {
+public class TableroVista extends Pane {
 
-    private final double RADIO = 45;
+    private TableroControlador controlador;
+    private final Juego juego;
+    private final CatanApp app;
+
+    private final double RADIO = 60;
 
     private final double X_DISTANCIA = RADIO * Math.sqrt(3);
     private final double Y_DISTANCIA = RADIO * 1.5;
@@ -59,6 +61,27 @@ public class TableroVista extends Application {
 
     private final String BORDE_HEXAGONO_COLOR = "#EDC9AF";
 
+    public TableroVista(CatanApp app, Juego juego, TableroControlador controlador) {
+        this.app = app;
+        this.juego = juego;
+        this.controlador = controlador; // Inyección de dependencia
+
+        this.setWidth(1366);
+        this.setHeight(768);
+
+        // La lógica de inicialización del tablero (que estaba en start) se mueve aquí.
+        generarTablero(juego.obtenerTablero(), juego.listaDeJugadores());
+
+        // Añadir todos los nodos al Pane (la vista)
+        this.getChildren().addAll(nodosTablero);
+
+        // Opcional: Si tienes elementos de control de la UI (botones de tirar dados, etc.)
+        // es aquí donde se añadirían al Pane.
+        // setupUIControles();
+    }
+
+    // [CAMBIO 3] Eliminar el método start, ya no somos la clase Application.
+    /*
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -106,8 +129,11 @@ public class TableroVista extends Application {
         stage.setScene(escena);
         stage.show();
     }
+    */
 
-    public void generarTablero(Tablero tablero, Collection<Jugador> jugadores) {
+    // [ELIMINADO] Se elimina el método start.
+
+    public void generarTablero(Tablero tablero, Collection<Jugador> jugadors) {
 
         List<Terreno> terrenos = tablero.getTerrenos();
 
@@ -304,6 +330,8 @@ public class TableroVista extends Application {
 
         botonHexagono.setOnAction(e -> {
             System.out.println("Botón presionado en la hexagono: (" + y + ", " + x);
+            // [OPCIONAL] Si el hexágono necesita un manejador del controlador:
+            // if (this.controlador != null) { this.controlador.handleHexagonoClick(y, x); }
         });
 
         nodosTablero.add(botonHexagono);
@@ -331,6 +359,10 @@ public class TableroVista extends Application {
             int finalI = i/2;
             botonVertice.setOnAction(e -> {
                 System.out.println(y + "," + x + "," + finalI);
+                // [CAMBIO 4] Llamar al controlador
+                if (this.controlador != null) {
+                    this.controlador.handleBtnVertice(y, x, finalI);
+                }
             });
 
             nodosTablero.add(botonVertice);
@@ -371,6 +403,8 @@ public class TableroVista extends Application {
             int finalI = i/2;
             botonArista.setOnAction(e -> {
                 System.out.println(y + "," + x + "," + finalI);
+                // [CAMBIO 5] Llamar al controlador (si tienes un método handle para aristas)
+                // if (this.controlador != null) { this.controlador.handleBtnArista(y, x, finalI); }
             });
 
             nodosTablero.add(botonArista);
@@ -427,10 +461,6 @@ public class TableroVista extends Application {
         }
 
         return hex;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
 }

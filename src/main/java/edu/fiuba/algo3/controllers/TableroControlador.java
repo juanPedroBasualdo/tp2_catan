@@ -1,6 +1,10 @@
 package edu.fiuba.algo3.controllers;
 
 import edu.fiuba.algo3.vistas.JuegoVista;
+import edu.fiuba.algo3.modelo.juego.Juego;
+import edu.fiuba.algo3.modelo.tablero.Tablero;
+import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
+import edu.fiuba.algo3.vistas.JuegoVista;
 import javafx.application.Platform;
 import javafx.scene.control.Slider;
 
@@ -8,14 +12,30 @@ public class TableroControlador {
 
     private final JuegoVista vista;
     private final CatanApp app;
+    private final Juego juego;
+    private AccionesJuego accion = AccionesJuego.ESPERARACCION;
 
     private static final String PATH_MUSICA_1 = "/Musicas/01 Age of Empires II Main Theme.mp3";
     private static  final String PATH_MUSICA_2 = "/Musicas/02 Maps of the World.mp3";
     private static  final String PATH_MUSICA_3 = "/Musicas/13 Tazer.mp3";
 
-    public TableroControlador(JuegoVista vista, CatanApp app) {
+    private enum AccionesJuego {
+        INICIARJUEGO,
+        CONSTRUIR,
+        COMERCIAR21,
+        COMERCIAR31,
+        COMERCIARJUGADOR,
+        COMERCIARBANCA,
+        TERMINARTURNO,
+        TIRARDADOS,
+        ESPERARACCION
+    }
+
+    public TableroControlador(JuegoVista vista, CatanApp app, Juego juego) {
         this.vista = vista;
         this.app = app;
+        this.juego = juego;
+
         setupEventHandlers();
         setupMenuHandlers();
         setupVolumeControl();
@@ -39,6 +59,41 @@ public class TableroControlador {
 
     private void handleConstruirClick() {
         System.out.println("Construyo");
+        accion = AccionesJuego.CONSTRUIR;
+    }
+
+    public void handleBtnVertice(int y, int x, int z) {
+
+        try{
+            Coordenada coordVert = new Coordenada(x,y,z);
+            Tablero tablero = juego.obtenerTablero();
+            String construccion = tablero.getTerreno(coordVert).verticeEn(z).obtenerPieza().getClass().getSimpleName();
+            switch(accion){
+
+                case CONSTRUIR:
+                    switch(construccion){
+                        case ("Vacio"): {
+                            juego.posicionarPoblado(coordVert);
+                            break;
+                        }
+                        case ("Poblado"): {
+                            juego.mejorarACiudad(coordVert);
+                            break;
+                        }
+                        case ("Ciudad"): {
+                            System.out.println("No se puede mejorar una CIUDAD");
+                            break;
+                        }
+                    }
+                    accion = AccionesJuego.ESPERARACCION;
+                    break;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     private void handleComerciarJugadorClick() {

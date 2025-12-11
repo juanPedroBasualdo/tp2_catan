@@ -37,6 +37,12 @@ public class Turnos {
         turnero.add(jugadorAnterior);
     }
 
+    public void notificarObservadores() {
+        for(Jugador j : turnero) {
+            j.notificarObservadores();
+        }
+    }
+
     /*-- Getters --*/
 
     public Jugador jugadorActual() {

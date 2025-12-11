@@ -60,6 +60,8 @@ public class Juego {
         tablero.mejorarPoblado(turnero.jugadorActual(), coordenada);
     }
 
+    public void posicionarPoblado(Coordenada coordenada) { tablero.posicionarPoblado(turnero.jugadorActual(), coordenada);}
+
     public void otorgarRecursos(int fichaNumero) {
         tablero.producirRecursos(fichaNumero);
     }
@@ -90,6 +92,10 @@ public class Juego {
         this.tablero.robarCarta(this.turnero.jugadorActual(), jugadorVictima);
     }
 
+    public boolean estaLadron(Coordenada coordenada) {
+        return this.tablero.estaLadronEn(coordenada);
+    }
+
     public void intercambioTasaEstandar(Recurso recursoACambiar, Recurso recursoARecibir) {
         banca.intercambioDeTasaEstandar(turnero.jugadorActual(), recursoACambiar, recursoARecibir);
     }
@@ -116,6 +122,14 @@ public class Juego {
 
     public void actualizarBonificaciones() {
         this.bonificaciones.actualizarBonificaciones(this.tablero.getAristas());
+    }
+
+    // Metodos observer:
+
+    public void notificarObservadores() {
+        this.turnero.notificarObservadores();
+        this.tablero.notificarObservadores();
+        this.bonificaciones.notificarObservadores();
     }
 
 }

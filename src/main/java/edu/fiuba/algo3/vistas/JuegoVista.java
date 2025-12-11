@@ -17,13 +17,15 @@ public class JuegoVista {
     private final BarraBotonesVista botoneraVista;
     private final ManoVista manoVista;
 
+    private final VBox tableroContainer;
+
     public JuegoVista() {
         this.menuBar = new CatanMenuBar();
         this.barraDerecha = new BarraDerechaVista();
         this.botoneraVista = new BarraBotonesVista();
         this.manoVista = new ManoVista();
 
-        VBox tableroContainer = new VBox();
+        this.tableroContainer = new VBox();
         tableroContainer.setAlignment(Pos.CENTER);
         tableroContainer.setStyle("-fx-background-color: #2b78a9;");
 
@@ -39,6 +41,11 @@ public class JuegoVista {
         root.setPrefWidth(1366);
         root.setPrefHeight(768);
         root.setStyle("-fx-background-color: #f0f0f0;");
+    }
+
+    public void setTablero(TableroVista tablero) {
+        this.tableroContainer.getChildren().clear();
+        this.tableroContainer.getChildren().add(tablero);
     }
 
     public BorderPane getRoot() {

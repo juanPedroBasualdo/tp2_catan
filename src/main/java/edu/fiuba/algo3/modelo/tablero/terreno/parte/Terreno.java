@@ -67,6 +67,10 @@ public abstract class Terreno {
         return false;
     }
 
+    public boolean tieneLadron(Terreno terrenoDeLadron) {
+        return this == terrenoDeLadron;
+    }
+
     public boolean puedeColocarPoblado(int indiceVertice) {
         return vertices.get(indiceVertice).esValido();
     }
