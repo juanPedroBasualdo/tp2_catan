@@ -124,4 +124,12 @@ public class Juego {
         this.bonificaciones.actualizarBonificaciones(this.tablero.getAristas());
     }
 
+    // Metodos observer:
+
+    public void notificarObservadores() {
+        this.turnero.notificarObservadores();
+        this.tablero.notificarObservadores();
+        this.bonificaciones.notificarObservadores();
+    }
+
 }
