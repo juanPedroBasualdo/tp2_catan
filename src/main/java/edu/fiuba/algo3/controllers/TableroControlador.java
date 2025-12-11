@@ -1,19 +1,19 @@
 package edu.fiuba.algo3.controllers;
 
-import edu.fiuba.algo3.vistas.TableroVista;
+import edu.fiuba.algo3.vistas.JuegoVista;
 import javafx.application.Platform;
 import javafx.scene.control.Slider;
 
 public class TableroControlador {
 
-    private final TableroVista vista;
+    private final JuegoVista vista;
     private final CatanApp app;
 
     private static final String PATH_MUSICA_1 = "/Musicas/01 Age of Empires II Main Theme.mp3";
     private static  final String PATH_MUSICA_2 = "/Musicas/02 Maps of the World.mp3";
     private static  final String PATH_MUSICA_3 = "/Musicas/13 Tazer.mp3";
 
-    public TableroControlador(TableroVista vista, CatanApp app) {
+    public TableroControlador(JuegoVista vista, CatanApp app) {
         this.vista = vista;
         this.app = app;
         setupEventHandlers();
