@@ -9,6 +9,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class BarraDerechaVista extends VBox {
@@ -17,11 +20,14 @@ public class BarraDerechaVista extends VBox {
     private final Label labelResultadoDados;
     private final Label labelJugadorActual;
     private final Label labelInfo;
+    private final List<Label> cantPV;
 
     private static final String PATH_ICONO_DADO = "/Imagenes/Dados.png";
     private static final double TAMANIO_DADO = 70;
 
-    public BarraDerechaVista() {
+    public BarraDerechaVista(List<String> nombreJugadores) {
+        this.cantPV =new ArrayList<>();
+
         VBox pvBox = new VBox(5);
         pvBox.setPrefWidth(330);
         pvBox.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 5;");
@@ -31,15 +37,23 @@ public class BarraDerechaVista extends VBox {
         Label labelJugadores = new Label("Jugadores");
         labelJugadores.setStyle("-fx-font-weight: bold;");
         HBox.setHgrow(labelJugadores, Priority.ALWAYS);
-        pvHeader.getChildren().addAll(labelJugadores, new Label("PV") {{setStyle("-fx-font-weight: bold;");}});
+        pvHeader.getChildren().addAll(labelJugadores, new Label("Puntos de Victoria")
+        {{setStyle("-fx-font-weight: bold;");}});
 
-        pvBox.getChildren().addAll(
-                pvHeader,
-                new Label("Jugador 1: PV"),
-                new Label("Jugador 2: PV"),
-                new Label("Jugador 3: PV"),
-                new Label("Jugador 4: PV")
-        );
+
+
+        pvBox.getChildren().addAll(pvHeader);
+        for (String nombre : nombreJugadores) {
+
+            Label etiquetaJugadorPV = new Label(nombre + ": 0 PV");
+
+
+            this.cantPV.add(etiquetaJugadorPV);
+
+            // Añade la etiqueta al contenedor visual
+            pvBox.getChildren().add(etiquetaJugadorPV);
+        }
+
 
         botonTirarDados = crearBotonDado(PATH_ICONO_DADO, "Tirar dados");
         labelResultadoDados = new Label("-");
@@ -89,6 +103,17 @@ public class BarraDerechaVista extends VBox {
         Tooltip.install(boton, new Tooltip(textoTooltip));
 
         return boton;
+    }
+
+    public void actualizarPuntosVictoria(int indiceJugador, int nuevosPV) {
+        if (indiceJugador >= 0 && indiceJugador < cantPV.size()) {
+
+            // Extrae el nombre actual de la etiqueta (todo antes de ':')
+            String nombreActual = cantPV.get(indiceJugador).getText().split(":")[0];
+
+            // Asigna el nuevo texto con el nombre y los PV actualizados
+            cantPV.get(indiceJugador).setText(nombreActual + ": " + nuevosPV + " PV");
+        }
     }
 
     public Button getBotonTirarDados() {
