@@ -58,10 +58,8 @@ public class CatanApp extends Application {
     public void mostrarPantallaJuego(int numJugadores, List<String> nombreJugadores) {
 
         List<Jugador> listaJugadores = new ArrayList<Jugador>();
-        for(int i = 1; i <= numJugadores; i++) {
-            listaJugadores.add(new Jugador("Jugador " + i));
 
-        for(String nombre : nombreJugadores) {
+        for (String nombre : nombreJugadores) {
             listaJugadores.add(new Jugador(nombre));
         }
 
@@ -85,9 +83,9 @@ public class CatanApp extends Application {
         Scene scene = new Scene(vistaPrincipal.getRoot(), RESOLUCION_ANCHO, RESOLUCION_ALTO);
         escena.setScene(scene);
         escena.setTitle("Catan");
-    }
 
-    public void mostrarCreditos() {
+    }
+    public void mostrarCreditos () {
 
         CreditosVista creditosVista = new CreditosVista();
         Scene scene = new Scene(creditosVista.getRoot());
@@ -102,20 +100,20 @@ public class CatanApp extends Application {
         creditosStage.show();
     }
 
-    public void mostrarReglas() {
+    public void mostrarReglas () {
         try {
             Desktop.getDesktop().browse(new URI(URL_REGLAS_CATAN));
         } catch (Exception e) {
         }
     }
 
-    public void mostrarIngresarNombres(int cantJugadores){
+    public void mostrarIngresarNombres ( int cantJugadores){
         IngresarNombresVista nombresVista = new IngresarNombresVista(cantJugadores, escena);
-        new IngresarNombresControlador(this, cantJugadores,nombresVista);
+        new IngresarNombresControlador(this, cantJugadores, nombresVista);
         nombresVista.mostrar();
     }
 
-    public static void main(String[] args) {
+    public static void main (String[]args){
         launch(args);
     }
 }
