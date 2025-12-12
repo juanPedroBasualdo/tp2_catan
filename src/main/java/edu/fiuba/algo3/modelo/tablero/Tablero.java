@@ -284,6 +284,7 @@ public class Tablero extends Observable {
     public void producirRecursos(int numeroFicha) {
         List<Terreno> terrenosProduccion = this.getTerrenos();
         for(Terreno t : terrenosProduccion) {
+
             if(!this.ladron.estaEnTerreno(t) && t.tieneNumero(numeroFicha)) {
                 t.producir();
             }
@@ -350,8 +351,11 @@ public class Tablero extends Observable {
     public void otorgarRecursosIniciales(Jugador jugador, Coordenada coordenada) {
         List<Terreno> adyacentes = this.getTerrenosAdyacentes(coordenada);
 
+
         for (Terreno terreno : adyacentes) {
-            jugador.agregarRecurso(terreno.getRecurso());
+            if (!(terreno.getTipo() == TerrenoTipo.DESIERTO)){
+                jugador.agregarRecurso(terreno.getRecurso());
+            }
         }
     }
 
