@@ -22,12 +22,23 @@ public class BarraDerechaVista extends VBox {
     private final Label labelInfo;
     private final List<Label> cantPV;
 
-    private static final String PATH_ICONO_DADO = "/Imagenes/Dados.png";
+    private final Button botonComerciarCereal;
+    private final Button botonComerciarLana;
+    private final Button botonComerciarMineral;
+    private final Button botonComerciarMadera;
+    private final Button botonComerciarArcilla;
+
+    private static final String PATH_IMAGEN_DADO = "/Imagenes/Dados.png";
+    private static final String PATH_IMAGEN_CEREAL  = "/Imagenes/Carta_cereal.png";
+    private static final String PATH_IMAGEN_LANA  = "/Imagenes/Carta_lana.png";
+    private static final String PATH_IMAGEN_MINERAL  = "/Imagenes/Carta_mineral.png";
+    private static final String PATH_IMAGEN_MADERA = "/Imagenes/Carta_madera.png";
+    private static final String PATH_IMAGEN_ARCILLA  = "/Imagenes/Carta_arcilla.png";
     private static final double TAMANIO_DADO = 70;
+    private static final double TAMANIO_BOTONES_COMERCIO = 65;
 
     public BarraDerechaVista(List<String> nombreJugadores) {
         this.cantPV =new ArrayList<>();
-
         VBox pvBox = new VBox(5);
         pvBox.setPrefWidth(330);
         pvBox.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 5;");
@@ -40,22 +51,27 @@ public class BarraDerechaVista extends VBox {
         pvHeader.getChildren().addAll(labelJugadores, new Label("Puntos de Victoria")
         {{setStyle("-fx-font-weight: bold;");}});
 
-
-
         pvBox.getChildren().addAll(pvHeader);
         for (String nombre : nombreJugadores) {
-
             Label etiquetaJugadorPV = new Label(nombre + ": 0 PV");
-
-
             this.cantPV.add(etiquetaJugadorPV);
-
-            // Añade la etiqueta al contenedor visual
             pvBox.getChildren().add(etiquetaJugadorPV);
         }
 
+        botonComerciarCereal = crearBotones(PATH_IMAGEN_CEREAL, "Comerciar cereal");
+        botonComerciarLana = crearBotones(PATH_IMAGEN_LANA, "Comerciar lana");
+        botonComerciarMineral = crearBotones(PATH_IMAGEN_MINERAL, "Comerciar mineral");
+        botonComerciarMadera = crearBotones(PATH_IMAGEN_MADERA, "Comerciar madera");
+        botonComerciarArcilla = crearBotones(PATH_IMAGEN_ARCILLA, "Comerciar arcilla");
 
-        botonTirarDados = crearBotonDado(PATH_ICONO_DADO, "Tirar dados");
+        HBox contenedorBotonesComercio = new HBox(10);
+        contenedorBotonesComercio.setAlignment(Pos.CENTER);
+        contenedorBotonesComercio.getChildren().addAll(
+                botonComerciarCereal, botonComerciarLana,botonComerciarMineral,
+                botonComerciarMadera, botonComerciarArcilla);
+        contenedorBotonesComercio.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;");
+
+        botonTirarDados = crearBotones(PATH_IMAGEN_DADO, "Tirar dados");
         labelResultadoDados = new Label("-");
         labelResultadoDados.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
@@ -78,13 +94,13 @@ public class BarraDerechaVista extends VBox {
         HBox contenedorBancaDados = new HBox(10, contenedorJugadorActual, contenedorDados);
         contenedorBancaDados.setPrefWidth(330);
 
-        this.getChildren().addAll(pvBox, contenedorBancaDados);
+        this.getChildren().addAll(pvBox, contenedorBancaDados,contenedorBotonesComercio);
         this.setAlignment(Pos.TOP_CENTER);
         this.setStyle("-fx-background-color: #e0e0e0; -fx-padding: 10;");
         this.setPrefWidth(350);
         this.setSpacing(15);
     }
-    private Button crearBotonDado(String pathIcono, String textoTooltip) {
+    private Button crearBotones(String pathIcono, String textoTooltip) {
 
         Image icono = new Image(Objects.requireNonNull(getClass().getResource(pathIcono)).toExternalForm());
 
@@ -108,10 +124,8 @@ public class BarraDerechaVista extends VBox {
     public void actualizarPuntosVictoria(int indiceJugador, int nuevosPV) {
         if (indiceJugador >= 0 && indiceJugador < cantPV.size()) {
 
-            // Extrae el nombre actual de la etiqueta (todo antes de ':')
             String nombreActual = cantPV.get(indiceJugador).getText().split(":")[0];
 
-            // Asigna el nuevo texto con el nombre y los PV actualizados
             cantPV.get(indiceJugador).setText(nombreActual + ": " + nuevosPV + " PV");
         }
     }
@@ -123,4 +137,24 @@ public class BarraDerechaVista extends VBox {
     public Label getLabelResultadoDados() {return  labelResultadoDados;}
 
     public Label getLabelJugadorActual() {return  labelJugadorActual;}
+
+    public Button getBotonComerciarCereal() {
+        return botonComerciarCereal;
+    }
+
+    public Button getBotonComerciarLana() {
+        return botonComerciarLana;
+    }
+
+    public Button getBotonComerciarMineral() {
+        return botonComerciarMineral;
+    }
+
+    public Button getBotonComerciarMadera() {
+        return botonComerciarMadera;
+    }
+
+    public Button getBotonComerciarArcilla() {
+        return botonComerciarArcilla;
+    }
 }
