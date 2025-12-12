@@ -20,8 +20,8 @@ public class SeleccionJugadoresControlador {
         this.app = app;
         setupEventHandlers();
         setupMenuHandlers();
-        //setupVolumeControl();
-        //setupMenuElegirMusicaHandler();
+        setupVolumeControl();
+        setupMenuElegirMusicaHandler();
     }
 
     private void setupEventHandlers() {
@@ -34,9 +34,6 @@ public class SeleccionJugadoresControlador {
         app.mostrarIngresarNombres(cantJugadores);
     }
 
-    //private void onStartGameClick(int numJugadores) {
-        //app.mostrarPantallaJuego(numJugadores);
-   // }
 
     private void onBotonAtrasClick() {
         app.mostrarPantallaInicio();

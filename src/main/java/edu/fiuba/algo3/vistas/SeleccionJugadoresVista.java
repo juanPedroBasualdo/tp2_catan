@@ -43,7 +43,7 @@ public class SeleccionJugadoresVista {
         addButtonHoverEffect(botonJugadores3);
         addButtonHoverEffect(botonJugadores4);
 
-        Label labelTitulo = new Label("Catan");
+        Label labelTitulo = new Label("Seleccionar Jugadores");
         labelTitulo.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: black;");
 
         VBox contenedorBotones = new VBox(10, botonJugadores3, botonJugadores4);
