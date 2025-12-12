@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.vistas;
 
+import edu.fiuba.algo3.modelo.jugador.Jugador;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,6 +14,7 @@ import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class BarraDerechaVista extends VBox {
 
@@ -25,8 +27,12 @@ public class BarraDerechaVista extends VBox {
     private static final String PATH_ICONO_DADO = "/Imagenes/Dados.png";
     private static final double TAMANIO_DADO = 70;
 
-    public BarraDerechaVista(List<String> nombreJugadores) {
+    public BarraDerechaVista(List<Jugador> nombreJugadores) {
         this.cantPV =new ArrayList<>();
+
+        List<String> nombresJugadores = nombreJugadores.stream()
+                .map(Jugador::obtenerNombre)
+                .collect(Collectors.toList());
 
         VBox pvBox = new VBox(5);
         pvBox.setPrefWidth(330);
@@ -43,9 +49,9 @@ public class BarraDerechaVista extends VBox {
 
 
         pvBox.getChildren().addAll(pvHeader);
-        for (String nombre : nombreJugadores) {
+        for (Jugador j: nombreJugadores) {
 
-            Label etiquetaJugadorPV = new Label(nombre + ": 0 PV");
+            Label etiquetaJugadorPV = new Label(j.obtenerNombre() + ": " + j.calcularPuntajeVictoria() + "PV");
 
 
             this.cantPV.add(etiquetaJugadorPV);

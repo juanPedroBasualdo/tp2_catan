@@ -29,11 +29,7 @@ public class JuegoVista {
         this.manoVista = new ManoVista();
         this.tableroContainer = new VBox();
 
-        List<String> nombresJugadores = nombreJugadores.stream()
-                .map(Jugador::obtenerNombre)
-                .collect(Collectors.toList());
-
-        this.barraDerecha = new BarraDerechaVista(nombresJugadores);
+        this.barraDerecha = new BarraDerechaVista(nombreJugadores);
 
         tableroContainer.setAlignment(Pos.CENTER);
         tableroContainer.setStyle("-fx-background-color: #2b78a9;");
