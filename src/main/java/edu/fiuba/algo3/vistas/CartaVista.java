@@ -30,19 +30,19 @@ public class CartaVista extends StackPane {
         String pathImagenCarta = "";
 
         switch(tipoCarta){
-            case "Lana":
+            case "LANA":
                 pathImagenCarta = "/Imagenes/Carta_lana.png";
                 break;
-            case "Mineral":
-                pathImagenCarta = "/Imagenes/Carta_arcilla.png";
+            case "MINERAL":
+                pathImagenCarta = "/Imagenes/Carta_mineral.png";
                 break;
-            case "Madera":
+            case "MADERA":
                 pathImagenCarta = "/Imagenes/Carta_madera.png";
                 break;
-            case "Cereal":
+            case "CEREAL":
                 pathImagenCarta = "/Imagenes/Carta_cereal.png";
                 break;
-            case "Arcilla":
+            case "ARCILLA":
                 pathImagenCarta = "/Imagenes/Carta_arcilla.png";
                 break;
             case "Monopolio":
