@@ -3,6 +3,8 @@ package edu.fiuba.algo3.controllers;
 import edu.fiuba.algo3.vistas.SeleccionJugadoresVista;
 import javafx.application.Platform;
 import javafx.scene.control.Slider;
+import edu.fiuba.algo3.vistas.IngresarNombresVista;
+import edu.fiuba.algo3.controllers.IngresarNombresControlador;
 
 public class SeleccionJugadoresControlador {
 
@@ -23,14 +25,18 @@ public class SeleccionJugadoresControlador {
     }
 
     private void setupEventHandlers() {
-        vista.getBotonJugadores3().setOnAction(event -> onStartGameClick(3));
-        vista.getBotonJugadores4().setOnAction(event -> onStartGameClick(4));
+        vista.getBotonJugadores3().setOnAction(event -> onObtenerNombresClick(3));
+        vista.getBotonJugadores4().setOnAction(event -> onObtenerNombresClick(4));
         vista.getBotonAtras().setOnAction(event -> onBotonAtrasClick());
     }
 
-    private void onStartGameClick(int numJugadores) {
-        app.mostrarPantallaJuego(numJugadores);
+    private void onObtenerNombresClick(int cantJugadores) {
+        app.mostrarIngresarNombres(cantJugadores);
     }
+
+    //private void onStartGameClick(int numJugadores) {
+        //app.mostrarPantallaJuego(numJugadores);
+   // }
 
     private void onBotonAtrasClick() {
         app.mostrarPantallaInicio();

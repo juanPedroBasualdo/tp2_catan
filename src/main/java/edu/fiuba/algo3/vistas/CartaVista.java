@@ -27,7 +27,7 @@ public class CartaVista extends StackPane {
     }
 
     private ImageView aplicarImagenCarta(String tipoCarta) {
-        String pathImagenCarta = "/Imagenes/Carta_desarrollo.png";
+        String pathImagenCarta = "";
 
         switch(tipoCarta){
             case "Lana":
@@ -51,6 +51,17 @@ public class CartaVista extends StackPane {
             case "Abundancia":
                 pathImagenCarta = "/Imagenes/Carta_abundancia.png";
                 break;
+            case "Caballero":
+                pathImagenCarta = "/Imagenes/Carta_caballero.png";
+                break;
+            case "PuntoDeVictoria":
+                pathImagenCarta = "/Imagenes/Carta_un_punto_victoria.png";
+                break;
+            case "ConstruccionDeCarreteras":
+                pathImagenCarta = "/Imagenes/Carta_carreteras.png";
+                break;
+            default:
+                pathImagenCarta = "/Imagenes/Carta_desarrollo.png";
         }
 
         String externalForm = Objects.requireNonNull(getClass().getResource(pathImagenCarta),

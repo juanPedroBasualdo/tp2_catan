@@ -226,10 +226,14 @@ public class TableroControlador {
 
     }
 
+    public void handleBtnCartaDesarrollo(String nombreTipo) {
+    }
+
     private void actualizarJugadorQueLeToca(){
         String nombreJugador = juego.jugadorActual().obtenerNombre();
         String jugadorNombre = "Juega:" + nombreJugador;
         vista.getBarraDerecha().getLabelJugadorActual().setText(jugadorNombre);
+        vista.getManoVista().setJugadorActual(juego.jugadorActual());
     }
 
     private void handleComerciarJugadorClick() {
@@ -272,7 +276,7 @@ public class TableroControlador {
         if(juego.obtenerFase() == FaseTurno.TURNOJUGADOR) {
             System.out.println("Compro carta de desarrollo");
             juego.comprarCartaDesarrollo();
-            juego.notificarObservadores();
+            actualizarUI();
         }
 
     }
