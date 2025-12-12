@@ -64,7 +64,7 @@ public class CatanApp extends Application {
         }
 
         Juego juego = new Juego(listaJugadores);
-        JuegoVista vistaPrincipal = new JuegoVista();
+        JuegoVista vistaPrincipal = new JuegoVista(listaJugadores);
 
         TableroControlador tableroControlador = new TableroControlador(vistaPrincipal, this, juego);
 
