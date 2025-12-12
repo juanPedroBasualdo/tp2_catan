@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.controllers;
 
-import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.vistas.CreditosVista;
 import edu.fiuba.algo3.vistas.InicioVista;
 import edu.fiuba.algo3.vistas.SeleccionJugadoresVista;
@@ -28,7 +27,7 @@ public class CatanApp extends Application {
     @Override
     public void start(Stage stage) {
         this.escena = stage;
-        //ControladorMusica.getInstance();
+        ControladorMusica.getInstance();
         mostrarPantallaInicio();
         escena.setTitle("Catan");
         escena.setResizable(false);
@@ -56,17 +55,18 @@ public class CatanApp extends Application {
         escena.setTitle("Catan");
     }
 
-    public void mostrarPantallaJuego(int numJugadores) {
+    public void mostrarPantallaJuego(int numJugadores, List<String> nombreJugadores) {
 
         List<Jugador> listaJugadores = new ArrayList<Jugador>();
         for(int i = 1; i <= numJugadores; i++) {
             listaJugadores.add(new Jugador("Jugador " + i));
+
+        for(String nombre : nombreJugadores) {
+            listaJugadores.add(new Jugador(nombre));
         }
 
         Juego juego = new Juego(listaJugadores);
-
         JuegoVista vistaPrincipal = new JuegoVista();
-
 
         TableroControlador tableroControlador = new TableroControlador(vistaPrincipal, this, juego);
 
@@ -107,6 +107,12 @@ public class CatanApp extends Application {
             Desktop.getDesktop().browse(new URI(URL_REGLAS_CATAN));
         } catch (Exception e) {
         }
+    }
+
+    public void mostrarIngresarNombres(int cantJugadores){
+        IngresarNombresVista nombresVista = new IngresarNombresVista(cantJugadores, escena);
+        new IngresarNombresControlador(this, cantJugadores,nombresVista);
+        nombresVista.mostrar();
     }
 
     public static void main(String[] args) {
