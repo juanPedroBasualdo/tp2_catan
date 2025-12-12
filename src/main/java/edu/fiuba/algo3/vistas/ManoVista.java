@@ -80,7 +80,7 @@ public class ManoVista extends HBox implements Observador {
 
             cartaVista.getClickEnCarta().setOnMouseClicked(e -> {
                 System.out.println("Clic en carta de recurso: " + nombreRecurso);
-                controlador.handleBtnCartaRecurso(nombreRecurso);
+                // controlador.handleBtnCartaRecurso(nombreRecurso);
             });
 
             this.contenedorCartasDeRecurso.getChildren().add(cartaVista);

@@ -61,6 +61,7 @@ public class TableroControlador {
     private void actualizarUI() {
         this.actualizarJugadorQueLeToca();
         juego.notificarObservadores();
+        vista.getBarraDerecha().actualizarPuntosVictoria(1, juego.obtenerPuntaje());
     }
 
     private void handleTirarDadosClick() {

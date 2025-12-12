@@ -36,7 +36,7 @@ public class TableroVista extends Pane implements Observador {
     private final double Y_DISTANCIA = RADIO * 1.5;
 
     private final double X_INIT = 400;
-    private final double Y_INIT = 150;
+    private final double Y_INIT = 125;
 
     private List<Node> nodosTablero = new ArrayList<Node>();
 
