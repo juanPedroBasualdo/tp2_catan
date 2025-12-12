@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.controllers;
 
+import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.vistas.CreditosVista;
 import edu.fiuba.algo3.vistas.InicioVista;
 import edu.fiuba.algo3.vistas.SeleccionJugadoresVista;
@@ -65,6 +66,9 @@ public class CatanApp extends Application {
         }
 
         Juego juego = new Juego(listaJugadores);
+
+        vista.getManoVista().setJugadorActual(juego.jugadorActual());
+
         JuegoVista vistaPrincipal = new JuegoVista();
 
         TableroControlador tableroControlador = new TableroControlador(vistaPrincipal, this, juego);

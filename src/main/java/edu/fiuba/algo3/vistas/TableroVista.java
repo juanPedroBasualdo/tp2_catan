@@ -192,7 +192,6 @@ public class TableroVista extends Pane implements Observador {
                 }
                 case ARCILLA: {
                     System.out.println("Clic en Puerto 2:1 de Ladrillo.");
-                    // Aquí iría la llamada al controlador para la función de Intercambio 2:1 de ARCILLA (Ladrillo)
                     controlador.handleBtnPuerto2_1(Recurso.ARCILLA);
                     break;
                 }

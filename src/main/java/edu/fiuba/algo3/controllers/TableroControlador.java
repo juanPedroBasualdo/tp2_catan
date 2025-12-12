@@ -195,7 +195,8 @@ public class TableroControlador {
             }
 
         } catch (Exception e) {
-            vista.getBarraDerecha().getLabelJugadorActual().setText("No se puede colocar porque" + e);
+            System.out.println(e);
+            vista.getBarraDerecha().getLabelJugadorActual().setText(String.valueOf(e));
         }
 
     }
@@ -207,11 +208,10 @@ public class TableroControlador {
     }
 
     private void actualizarJugadorQueLeToca(){
-
         String nombreJugador = juego.jugadorActual().obtenerNombre();
         String jugadorNombre = "Juega:" + nombreJugador;
         vista.getBarraDerecha().getLabelJugadorActual().setText(jugadorNombre);
-
+        vista.getManoVista().setJugadorActual(juego.jugadorActual());
     }
 
     private void handleComerciarJugadorClick() {
@@ -254,7 +254,7 @@ public class TableroControlador {
         if(juego.obtenerFase() == FaseTurno.TURNOJUGADOR) {
             System.out.println("Compro carta de desarrollo");
             juego.comprarCartaDesarrollo();
-            juego.notificarObservadores();
+            actualizarUI();
         }
 
     }
