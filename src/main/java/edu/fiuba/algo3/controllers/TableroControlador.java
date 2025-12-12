@@ -1,14 +1,19 @@
 package edu.fiuba.algo3.controllers;
 
+import edu.fiuba.algo3.modelo.cartasDesarrollo.CartaDesarrollo;
+import edu.fiuba.algo3.modelo.cartasDesarrollo.Monopolio;
 import edu.fiuba.algo3.modelo.juego.turno.FaseTurno;
 import edu.fiuba.algo3.modelo.tablero.Recurso;
 import edu.fiuba.algo3.modelo.tablero.terreno.pieza.construcciones.Construccion;
+import edu.fiuba.algo3.vistas.CartaVista;
 import edu.fiuba.algo3.vistas.JuegoVista;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.tablero.Tablero;
 import edu.fiuba.algo3.modelo.tablero.coordenada.Coordenada;
 import javafx.application.Platform;
 import javafx.scene.control.Slider;
+
+import java.util.List;
 
 public class TableroControlador {
 
@@ -22,6 +27,9 @@ public class TableroControlador {
     private static  final String PATH_MUSICA_2 = "/Musicas/02 Maps of the World.mp3";
     private static  final String PATH_MUSICA_3 = "/Musicas/13 Tazer.mp3";
 
+    private Recurso recursoOferta; // DAMOS
+    private Recurso recursoDemanda; // RECIBIMOS
+
     private enum AccionesJuego {
         INICIARJUEGO,
         CONSTRUIR,
@@ -32,8 +40,11 @@ public class TableroControlador {
         COMERCIARBANCA,
         TERMINARTURNO,
         TIRARDADOS,
-        ESPERARACCION
+        MONOPOLIO, CABALLERO, ESPERARACCION
     }
+
+    List<Recurso> recursosOferta;
+    List<Recurso> recursosDemanda;
 
     public TableroControlador(JuegoVista vista, CatanApp app, Juego juego) {
         this.vista = vista;
@@ -42,8 +53,8 @@ public class TableroControlador {
 
        setupEventHandlers();
         setupMenuHandlers();
-        //setupVolumeControl();
-        //actualizarJugadorQueLeToca();
+        setupVolumeControl();
+        actualizarJugadorQueLeToca();
     }
 
     private void setupEventHandlers() {
@@ -55,7 +66,20 @@ public class TableroControlador {
         vista.getBotonComerciarPuerto3a1().setOnAction(e -> handleComerciarPuerto3a1Click());
         vista.getBotonPasar().setOnAction(e -> handlePasarClick());
         vista.getBotonComprarCartaDesarrollo().setOnAction(e -> handleComprarCartaDesarrolloClick());
+        vista.getBarraDerecha().getBotonComerciarArcilla().setOnAction(e -> seleccionarRecursos(Recurso.ARCILLA));
+        vista.getBarraDerecha().getBotonComerciarMadera().setOnAction(e -> seleccionarRecursos(Recurso.MADERA));
+        vista.getBarraDerecha().getBotonComerciarMineral().setOnAction(e -> seleccionarRecursos(Recurso.MINERAL));
+        vista.getBarraDerecha().getBotonComerciarLana().setOnAction(e -> seleccionarRecursos(Recurso.LANA));
+        vista.getBarraDerecha().getBotonComerciarCereal().setOnAction(e -> seleccionarRecursos(Recurso.CEREAL));
         setupMenuElegirMusicaHandler();
+    }
+
+    private void seleccionarRecursos(Recurso recurso) {
+        if (recursoOferta == null) {
+            recursoOferta = recurso;
+        }else {
+            recursoDemanda = recurso;
+        }
     }
 
     private void actualizarUI() {
@@ -100,6 +124,7 @@ public class TableroControlador {
             String construccion = pieza.getClass().getSimpleName();
             switch(accion){
                 case CONSTRUIR:
+
                     switch(construccion){
                         case ("Vacio"): {
                             switch (juego.obtenerFase()){
@@ -153,6 +178,7 @@ public class TableroControlador {
                     juego.notificarObservadores();
                     accion = AccionesJuego.ESPERARACCION;
                     break;
+
                 case ROBAR:
                     switch (construccion) {
                         case("Vacio"):
@@ -177,6 +203,7 @@ public class TableroControlador {
                     break;
                 default:
                     break;
+                case ESPERARACCION:
             }
 
         } catch (Exception e) {
@@ -220,14 +247,50 @@ public class TableroControlador {
     }
 
     public void handleBtnPuerto3_1() {
-
+        this.juego.intercambioTasaGenerica(recursoOferta,recursoDemanda);
+        recursoOferta = null;
+        recursoDemanda = null;
     }
 
-    public void handleBtnPuerto2_1(Recurso recurso) {
-
+    public void handleBtnPuerto2_1() {
+        this.juego.intercambioTasaEspecifica(recursoOferta,recursoDemanda);
+        recursoOferta = null;
+        recursoDemanda = null;
     }
 
     public void handleBtnCartaDesarrollo(String nombreTipo) {
+
+        switch (nombreTipo) {
+
+            case "Monopolio": {
+                accion = AccionesJuego.MONOPOLIO;
+                break;
+            }
+
+            case "Abundancia": {
+
+                break;
+            }
+
+            case "Caballero": {
+                accion = AccionesJuego.ROBAR;
+                break;
+            }
+
+            case "PuntoDeVictoria": {
+                break;
+            }
+
+            case "ConstruccionDeCarreteras": {
+                break;
+            }
+
+        }
+
+    }
+
+    public void handleBtnCartaRecurso(String nombreRecurso) {       // CARTA DE JUGADOR
+
     }
 
     private void actualizarJugadorQueLeToca(){
@@ -244,7 +307,11 @@ public class TableroControlador {
     private void handleComerciarBancaClick() {
         if(juego.obtenerFase() == FaseTurno.TURNOJUGADOR) {
             System.out.println("Comercio con la banca");
+            this.juego.intercambioTasaEstandar(recursoOferta,recursoDemanda);
+            recursoOferta = null;
+            recursoDemanda = null;
         }
+
     }
 
     private void handleComerciarPuerto2a1Click() {

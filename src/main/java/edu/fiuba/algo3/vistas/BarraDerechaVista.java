@@ -37,7 +37,6 @@ public class BarraDerechaVista extends VBox {
     private static final String PATH_IMAGEN_MADERA = "/Imagenes/Carta_madera.png";
     private static final String PATH_IMAGEN_ARCILLA  = "/Imagenes/Carta_arcilla.png";
     private static final double TAMANIO_DADO = 70;
-    private static final double TAMANIO_BOTONES_COMERCIO = 65;
 
     public BarraDerechaVista(List<Jugador> nombreJugadores) {
         this.cantPV =new ArrayList<>();
@@ -75,6 +74,7 @@ public class BarraDerechaVista extends VBox {
         botonComerciarMineral = crearBotones(PATH_IMAGEN_MINERAL, "Comerciar mineral");
         botonComerciarMadera = crearBotones(PATH_IMAGEN_MADERA, "Comerciar madera");
         botonComerciarArcilla = crearBotones(PATH_IMAGEN_ARCILLA, "Comerciar arcilla");
+
 
         HBox contenedorBotonesComercio = new HBox(10);
         contenedorBotonesComercio.setAlignment(Pos.CENTER);

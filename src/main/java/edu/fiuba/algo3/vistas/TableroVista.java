@@ -172,27 +172,27 @@ public class TableroVista extends Pane implements Observador {
             switch (recurso) {
                 case MADERA: {
                     System.out.println("Clic en Puerto 2:1 de Madera.");
-                    controlador.handleBtnPuerto2_1(Recurso.MADERA);
+                    controlador.handleBtnPuerto2_1();
                     break;
                 }
                 case CEREAL: {
                     System.out.println("Clic en Puerto 2:1 de Cereal.");
-                    controlador.handleBtnPuerto2_1(Recurso.CEREAL);
+                    controlador.handleBtnPuerto2_1();
                     break;
                 }
                 case MINERAL: {
                     System.out.println("Clic en Puerto 2:1 de Mineral.");
-                    controlador.handleBtnPuerto2_1(Recurso.MINERAL);
+                    controlador.handleBtnPuerto2_1();
                     break;
                 }
                 case LANA: {
                     System.out.println("Clic en Puerto 2:1 de Lana.");
-                    controlador.handleBtnPuerto2_1(Recurso.LANA);
+                    controlador.handleBtnPuerto2_1();
                     break;
                 }
                 case ARCILLA: {
                     System.out.println("Clic en Puerto 2:1 de Ladrillo.");
-                    controlador.handleBtnPuerto2_1(Recurso.ARCILLA);
+                    controlador.handleBtnPuerto2_1();
                     break;
                 }
             }

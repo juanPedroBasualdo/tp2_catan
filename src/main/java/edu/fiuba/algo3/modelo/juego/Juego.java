@@ -100,7 +100,7 @@ public class Juego {
     }
 
     public void robarCarta(Jugador jugadorVictima) {
-        this.tablero.robarCarta(this.turnero.jugadorActual(), jugadorVictima);
+        this.tablero.robarCarta(jugadorVictima,this.turnero.jugadorActual());
     }
 
     public boolean estaLadron(Coordenada coordenada) {

@@ -4,7 +4,7 @@ import edu.fiuba.algo3.controllers.TableroControlador;
 import edu.fiuba.algo3.modelo.Observer.Observador;
 import edu.fiuba.algo3.modelo.cartasDesarrollo.CartaDesarrollo;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
-import edu.fiuba.algo3.modelo.tablero.Recurso; // Asegúrate de importar el enum Recurso
+import edu.fiuba.algo3.modelo.tablero.Recurso;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class ManoVista extends HBox implements Observador {
 
     private final HBox contenedorCartasDeDesarrollo;
-    private final HBox contenedorCartasDeRecurso; // Nuevo contenedor para recursos
+    private final HBox contenedorCartasDeRecurso;
     private Jugador jugadorActual;
 
     TableroControlador controlador;
@@ -30,15 +30,12 @@ public class ManoVista extends HBox implements Observador {
         this.setPrefWidth(1200);
         this.setPrefHeight(100);
 
-        // Contenedor de Cartas de Desarrollo
         this.contenedorCartasDeDesarrollo = new HBox(5);
         this.contenedorCartasDeDesarrollo.setAlignment(Pos.CENTER_LEFT);
 
-        // Contenedor de Cartas de Recurso
-        this.contenedorCartasDeRecurso = new HBox(5); // Espaciado de 5 entre cartas de recurso
+        this.contenedorCartasDeRecurso = new HBox(5);
         this.contenedorCartasDeRecurso.setAlignment(Pos.CENTER_LEFT);
 
-        // Etiquetas y adición de contenedores al HBox principal
         Label separadorDesarrollo = new Label("CARTAS DESARROLLO:");
         separadorDesarrollo.setStyle("-fx-font-weight: bold; -fx-padding: 0 10 0 10;");
 
@@ -58,7 +55,6 @@ public class ManoVista extends HBox implements Observador {
         actualizarVistas();
     };
 
-    // Método principal de renderizado que combina ambos tipos de cartas
     private void actualizarVistas() {
         if (jugadorActual != null) {
             renderizarCartasDesarrollo();
@@ -80,7 +76,7 @@ public class ManoVista extends HBox implements Observador {
 
             cartaVista.getClickEnCarta().setOnMouseClicked(e -> {
                 System.out.println("Clic en carta de recurso: " + nombreRecurso);
-                // controlador.handleBtnCartaRecurso(nombreRecurso);
+                controlador.handleBtnCartaRecurso(nombreRecurso);
             });
 
             this.contenedorCartasDeRecurso.getChildren().add(cartaVista);
