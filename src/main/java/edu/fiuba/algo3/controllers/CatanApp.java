@@ -58,25 +58,26 @@ public class CatanApp extends Application {
 
     public void mostrarPantallaJuego(int numJugadores) {
 
-        JuegoVista vista = new JuegoVista();
         List<Jugador> listaJugadores = new ArrayList<Jugador>();
-
         for(int i = 1; i <= numJugadores; i++) {
             listaJugadores.add(new Jugador("Jugador " + i));
         }
 
         Juego juego = new Juego(listaJugadores);
 
-        vista.getManoVista().setJugadorActual(juego.jugadorActual());
-
         JuegoVista vistaPrincipal = new JuegoVista();
+
 
         TableroControlador tableroControlador = new TableroControlador(vistaPrincipal, this, juego);
 
+        vistaPrincipal.getManoVista().setJugadorActual(juego.jugadorActual());
+        vistaPrincipal.getManoVista().setControlador(tableroControlador);
+
         TableroVista tableroVista = new TableroVista(this, juego, tableroControlador, listaJugadores);
 
+
         juego.agregarObserversDeJugador(tableroVista);
-        juego.agregarObserversDeJugador(vista.getManoVista());
+        juego.agregarObserversDeJugador(vistaPrincipal.getManoVista());
         juego.agregarObserversDeTablero(tableroVista);
 
         vistaPrincipal.setTablero(tableroVista);

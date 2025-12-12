@@ -207,6 +207,9 @@ public class TableroControlador {
     public void handleBtnPuerto2_1(Recurso recurso) {
     }
 
+    public void handleBtnCartaDesarrollo(String nombreTipo) {
+    }
+
     private void actualizarJugadorQueLeToca(){
         String nombreJugador = juego.jugadorActual().obtenerNombre();
         String jugadorNombre = "Juega:" + nombreJugador;

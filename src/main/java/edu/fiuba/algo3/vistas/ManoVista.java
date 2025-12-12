@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.vistas;
 
+import edu.fiuba.algo3.controllers.TableroControlador;
 import edu.fiuba.algo3.modelo.Observer.Observador;
 import edu.fiuba.algo3.modelo.cartasDesarrollo.CartaDesarrollo;
 import edu.fiuba.algo3.modelo.jugador.Jugador;
@@ -8,15 +9,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.geometry.Insets;
 
-import java.util.HashMap;
-
 public class ManoVista extends HBox implements Observador {
     private final HBox contenedorCartasDeDesarrollo;
     private Jugador jugadorActual;
 
-
-
-    HashMap<String, String> listaIconosCartas = new HashMap<>();
+    TableroControlador controlador;
 
     public ManoVista() {
 
@@ -39,11 +36,11 @@ public class ManoVista extends HBox implements Observador {
     public void setJugadorActual(Jugador jugadorActual) {
         this.jugadorActual = jugadorActual;
         renderizarCartasDesarrollo();
-
     };
 
+
     private void renderizarCartasDesarrollo() {
-        this.contenedorCartasDeDesarrollo.getChildren().clear(); // Limpiar si se llama en actualizar/re-render
+        this.contenedorCartasDeDesarrollo.getChildren().clear();
 
         for (CartaDesarrollo carta : jugadorActual.cartasDesarrollo()) {
             String nombreTipo = carta.getClass().getSimpleName();
@@ -53,6 +50,7 @@ public class ManoVista extends HBox implements Observador {
             cartaVista.getClickEnCarta().setOnMouseClicked(e -> {
                 System.out.println("Clic en carta de desarrollo: " + nombreTipo);
 
+                controlador.handleBtnCartaDesarrollo(nombreTipo);
             });
 
             this.contenedorCartasDeDesarrollo.getChildren().add(cartaVista);
@@ -62,5 +60,9 @@ public class ManoVista extends HBox implements Observador {
     @Override
     public void actualizar() {
         renderizarCartasDesarrollo();
+    }
+
+    public void setControlador(TableroControlador tableroControlador) {
+        controlador = tableroControlador;
     }
 }
