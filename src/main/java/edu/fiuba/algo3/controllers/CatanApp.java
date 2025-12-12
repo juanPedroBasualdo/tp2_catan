@@ -57,7 +57,6 @@ public class CatanApp extends Application {
 
     public void mostrarPantallaJuego(int numJugadores, List<String> nombreJugadores) {
 
-        JuegoVista vista = new JuegoVista();
         List<Jugador> listaJugadores = new ArrayList<Jugador>();
 
         for(String nombre : nombreJugadores) {
@@ -65,7 +64,7 @@ public class CatanApp extends Application {
         }
 
         Juego juego = new Juego(listaJugadores);
-        JuegoVista vistaPrincipal = new JuegoVista();
+        JuegoVista vistaPrincipal = new JuegoVista(listaJugadores);
 
         TableroControlador tableroControlador = new TableroControlador(vistaPrincipal, this, juego);
         TableroVista tableroVista = new TableroVista(this, juego, tableroControlador, listaJugadores);

@@ -8,6 +8,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
+import edu.fiuba.algo3.modelo.jugador.Jugador;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class JuegoVista {
 
@@ -19,13 +23,18 @@ public class JuegoVista {
 
     private final VBox tableroContainer;
 
-    public JuegoVista() {
+    public JuegoVista(List<Jugador> nombreJugadores) {
         this.menuBar = new CatanMenuBar();
-        this.barraDerecha = new BarraDerechaVista();
         this.botoneraVista = new BarraBotonesVista();
         this.manoVista = new ManoVista();
-
         this.tableroContainer = new VBox();
+
+        List<String> nombresJugadores = nombreJugadores.stream()
+                .map(Jugador::obtenerNombre)
+                .collect(Collectors.toList());
+
+        this.barraDerecha = new BarraDerechaVista(nombresJugadores);
+
         tableroContainer.setAlignment(Pos.CENTER);
         tableroContainer.setStyle("-fx-background-color: #2b78a9;");
 
