@@ -19,8 +19,8 @@ public class InicioControlador {
         this.app = app;
         setupEventHandlers();
         setupMenuHandlers();
-        setupVolumeControl();
-        setupMenuElegirMusicaHandler();
+        // setupVolumeControl();
+        // setupMenuElegirMusicaHandler();
     }
 
     private void setupEventHandlers() {
