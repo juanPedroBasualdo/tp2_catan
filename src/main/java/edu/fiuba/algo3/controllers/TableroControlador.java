@@ -16,6 +16,7 @@ public class TableroControlador {
     private final CatanApp app;
     private final Juego juego;
     private AccionesJuego accion = AccionesJuego.ESPERARACCION;
+    private boolean construido = false;
 
     private static final String PATH_MUSICA_1 = "/Musicas/age_of_empires_main_theme.mp3";
     private static  final String PATH_MUSICA_2 = "/Musicas/02 Maps of the World.mp3";
@@ -102,13 +103,25 @@ public class TableroControlador {
                         case ("Vacio"): {
                             switch (juego.obtenerFase()){
                                 case INICIANDO1:{
-                                    juego.posicionarPoblado(coordVert);
-                                    break;
+                                    if(construido) {
+                                        vista.getBarraDerecha().getLabelJugadorActual().setText("Ya se construyó este turno");
+                                    } else {
+                                        juego.posicionarPoblado(coordVert);
+                                        construido = true;
+                                        break;
+                                    }
+
                                 }
                                 case INICIANDO2:
-                                    juego.posicionarPoblado(coordVert);
-                                    juego.otorgarRecursosIniciales(coordVert);
-                                    System.out.println(juego.jugadorActual().obtenerRecursos());
+                                    if(construido) {
+                                        vista.getBarraDerecha().getLabelJugadorActual().setText("Ya se construyó este turno");
+                                    }else {
+                                        juego.posicionarPoblado(coordVert);
+                                        juego.otorgarRecursosIniciales(coordVert);
+                                        System.out.println(juego.jugadorActual().obtenerRecursos());
+                                        construido = true;
+                                        break;
+                                    }
                                     break;
                                 case TURNOJUGADOR: {
                                     juego.construirPoblado(coordVert);
@@ -166,9 +179,8 @@ public class TableroControlador {
             }
 
         } catch (Exception e) {
-            vista.getBarraDerecha().getLabelJugadorActual().setText("No se puede colocar porque" + e);
+            vista.getBarraDerecha().getLabelJugadorActual().setText(String.valueOf(e));
         }
-
     }
 
 
@@ -179,10 +191,16 @@ public class TableroControlador {
             switch(accion){
                 case CONSTRUIR:
                     if (juego.obtenerFase() == FaseTurno.INICIANDO1 || juego.obtenerFase() == FaseTurno.INICIANDO2) {
-                        juego.posicionarCamino(coordArista);
-                        this.juego.cambiarFase(0);
-                        this.juego.pasarTurno();
-                        actualizarJugadorQueLeToca();
+                        if(!construido) {
+                            vista.getBarraDerecha().getLabelJugadorActual().setText("Debe construir un poblado.");
+                        } else{
+                            juego.posicionarCamino(coordArista);
+                            this.juego.cambiarFase(0);
+                            this.juego.pasarTurno();
+                            construido = false;
+                            actualizarJugadorQueLeToca();
+                        }
+
                     }
                     if (juego.obtenerFase() == FaseTurno.TURNOJUGADOR){
                         juego.construirCamino(coordArista);
@@ -195,15 +213,17 @@ public class TableroControlador {
             }
 
         } catch (Exception e) {
-            vista.getBarraDerecha().getLabelJugadorActual().setText("No se puede colocar porque" + e);
+            vista.getBarraDerecha().getLabelJugadorActual().setText(String.valueOf(e));
         }
 
     }
 
     public void handleBtnPuerto3_1() {
+
     }
 
     public void handleBtnPuerto2_1(Recurso recurso) {
+
     }
 
     private void actualizarJugadorQueLeToca(){
